@@ -1,0 +1,48 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSApp", "CMS\CMSApp.csproj", "{BB8817AE-48DF-4672-A1CB-CFB7441B88DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{69D4E64D-D1FB-4A71-880E-FEBE335FDB6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C3Apparel.Data.Kentico", "C3Apparel.Data.Kentico\C3Apparel.Data.Kentico.csproj", "{D749AB29-82DD-42B5-9EA3-C88FA4523148}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C3Apparel.Module.UI", "C3Apparel.Module.UI\C3Apparel.Module.UI.csproj", "{CFF733D9-BE8C-4EA0-9B60-90EC6F3FB04E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C3Apparel.PDF", "C3Apparel.PDF\C3Apparel.PDF.csproj", "{4C1928DC-7FF7-4818-970B-742D166B255E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB8817AE-48DF-4672-A1CB-CFB7441B88DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB8817AE-48DF-4672-A1CB-CFB7441B88DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB8817AE-48DF-4672-A1CB-CFB7441B88DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB8817AE-48DF-4672-A1CB-CFB7441B88DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D749AB29-82DD-42B5-9EA3-C88FA4523148}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D749AB29-82DD-42B5-9EA3-C88FA4523148}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D749AB29-82DD-42B5-9EA3-C88FA4523148}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D749AB29-82DD-42B5-9EA3-C88FA4523148}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFF733D9-BE8C-4EA0-9B60-90EC6F3FB04E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFF733D9-BE8C-4EA0-9B60-90EC6F3FB04E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFF733D9-BE8C-4EA0-9B60-90EC6F3FB04E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFF733D9-BE8C-4EA0-9B60-90EC6F3FB04E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C1928DC-7FF7-4818-970B-742D166B255E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C1928DC-7FF7-4818-970B-742D166B255E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C1928DC-7FF7-4818-970B-742D166B255E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C1928DC-7FF7-4818-970B-742D166B255E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D749AB29-82DD-42B5-9EA3-C88FA4523148} = {69D4E64D-D1FB-4A71-880E-FEBE335FDB6E}
+		{CFF733D9-BE8C-4EA0-9B60-90EC6F3FB04E} = {69D4E64D-D1FB-4A71-880E-FEBE335FDB6E}
+		{4C1928DC-7FF7-4818-970B-742D166B255E} = {69D4E64D-D1FB-4A71-880E-FEBE335FDB6E}
+	EndGlobalSection
+EndGlobal
+

@@ -1,0 +1,20 @@
+header {
+    position:relative;
+    padding-top:20px;
+    .wrapper{
+        padding:0 20px;
+        display: flex;
+        justify-content: space-between;
+        
+        @media(min-width:1200px){
+            padding:0 0px;
+        }
+        max-width: 1400px;
+        img.logo{
+            max-width:200px;
+            margin:0 auto;
+        }
+    
+    }
+    
+}

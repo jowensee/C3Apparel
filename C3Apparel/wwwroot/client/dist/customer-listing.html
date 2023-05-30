@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>C3 Apparel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/favicon/site.webmanifest">
+  <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#FFFFFF">
+  <meta name="msapplication-TileColor" content="#283b83">
+  <meta name="theme-color" content="#f4f3f2">
+  <link rel="stylesheet" href="styles/bulma.min.css">
+  <link rel="stylesheet" href="styles/global.css">
+  <!-- start head -->
+  <link rel="stylesheet" href="styles/customer-listing.css">
+
+  <!-- end head -->
+</head>
+
+<body>
+  <!-- START widget header -->
+  <header>
+    <div class="wrapper">
+      <a href="/">
+        <img src="../images/C3_logo_print-small-600_800x.webp" class="logo" />
+      </a>
+      <div class="right-panel">
+        <a>Logout</a>
+      </div>
+    </div>
+  </header>
+  <!-- END widget header -->
+  <div class="main-wrapper">
+    <div class="main-content">
+      <!-- start body -->
+      <div class="main-caption">
+        New Zealand Pricing
+      </div>
+      <div class="filter-container">
+        <form action="">
+          <div class="field-with-button">
+            <div class="field">
+              <label>Brand</label>
+              <div class="control">
+                <div class="select">
+                  <select id="selectBrand" name="brand">
+                    <option value="">Select Brand</option>
+                    <option value="3">Decky</option>
+                    <option value="1" selected>PureWaste</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="buttons">
+              <button id="buttonSearch" class="button is-link">Search</button>
+              <button id="buttonPrint" class="button is-link" type="submit" value="print">Print</button>
+            </div>
+          </div>
+          <div class="error"></div>
+        </form>
+      </div>
+      <div id="listingMain" data-endpoint="api/getpricing.json" data-method="GET" data-item-per-page="5">
+        <div class="listing-container" v-if="grid.rows.length == 0">
+          <div class="instruction">
+            <p>Please select a brand and click on search</p>
+          </div>
+        </div>
+        <div class="listing-container" v-if="grid.rows.length>0">
+
+          <table class="listing-table" cell-spacing="0" cell-padding="0">
+            <thead class="listing-header">
+              <tr>
+                <th colspan="5" rowspan="2"></th>
+                <th class="col-header col-group green thick thick-left" colspan="3">
+                  Column 1
+                </th>
+                <th class="col-header col-group green thick" colspan="2">
+                  Column 2
+                </th>
+                <th class="col-header col-group green thick" colspan="2">
+                  Column 3
+                </th>
+                <th class="col-header col-group green thick" colspan="2">
+                  Column 4
+                </th>
+              </tr>
+              <tr>
+                <th class="col-header thick-left">
+                  Small Shipment
+                </th>
+                <th class="col-header green">
+                  Air Express
+                </th>
+                <th class="col-header green thick">
+                  4-5 working days
+                </th>
+                <th class="col-header green">
+                  Air Express
+                </th>
+                <th class="col-header green thick">
+                  4-5 working days
+                </th>
+                <th class="col-header green">
+                  Air Express
+                </th>
+                <th class="col-header green thick">
+                  4-5 working days
+                </th>
+                <th class="col-header green">
+                  Air Express
+                </th>
+                <th class="col-header green thick">
+                  4-5 working days
+                </th>
+              </tr>
+              <tr>
+                <th rowspan="2" class="col-header col-brand">Brand</th>
+                <th rowspan="2" class="col-header col-style">Style</th>
+                <th rowspan="2" class="col-header col-name">Description</th>
+                <th rowspan="2" class="col-header col-sizes">Sizes</th>
+                <th rowspan="2" class="col-header col-color">Colours</th>
+              </tr>
+              <tr>
+                <th class="col-header green thick-left">
+                  Freight &amp; Surcharge
+                </th>
+                <th class="col-header green">
+                  Unit Price
+                </th>
+                <th class="col-header thick">
+                  MOQ Unit
+                </th>
+                <th class="col-header green">
+                  Unit Price
+                </th>
+                <th class="col-header thick">
+                  MOQ Unit
+                </th>
+                <th class="col-header green">
+                  Unit Price
+                </th>
+                <th class="col-header thick">
+                  MOQ Unit
+                </th>
+                <th class="col-header green">
+                  Unit Price
+                </th>
+                <th class="col-header thick">
+                  MOQ Unit
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row" v-for="(row, index) in grid.rows">
+                <td class=" col-brand">{{row.brand}}</td>
+                <td class=" col-style">{{row.productCode}}</td>
+                <td class=" col-name">{{row.description}}</td>
+                <td class=" col-sizes">{{row.sizes}}</td>
+                <td class=" col-color">{{row.colours}}</td>
+                <td class=" col-price thick-left">{{row.freighSurcharge1}}</td>
+                <td class=" col-price green">{{row.unitPrice1}}</td>
+                <td class=" col-units thick">{{row.moq1}}</td>
+                <td class=" col-price green">{{row.unitPrice2}}</td>
+                <td class=" col-units thick">{{row.moq2}}</td>
+                <td class=" col-price green">{{row.unitPrice3}}</td>
+                <td class=" col-units thick">{{row.moq3}}</td>
+                <td class=" col-price green">{{row.unitPrice4}}</td>
+                <td class=" col-units thick">{{row.moq4}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pagination" v-if="grid.rows.length>0">
+          <div>
+            <a v-if="grid.pagination.currentPage > 1" v-on:click="(event) => gotoPreviousPage(event)">&lt; Previous</a>
+          </div>
+          <div class="page">
+            <div>Page </div>
+            <div class="select">
+              <select v-model="grid.pagination.currentPage" v-on:change="(event) => gotoPage(event)">
+                <option v-for="(n, index) in grid.pagination.totalPage">{{n}}</option>
+              </select>
+            </div>
+
+            <div> of</div>
+            <div>{{grid.pagination.totalPage}} </div>
+          </div>
+          <div>
+            <a v-if="grid.pagination.currentPage < grid.pagination.totalPage" v-on:click="(event) => gotoNextPage(event)">Next &gt;</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- end body -->
+    </div>
+  </div>
+  <!-- START widget footer -->
+  <footer>
+    <div class="footer-copyright">
+      <div class="wrapper">
+        <p class="text-small">&copy;2022 C-3 APPAREL</p>
+
+      </div>
+    </div>
+  </footer>
+  <!-- END widget footer -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <!-- start scripts -->
+  <script src="scripts/customer-listing.js"></script>
+
+  <!-- end scripts -->
+</body>
+
+</html>

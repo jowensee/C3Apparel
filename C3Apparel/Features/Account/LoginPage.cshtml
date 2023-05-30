@@ -1,0 +1,25 @@
+@model C3Apparel.Web.Features.Account.LoginPageViewModel
+
+@section Styles {
+   <link rel="stylesheet" href="/client/dist/styles/login-page.css" asp-append-version="true">
+}
+
+@section Scripts {
+   <script src="/client/dist/scripts/login-page.js" asp-append-version="true"></script>
+}
+
+<div class="login-panel">
+   <form asp-controller="Account" asp-action="Login" method="post">
+      <div class="form-group">
+         <label>Username</label>
+         <input type="text" name="username" class="field" asp-for="Username" />
+      </div>
+      <div class="form-group">
+         <label>Password</label>
+         <input type="password" name="password" class="field"  asp-for="Password"/>
+      </div>
+      <div class="form-group">
+         <button type="submit" class="button is-link">Login</button>
+      </div>
+   </form>
+</div>

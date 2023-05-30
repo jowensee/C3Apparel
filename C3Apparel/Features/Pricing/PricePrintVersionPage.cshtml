@@ -1,0 +1,233 @@
+@using C3Apparel.Data.Pricing
+@model C3Apparel.Web.Features.Pricing.PriceListingPageViewModel
+@{
+   Layout = "_PrintLayout";
+}
+@section Styles {
+   <link rel="stylesheet" href="/client/dist/styles/customer-listing.css" asp-append-version="true">
+}
+
+@section Scripts {
+   <style>
+      body{
+         font-size: 12px;
+      }
+      .col-header .col-price, .col-header .col-units{
+         display: inline-block;
+      }
+      
+      .listing-container{
+      }
+      
+      table td.center, table th{
+         text-align: center!important;
+      }
+      
+      .page-container{
+         height: 950px;
+         position: relative;
+         page-break-before: always;
+      }
+      body .main-wrapper .main-content{
+         max-width: 1400px;
+      }
+   </style>
+}
+
+@if (Model.HasError)
+{
+   return;
+}
+
+@{
+   const int ROWS_PER_PAGE = 25;
+   var products = Model.Products.ToList();
+   var counter = 0;
+}
+
+
+   @if (products.Any())
+   {
+      var currentPage = 0;
+      var totalPage = Math.Ceiling((decimal) products.Count / ROWS_PER_PAGE) ;
+      while (counter < products.Count)
+      {
+         currentPage++;
+         var pageMaxIndex = counter + ROWS_PER_PAGE;
+         <div class="page-container">
+            <div class="listing-container">
+               <table class="listing-table">
+                  <thead class="listing-header">
+                  <tr>
+                     <th colspan="5" rowspan="2" class="disclaimer">
+                           @Html.Raw(Model.DisclaimerText)
+                     </th>
+                     <th class="col-header col-group thick thick-left" colspan="@(Model.PriceCol1HasFreightSurcharge ? "3" : "2")">
+                        Column 1
+                     </th>
+                     <th class="col-header col-group thick" colspan="@(Model.PriceCol2HasFreightSurcharge ? "3" : "2")">
+                        Column 2
+                     </th>
+                     <th class="col-header col-group thick" colspan="@(Model.PriceCol3HasFreightSurcharge ? "3" : "2")">
+                        Column 3
+                     </th>
+                     <th class="col-header col-group thick" colspan="@(Model.PriceCol4HasFreightSurcharge ? "3" : "2")">
+                        Column 4
+                     </th>
+                  </tr>
+                  <tr>
+                     @if (Model.PriceCol1HasFreightSurcharge)
+                     {
+                        <th class="col-header thick-left">
+                           Small Shipment
+                        </th>
+                     }
+                     <th class="col-header">
+                        @Html.Raw(Model.GetColumnHeader(1, WeightbasedSettings.GetRegionPriceKeyName(Model.CurrentBrandRegionCode,WeightbasedSettings.Price1KeyName)))
+                     </th>
+                     <th class="col-header thick">
+                         @Html.Raw(Model.GetColumnHeader(2, WeightbasedSettings.GetRegionPriceKeyName(Model.CurrentBrandRegionCode,WeightbasedSettings.Price1KeyName)))
+                     </th>
+                     @if (Model.PriceCol2HasFreightSurcharge)
+                     {
+                        <th class="col-header">
+                        </th>
+                     }
+                     <th class="col-header">
+                        @Html.Raw(Model.GetColumnHeader(1, WeightbasedSettings.GetRegionPriceKeyName(Model.CurrentBrandRegionCode, WeightbasedSettings.Price2KeyName)))
+                     </th>
+                     <th class="col-header thick">
+                         @Html.Raw(Model.GetColumnHeader(2, WeightbasedSettings.GetRegionPriceKeyName(Model.CurrentBrandRegionCode, WeightbasedSettings.Price2KeyName)))
+                     </th>
+                     @if (Model.PriceCol3HasFreightSurcharge)
+                     {
+                        <th class="col-header">
+                        </th>
+                     }
+                     <th class="col-header">
+                        @Html.Raw(Model.GetColumnHeader(1, WeightbasedSettings.GetRegionPriceKeyName(Model.CurrentBrandRegionCode, WeightbasedSettings.Price3KeyName)))
+                     </th>
+                     <th class="col-header thick">
+                         @Html.Raw(Model.GetColumnHeader(2, WeightbasedSettings.GetRegionPriceKeyName(Model.CurrentBrandRegionCode, WeightbasedSettings.Price3KeyName)))
+                     </th>
+                     @if (Model.PriceCol4HasFreightSurcharge)
+                     {
+                        <th class="col-header">
+                        </th>
+                     }
+                     <th class="col-header">
+                        @Html.Raw(Model.GetColumnHeader(1, WeightbasedSettings.GetRegionPriceKeyName(Model.CurrentBrandRegionCode, WeightbasedSettings.Price4KeyName)))
+                     </th>
+                     <th class="col-header thick">
+                         @Html.Raw(Model.GetColumnHeader(2, WeightbasedSettings.GetRegionPriceKeyName(Model.CurrentBrandRegionCode, WeightbasedSettings.Price4KeyName)))
+                     </th>
+                  </tr>
+                  <tr class="row-header">
+                     <th rowspan="2" class="col-header col-brand">Brand</th>
+                     <th rowspan="2" class="col-header col-style">Style</th>
+                     <th rowspan="2" class="col-header col-name">Description</th>
+                     <th rowspan="2" class="col-header col-sizes">Sizes</th>
+                     <th rowspan="2" class="col-header col-color">Colours</th>
+                  </tr>
+                  <tr>
+                     @if (Model.PriceCol1HasFreightSurcharge)
+                     {
+                        <th class="col-header thick-left">
+                           Freight &amp; Surcharge
+                        </th>
+                     }
+                     <th class="col-header">
+                        Unit Price
+                     </th>
+                     <th class="col-header thick">
+                        MOQ Unit
+                     </th>
+                     @if (Model.PriceCol2HasFreightSurcharge)
+                     {
+                        <th class="col-header">
+                           Freight &amp; Surcharge
+                        </th>
+                     }
+                     <th class="col-header">
+                        Unit Price
+                     </th>
+                     <th class="col-header thick">
+                        MOQ Unit
+                     </th>
+                     @if (Model.PriceCol3HasFreightSurcharge)
+                     {
+                        <th class="col-header">
+                           Freight &amp; Surcharge
+                        </th>
+                     }
+                     <th class="col-header">
+                        Unit Price
+                     </th>
+                     <th class="col-header thick">
+                        MOQ Unit
+                     </th>
+                     @if (Model.PriceCol4HasFreightSurcharge)
+                     {
+                        <th class="col-header">
+                           Freight &amp; Surcharge
+                        </th>
+                     }
+                     <th class="col-header">
+                        Unit Price
+                     </th>
+                     <th class="col-header thick">
+                        MOQ Unit
+                     </th>
+                  </tr>
+            </thead>
+                  <tbody>
+                  @for (var i = counter; i < pageMaxIndex && i < products.Count; i++)
+                  {
+                     var product = products[i];
+                     <tr class="row">
+                        <td class=" col-brand" nowrap="nowrap">@product.BrandName</td>
+                        <td class=" col-style">@product.ProductCode</td>
+                        <td class=" col-name">@product.ProductName</td>
+                        <td class=" col-color">@product.ProductSizes</td>
+                        <td class=" col-color">@product.ProductColours</td>
+                        @if (Model.PriceCol1HasFreightSurcharge)
+                        {
+                           <td class=" col-price thick-left">@product.FormatPrice(product.FreightSurcharge1)</td>
+                        }
+                        <td class=" col-price">@product.FormatPrice(product.Price1)</td>
+                        <td class=" col-units thick">@product.MinimumOrderQty1</td>
+                        @if (Model.PriceCol2HasFreightSurcharge)
+                        {
+                           <td class=" col-price thick-left">@product.FormatPrice(product.FreightSurcharge2)</td>
+                        }
+                        <td class=" col-price">@product.FormatPrice(product.Price2)</td>
+                        <td class=" col-units thick">@product.MinimumOrderQty2</td>
+                        @if (Model.PriceCol3HasFreightSurcharge)
+                        {
+                           <td class=" col-price thick-left">@product.FormatPrice(product.FreightSurcharge3)</td>
+                        }
+                        <td class=" col-price">@product.FormatPrice(product.Price3)</td>
+                        <td class=" col-units thick">@product.MinimumOrderQty3</td>
+                        @if (Model.PriceCol4HasFreightSurcharge)
+                        {
+                           <td class=" col-price thick-left">@product.FormatPrice(product.FreightSurcharge4)</td>
+                        }
+                        <td class=" col-price">@product.FormatPrice(product.Price4)</td>
+                        <td class=" col-units thick">@product.MinimumOrderQty4</td>
+
+                     </tr>
+
+                     counter++;
+                  }
+                  </tbody>
+
+               </table>
+            </div>
+               
+            <div style="position:absolute;left: 0px;bottom: 0">@Model.CurrentBrandName</div>
+               <div style="position: absolute;left: 600px;bottom: 0">@currentPage of @totalPage</div>
+               <div style="position:absolute;right: 0px;bottom: 0">@Html.Raw(DateTime.Today.ToString("dd/MM/yyyy"))</div>
+         </div>
+      }
+   }
+   

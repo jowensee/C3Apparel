@@ -1,0 +1,162 @@
+.main-caption {
+  font-size: 30px;
+  font-weight: bold;
+  padding: 0px 0 40px;
+  text-align: center;
+}
+
+.filter-container.inquiry-filter {
+  margin-bottom: 40px;
+}
+.filter-container.inquiry-filter .error {
+  display: block;
+}
+.filter-container.inquiry-filter .field label {
+  width: 120px;
+}
+.filter-container.inquiry-filter .field-row {
+  margin-top: 10px;
+  display: flex;
+}
+.filter-container.inquiry-filter .field-row .field {
+  margin-right: 20px;
+}
+.filter-container.inquiry-filter .field-row .field:last-child {
+  margin-bottom: 0.75em;
+}
+.filter-container.inquiry-filter .field-row label {
+  margin-right: 10px;
+}
+.filter-container.inquiry-filter .buttons {
+  margin-top: 20px;
+}
+.filter-container.inquiry-filter .filter-settings h3 {
+  font-size: 1.7em;
+}
+.filter-container.inquiry-filter .filter-settings h3 a.down svg {
+  transform: rotate(180deg);
+}
+.filter-container.inquiry-filter .filter-settings .field {
+  align-items: flex-start;
+  margin-right: 60px;
+}
+.filter-container.inquiry-filter .filter-settings table th {
+  padding: 5px 10px;
+  text-align: center !important;
+}
+.filter-container.inquiry-filter .filter-settings table td {
+  padding: 3px;
+  text-align: center !important;
+}
+.filter-container.inquiry-filter .filter-settings .filter-contents {
+  display: none;
+  padding-top: 20px;
+}
+.filter-container.inquiry-filter .filter-settings .filter-contents.active {
+  display: flex;
+}
+.filter-container.inquiry-filter .filter-settings .filter-contents .filter-row {
+  flex-grow: 1;
+}
+.filter-container.inquiry-filter .filter-settings .filter-contents .filter-content-column {
+  padding: 0px 40px;
+}
+.filter-container.inquiry-filter .filter-settings .filter-contents .filter-content-column:first-child {
+  border-right: 1px solid #dbdbdb;
+}
+.filter-container.inquiry-filter .filter-settings .filter-contents .filter-content-column:last-child {
+  padding-right: 0px;
+}
+.filter-container.inquiry-filter .filter-settings .filter-contents .field-heading {
+  font-size: 1.4em;
+  margin-bottom: 20px;
+}
+.filter-container.inquiry-filter .filter-settings .filter-contents .tabs li.is-active {
+  font-weight: bold;
+}
+.filter-container.inquiry-filter .filter-settings .filter-contents .tabs li.is-active a {
+  border-bottom-color: #000;
+}
+.filter-container.inquiry-filter .filter-settings .filter-contents .tabs li a {
+  text-decoration: none;
+  color: #000;
+}
+
+.listing-container {
+  width: 100%;
+  overflow-x: auto;
+}
+.listing-container .listing-table {
+  width: 100%;
+}
+.listing-container .listing-table td, .listing-container .listing-table th {
+  font-weight: normal;
+  border: 1px solid black;
+  padding: 5px;
+}
+.listing-container .listing-table td.thick, .listing-container .listing-table th.thick {
+  border-right: 5px solid #000;
+}
+.listing-container .listing-table td.thick-left, .listing-container .listing-table th.thick-left {
+  border-left: 5px solid #000;
+}
+.listing-container .listing-table tr.row:nth-child(even) {
+  background-color: #eeeeee;
+}
+.listing-container .listing-table .listing-header .col-header {
+  font-weight: bold;
+  padding: 5px;
+  /*background-color: $color-header;*/
+  text-align: center;
+  vertical-align: middle;
+}
+.listing-container .listing-table .listing-header .col-header.col-group {
+  text-align: center;
+}
+.listing-container .listing-table .listing-header .col-header.green {
+  background-color: #15b885;
+}
+.listing-container .listing-table .green {
+  background-color: #15b885;
+}
+.listing-container .listing-table .row .field {
+  padding: 5px;
+}
+.listing-container .listing-table .col-color {
+  width: 120px;
+}
+.listing-container .listing-table .col-sizes {
+  width: 120px;
+}
+.listing-container .listing-table .col-price {
+  width: 50px;
+  text-align: right;
+}
+.listing-container .listing-table .col-units {
+  width: 50px;
+  text-align: center;
+}
+.listing-container .instruction {
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+}
+
+.pagination {
+  padding-top: 20px;
+}
+.pagination a {
+  font-weight: bold;
+}
+.pagination .page {
+  display: flex;
+  align-items: center;
+}
+.pagination .page div {
+  padding: 0 5px;
+  font-weight: bold;
+}
+
+.disclaimer {
+  font-size: 10px;
+}

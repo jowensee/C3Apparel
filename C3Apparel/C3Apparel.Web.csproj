@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup Label="Globals">
+    <RootNamespace>C3Apparel</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.16" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\client" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\C3Apparel.Data\C3Apparel.Data.csproj" />
+    <ProjectReference Include="..\C3Apparel.Frontend.Data\C3Apparel.Frontend.Data.csproj" />
+    <ProjectReference Include="..\C3Apparel.PDF\C3Apparel.PDF.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="wwwroot\scripts\**" />
+    <Compile Remove="wwwroot\styles\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="wwwroot\scripts\**" />
+    <EmbeddedResource Remove="wwwroot\styles\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="wwwroot\scripts\**" />
+    <None Remove="wwwroot\styles\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\scripts\**" />
+    <Content Remove="wwwroot\styles\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Features\Content\ContentPage.cshtml" />
+  </ItemGroup>
+</Project>

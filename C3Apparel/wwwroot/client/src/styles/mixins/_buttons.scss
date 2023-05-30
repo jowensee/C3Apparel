@@ -1,0 +1,116 @@
+// Button variants
+//
+// Easily pump out default styles, as well as :hover, :focus, :active,
+// and disabled options for all buttons
+
+// scss-docs-start btn-variant-mixin
+@mixin button-variant(
+  $background,
+  $color,
+  $hover-background,
+  $hover-color: $color,
+  $active-background: $hover-background,
+  $active-color: $hover-color,
+  $disabled-background: $background,
+  $disabled-color: $color
+) {
+  color: $color;
+  background-color: $background;
+  border-color: $background;
+
+  svg {
+    fill: $color;
+  }
+
+  .spinner::before {
+    border-color: rgba($color, .7);
+  }
+
+  &:hover {
+    color: $hover-color;
+    background-color: $hover-background;
+    border-color: $hover-background;
+
+    svg {
+      fill: $background;
+    }
+  }
+
+  &:focus {
+    color: $hover-color;
+    background-color: $hover-background;
+    border-color: $hover-background;
+    box-shadow: 0 0 0 $btn-focus-width rgba($hover-background, .5);
+  }
+
+  &:active,
+  &.active {
+    color: $active-color;
+    background-color: $active-background;
+    border-color: $active-background;
+
+    &:focus {
+      box-shadow: 0 0 0 $btn-focus-width rgba($hover-background, .5);
+    }
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $disabled-color;
+    background-color: $disabled-background;
+    border-color: $disabled-background;
+  }
+}
+
+@mixin button-outline-variant(
+  $background,
+  $color: color-contrast($background),
+  $hover-background: if($color == $color-contrast-light, shade-color($background, $btn-hover-bg-shade-amount), tint-color($background, $btn-hover-bg-tint-amount)),
+  $hover-color: color-contrast($hover-background),
+  $active-background: if($color == $color-contrast-light, shade-color($background, $btn-active-bg-shade-amount), tint-color($background, $btn-active-bg-tint-amount)),
+  $active-color: color-contrast($active-background),
+  $disabled-background: $background,
+  $disabled-color: color-contrast($disabled-background)
+) {
+  color: $background;
+  background-color: transparent;
+  border-color: $background;
+
+  svg {
+    fill: currentColor;
+  }
+
+  .spinner::before {
+    border-color: $background;
+  }
+
+  &:hover {
+    color: $hover-color;
+    background-color: $hover-background;
+    border-color: $hover-background;
+  }
+
+  &:focus {
+    color: $hover-color;
+    background-color: $hover-background;
+    border-color: $hover-background;
+    box-shadow: 0 0 0 $btn-focus-width rgba(mix($color, $background, 15%), .5);
+  }
+
+  &:active,
+  &.active {
+    color: $active-color;
+    background-color: $active-background;
+    border-color: $active-background;
+
+    &:focus {
+      box-shadow: 0 0 0 $btn-focus-width rgba(mix($color, $background, 15%), .5);
+    }
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $color;
+    background-color: transparent;
+  }
+}

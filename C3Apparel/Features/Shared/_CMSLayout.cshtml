@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:vc="http://www.w3.org/1999/html">
+
+<head>
+   
+    <meta charset="UTF-8">
+    <title>C3 Apparel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#FFFFFF">
+    <meta name="msapplication-TileColor" content="#283b83">
+    <meta name="theme-color" content="#f4f3f2">
+    
+    <link rel="stylesheet" href="/client/dist/styles/bulma.min.css">
+    <link rel="stylesheet" href="/client/dist/styles/global.css" asp-append-version="true">
+
+    <!-- end head -->
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body>
+<vc:page-header/>
+<div class="main-wrapper">
+    <div class="main-content">
+        @RenderBody()
+    </div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+@await RenderSectionAsync("Scripts", false)
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+@import "variables";
+@import "mixins";
+@import "globals/normalize";
+@import "globals/reboot";
+@import "globals/forms";
+@import "globals/buttons";
+// Widgets
+@import "../widgets/header/header";
+@import "../widgets/footer/footer";
+
+body{
+    color:$color-body;
+    font-size: $body-font-size;
+    font-weight: $body-font-weight;
+    .main-wrapper{
+        padding:0 20px;
+        
+        
+        .main-content{
+            margin-left:auto;
+            margin-right:auto;
+            max-width:1400px;
+        }
+    }   
+}
+
+.wrapper{
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.fixed_header{
+    width: 400px;
+    table-layout: fixed;
+    border-collapse: collapse;
+
+    thead {
+        
+        background: black;
+        color:#fff;
+        tr {
+                display: block;
+            }
+    }
+    tbody{
+        display:block;
+        width: 100%;
+        overflow: auto;
+        height: 100px;
+      }
+
+      
+    th, td {
+        padding: 5px;
+        text-align: left;
+        width: 200px;
+    }
+}
+
+.error{
+    color:#ff0000;
+    display: none;
+}
+
+.show-error{
+    .error{
+        display: block;
+    }
+}
+
+
+.field{
+    display: flex;
+    
+    label{
+        width:60px;
+        display: flex;
+        align-items: center;
+        font-size:1.4em
+    }
+}
+
+.field-with-button{
+    display: flex;
+    flex-direction: column;
+    @media(min-width:768px){
+        flex-direction: row;
+        align-items:flex-start;
+    }
+    
+    .buttons{
+        @media(min-width:768px){
+            margin-left:20px;
+        }
+       
+    }
+}
+
+.select:not(.is-multiple):not(.is-loading)::after{
+    border-color:#000;
+}
+
+input[type=text]{
+    height:2.5em;
+}
+
+input.text-number{
+    width:60px;
+    text-align: right;
+    padding-right:10px;
+}

@@ -1,0 +1,228 @@
+@using C3Apparel.Frontend.Data.Constants
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using C3Apparel.Data.Pricing
+@model C3Apparel.Web.Features.Pricing.PriceListingPageViewModel
+
+@section Styles {
+   <link rel="stylesheet" href="/client/dist/styles/customer-listing.css" asp-append-version="true">
+}
+
+@section Scripts {
+   <script src="/client/dist/scripts/customer-listing.js" asp-append-version="true"></script>
+}
+<div class="main-caption">
+   @Model.CountryName Pricing
+</div>
+<div class="filter-container">
+   <form action="@Url.Action("CustomerPricePrintVersionPage", "Pricing")" method="post">
+      <div class="field-with-button">
+         <div class="field">
+            <label>Brand</label>
+            <div class="control">
+               <div class="select">
+                  <select id="selectBrand" name="brandId">
+                     <option value="">Select Brand</option>
+                     @foreach (var brand in Model.Brands)
+                     {
+                        <!option value="@brand.Value" @(brand.IsSelected ? "selected" : "")>@brand.Text</!option>
+                     }
+                  </select>
+               </div>
+            </div>
+         </div>
+         <div class="buttons">
+            <button id="buttonSearch" class="button is-link">Search</button>
+            <button id="buttonPrint" class="button is-link" type="submit" value="print">Print</button>
+         </div>
+      </div>
+      <div class="error"></div>
+   </form>
+</div>
+<div id="listingMain" data-endpoint="@Url.Action("GetPrices", "Pricing")" data-method="POST" data-item-per-page="@C3Constants.GRID_ITEMS_PER_PAGE">
+   <div class="listing-container" v-if="grid.rows.length == 0">
+      <div class="instruction">
+         <p>Please select a brand and click on search</p>
+      </div>
+   </div>
+   <div class="listing-container" v-if="grid.rows.length>0">
+      
+      <table class="listing-table">
+         <thead class="listing-header">
+         <tr>
+            <th colspan="5" rowspan="2">
+            </th>
+            <th class="col-header col-group thick thick-left" colspan="@(Model.PriceCol1HasFreightSurcharge ? "3" : "2")">
+               Column 1
+            </th>
+            <th class="col-header col-group thick" colspan="@(Model.PriceCol2HasFreightSurcharge ? "3" : "2")">
+               Column 2
+            </th>
+            <th class="col-header col-group thick" colspan="@(Model.PriceCol3HasFreightSurcharge ? "3" : "2")">
+               Column 3
+            </th>
+            <th class="col-header col-group thick" colspan="@(Model.PriceCol4HasFreightSurcharge ? "3" : "2")">
+               Column 4
+            </th>
+         </tr>
+         <tr>                   
+            @if (Model.PriceCol1HasFreightSurcharge)
+            {
+               <th class="col-header thick-left">
+                  Small Shipment
+               </th>
+            }
+             <th class="col-header">
+                  @Html.Raw(Model.GetColumnHeader(1, WeightbasedSettings.GetRegionPriceKeyName(Model.CurrentBrandRegionCode, WeightbasedSettings.Price1KeyName)))
+               </th>
+               <th class="col-header thick">
+                   @Html.Raw(Model.GetColumnHeader(2, WeightbasedSettings.GetRegionPriceKeyName(Model.CurrentBrandRegionCode, WeightbasedSettings.Price1KeyName)))
+               </th>
+            @if (Model.PriceCol2HasFreightSurcharge)
+            {
+               <th class="col-header">
+               </th>
+            }
+            <th class="col-header">
+              @Html.Raw(Model.GetColumnHeader(1, WeightbasedSettings.GetRegionPriceKeyName(Model.CurrentBrandRegionCode, WeightbasedSettings.Price2KeyName)))
+           </th>
+           <th class="col-header thick">
+               @Html.Raw(Model.GetColumnHeader(2, WeightbasedSettings.GetRegionPriceKeyName(Model.CurrentBrandRegionCode, WeightbasedSettings.Price2KeyName)))
+           </th>
+            @if (Model.PriceCol3HasFreightSurcharge)
+            {
+               <th class="col-header">
+               </th>
+            }
+            <th class="col-header">
+               @Html.Raw(Model.GetColumnHeader(1,WeightbasedSettings.GetRegionPriceKeyName(Model.CurrentBrandRegionCode,  WeightbasedSettings.Price3KeyName)))
+            </th>
+            <th class="col-header thick">
+                @Html.Raw(Model.GetColumnHeader(2, WeightbasedSettings.GetRegionPriceKeyName(Model.CurrentBrandRegionCode, WeightbasedSettings.Price3KeyName)))
+            </th>
+            @if (Model.PriceCol4HasFreightSurcharge)
+            {
+               <th class="col-header">
+               </th>
+            }
+             <th class="col-header">
+               @Html.Raw(Model.GetColumnHeader(1, WeightbasedSettings.GetRegionPriceKeyName(Model.CurrentBrandRegionCode, WeightbasedSettings.Price4KeyName)))
+            </th>
+            <th class="col-header thick">
+                @Html.Raw(Model.GetColumnHeader(2, WeightbasedSettings.GetRegionPriceKeyName(Model.CurrentBrandRegionCode, WeightbasedSettings.Price4KeyName)))
+            </th>
+         </tr>
+         <tr>
+            <th rowspan="2" class="col-header col-brand">Brand</th>
+            <th rowspan="2" class="col-header col-style">Style</th>
+            <th rowspan="2" class="col-header col-name">Description</th>
+            <th rowspan="2" class="col-header col-sizes">Sizes</th>
+            <th rowspan="2" class="col-header col-color">Colours</th>
+         </tr>
+         <tr>
+            @if (Model.PriceCol1HasFreightSurcharge)
+            {
+               <th class="col-header thick-left">
+                  Freight &amp; Surcharge
+               </th>
+            }
+            <th class="col-header">
+               Unit Price
+            </th>
+            <th class="col-header thick">
+               MOQ Unit
+            </th>
+            @if (Model.PriceCol2HasFreightSurcharge)
+            {
+               <th class="col-header">
+                  Freight &amp; Surcharge
+               </th>
+            }
+            <th class="col-header">
+               Unit Price
+            </th>
+            <th class="col-header thick">
+               MOQ Unit
+            </th>
+            @if (Model.PriceCol3HasFreightSurcharge)
+            {
+               <th class="col-header">
+                  Freight &amp; Surcharge
+               </th>
+            }
+            <th class="col-header">
+               Unit Price
+            </th>
+            <th class="col-header thick">
+               MOQ Unit
+            </th>
+            @if (Model.PriceCol4HasFreightSurcharge)
+            {
+               <th class="col-header">
+                  Freight &amp; Surcharge
+               </th>
+            }
+            <th class="col-header">
+               Unit Price
+            </th>
+            <th class="col-header thick">
+               MOQ Unit
+            </th>
+         </tr>
+         </thead>
+         <tbody>
+            <tr class="row" v-for="(row, index) in grid.rows">
+                <td class=" col-brand" nowrap="nowrap">{{row.brand}}</td>
+                <td class=" col-style">{{row.productCode}}</td>
+                <td class=" col-name">{{row.description}}</td>
+                <td class=" col-sizes">{{row.sizes}}</td>
+               <td class=" col-color">{{row.colours}}</td>
+               @if (Model.PriceCol1HasFreightSurcharge)
+               {
+                  <td class=" col-price thick-left">{{row.freightSurcharge1}}</td>  
+               }
+                <td class=" col-price">{{row.unitPrice1}}</td>
+               <td class=" col-units thick">{{row.moq1}}</td>
+               @if (Model.PriceCol2HasFreightSurcharge)
+               {
+                  <td class=" col-price">{{row.freightSurcharge2}}</td>  
+               }
+                <td class=" col-price">{{row.unitPrice2}}</td>
+               <td class=" col-units thick">{{row.moq2}}</td>
+               @if (Model.PriceCol3HasFreightSurcharge)
+               {
+                  <td class=" col-price">{{row.freightSurcharge3}}</td>  
+               }
+                <td class=" col-price">{{row.unitPrice3}}</td>
+               <td class=" col-units thick">{{row.moq3}}</td>
+               @if (Model.PriceCol4HasFreightSurcharge)
+               {
+                  <td class=" col-price">{{row.freightSurcharge4}}</td>  
+               }
+                <td class=" col-price">{{row.unitPrice4}}</td>
+                <td class=" col-units thick">{{row.moq4}}</td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+   <div class="pagination" v-if="grid.rows.length>0">
+        <div>
+            <a v-if="grid.pagination.currentPage > 1" v-on:click="(event) => gotoPreviousPage(event)" >&lt; Previous</a>
+        </div>
+        <div class="page">
+            <div>Page </div>
+            <div class="select">
+                <select v-model="grid.pagination.currentPage" v-on:change="(event) => gotoPage(event)">
+                    <option v-for="(n, index) in grid.pagination.totalPage">{{n}}</option>
+                </select>
+            </div>
+            
+            <div> of</div><div>{{grid.pagination.totalPage}} </div>
+        </div>
+        <div>
+            <a v-if="grid.pagination.currentPage < grid.pagination.totalPage" v-on:click="(event) => gotoNextPage(event)">Next &gt;</a>
+        </div>
+    </div>
+   <div class="disclaimer">
+      @Html.Raw(Model.DisclaimerText)
+   </div>
+</div>

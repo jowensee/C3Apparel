@@ -1,0 +1,219 @@
+@import "../../styles/variables";
+//@import "../../widgets/xxx/xxx";
+.main-caption{
+  font-size: 30px;
+  font-weight: bold;
+  padding:0px 0 40px;
+  text-align: center;
+
+}
+
+.filter-container.inquiry-filter{
+
+  margin-bottom:40px;
+  .error{
+    display:block;
+  }
+  .field label{
+    width:120px
+  }
+  .field-row{
+    margin-top:10px;
+    display: flex;
+    .field{
+      margin-right:20px;
+    }
+    .field:last-child{
+      margin-bottom:0.75em
+    }
+    label{
+      margin-right:10px;
+    }
+  }
+
+  .buttons{
+    margin-top:20px;
+  }
+
+  .filter-settings{
+    h3{
+      font-size:1.7em;
+
+      a.down svg{
+        transform:rotate(180deg)
+      }
+    }
+
+    .field{
+      align-items: flex-start;
+      margin-right:60px
+    }
+    table{
+      th{
+        padding:5px 10px;
+        text-align: center!important;
+      }
+      td{
+        padding:3px;
+        text-align: center!important;
+      }
+    }
+
+    .filter-contents{
+      display:none;
+      padding-top:20px;
+      &.active{
+
+        display:flex;
+      }
+    
+      .filter-row{
+        flex-grow: 1;
+      }
+      .filter-content-column{
+        padding:0px 40px;
+      }
+
+      .filter-content-column:first-child{
+        border-right: 1px solid #dbdbdb;
+      }
+
+      .filter-content-column:last-child{
+        padding-right:0px;
+      }
+
+      .field-heading{
+        font-size: 1.4em;
+        margin-bottom:20px;
+      }
+
+      .tabs{
+        li{
+          &.is-active{
+            font-weight: bold;
+            a{
+
+              border-bottom-color:#000
+            }
+          }
+          a{
+            text-decoration: none;
+            
+            color:#000;
+          }
+        }
+      }
+
+      
+    }
+  }
+}
+
+
+.listing-container{
+
+  width:100%;
+  overflow-x: auto;
+  .listing-table{
+    width:100%;
+    td,th{
+      font-weight: normal;
+      border:1px solid black;
+      padding:5px;
+
+      &.thick{
+        border-right:5px solid #000
+      }
+
+      &.thick-left{
+        border-left:5px solid #000
+      }
+    }
+    tr.row:nth-child(even){
+      background-color: #eeeeee;
+    }
+    .listing-header{
+
+      .col-header{
+        font-weight: bold;
+        padding:5px;
+        /*background-color: $color-header;*/
+        text-align: center;
+        vertical-align: middle;
+        &.col-group{
+          text-align:center;
+        }
+
+        &.green{
+          background-color: $color-price;
+        }
+      }
+    }
+
+    .green{
+      background-color: $color-price;
+    }
+    .row{
+
+      .field{
+        padding:5px;
+      }
+    }
+
+    .col-brand{
+    }
+
+    .col-style{
+    }
+
+    .col-name{
+    }
+
+    .col-color{
+      width: 120px;
+    }
+    .col-sizes{
+      width: 120px;
+    }
+    .col-price{
+      width: 50px;
+      text-align:right;
+    }
+
+    .col-units{
+      width: 50px;
+      text-align:center
+
+    }
+  }
+
+  .instruction{
+    font-weight: bold;
+    font-size:16px;
+    text-align: center;
+  }
+}
+
+
+.pagination{
+  padding-top:20px;
+
+  a{
+    font-weight: bold;
+  }
+
+  .page {
+    display: flex;
+    align-items: center;
+    div{
+      padding:0 5px;
+      font-weight: bold;
+    }
+  }
+
+
+}
+
+.disclaimer{
+  font-size: 10px;
+}

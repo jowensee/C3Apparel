@@ -1,0 +1,13 @@
+//@import "../../widgets/xxx/xxx";
+.login-panel {
+  margin:0 auto;
+  width:400px;
+  .form-group {
+    text-align: left;
+    label {
+      text-align: left;
+      width: 100px;
+    }
+  }
+}
+
