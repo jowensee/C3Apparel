@@ -44,20 +44,20 @@ namespace C3Apparel.Data.Products
 
         public IEnumerable<ProductItem> GetProducts(int brandID, SearchFilter filter)
         {
-            return _productPricingInfoProvider.GetProductPricing(brandID, filter?.Collection)
+            return _productPricingInfoProvider.GetProductPricing(brandID, filter)
                 .Select(product => CreateProductItem(product));
         }
 
         public IEnumerable<ProductItem> GetProducts(int brandID, SearchFilter filter, int pageNumber, int itemsPerPage)
         {
 
-            return _productPricingInfoProvider.GetProductPricing(brandID, filter?.Collection, pageNumber, itemsPerPage)
+            return _productPricingInfoProvider.GetProductPricing(brandID, filter, pageNumber, itemsPerPage)
                 .Select(product => CreateProductItem(product));
         }
 
         public int GetAllProductsCount(int brandID, SearchFilter filter)
         {
-            return _productPricingInfoProvider.GetProductPricingCount(brandID, filter?.Collection);
+            return _productPricingInfoProvider.GetProductPricingCount(brandID, filter);
         }
     }
 }

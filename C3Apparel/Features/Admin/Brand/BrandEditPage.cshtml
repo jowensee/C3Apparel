@@ -1,0 +1,22 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model C3Apparel.Features.Admin.Brand.BrandEditViewModel
+@{
+   Layout = "_CMSLayout";
+}
+@section Styles {
+   <link rel="stylesheet" href="/client/dist/styles/internal-inquiry.css" asp-append-version="true">
+}
+
+@section Scripts {
+   <script src="/client/dist/scripts/internal-inquiry.js" asp-append-version="true"></script>
+}
+
+<div id="editMain" data-endpoint-get="@Url.Action("SaveBrand", "Brand")" data-endpoint-save="@Url.Action("SaveBrand", "Brand")">
+
+   <div class="form">
+      <partial name="/Features/Shared/Form/_FormTextboxField.cshtml" model='("displayName","Display name", @Model.EditItem?.BrandDisplayName, "")' />
+      <partial name="/Features/Shared/Form/_FormTextboxField.cshtml" model='("businessName","Business name", @Model.EditItem?.BrandBusinessName, "")' />
+      <partial name="/Features/Shared/Form/_FormDropdownField.cshtml" model='("focus","Focus", @Model.EditItem?.BrandFocus, @Model.OptionsFocus, "")' />
+      <partial name="/Features/Shared/Form/_FormTextboxField.cshtml" model='("website","Website", @Model.EditItem?.BrandDisplayName, "")' />
+   </div>
+</div>

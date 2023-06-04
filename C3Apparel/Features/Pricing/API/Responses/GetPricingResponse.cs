@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BlankSiteCore.Features.Base.API;
 using Newtonsoft.Json;
 
 namespace C3Apparel.Web.Features.Pricing.API.Responses;
@@ -59,16 +60,12 @@ public class PricingAPIItem
     public string FreightSurcharge4 { get; set; }
 }
 
-public class GetPricingsResponse
+public class GetPricingsResponse : BaseListingResponse
 {
-    [JsonProperty("totalPage")]
-    public int TotalPage { get; set; }
 
     [JsonProperty("pricings")]
     public List<PricingAPIItem> Pricings { get; set; }
     
-    [JsonProperty("errorMessage")]
-    public string ErrorMessage { get; set; }
     
     [JsonProperty("settingsGuid")]
     public string SettingsGuid { get; set; }

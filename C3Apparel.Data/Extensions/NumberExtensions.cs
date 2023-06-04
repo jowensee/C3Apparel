@@ -22,12 +22,12 @@ namespace C3Apparel.Data.Extensions
         }
         public static decimal ToDecimal(this object obj)
         {
-            if (obj == null)
+            if (obj == null || obj is DBNull)
             {
                 return 0;
             }
-            decimal i = 0;
-            Decimal.TryParse(obj.ToString(), NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out i);
+            decimal i = (decimal)obj;
+           // decimal.TryParse(obj.ToString("R"), NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out i);
 
             return i;
         }

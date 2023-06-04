@@ -4,6 +4,7 @@ using System.IO;
 using System.Globalization;
 using System.Linq;
 using C3Apparel.Data.Modules.Classes;
+using C3Apparel.Data.Sql;
 using C3Apparel.Data.Utilities;
 using CsvHelper;
 using Newtonsoft.Json;
@@ -14,8 +15,15 @@ namespace C3Apparel.Data.Products
     {
         private Stream _stream;
         private string _fileName;
-        public CSVUploader(string fileName, Stream stream)
+        private readonly IConfigurationService _configurationService;
+        public CSVUploader( IConfigurationService configurationService)
         {
+            _configurationService = configurationService;
+        }
+
+        public void Set(string fileName, Stream stream)
+        {
+            
             _stream = stream;
             _fileName = fileName;
         }
@@ -35,7 +43,7 @@ namespace C3Apparel.Data.Products
             
             var logger = new UploadLogService(_fileName);
 
-            var brandProvider = new BrandInfoProvider();
+            var brandProvider = new BrandInfoProvider(_configurationService);
             
             var brandInfo = brandProvider.GetBrand(brandID);
 
@@ -72,7 +80,7 @@ namespace C3Apparel.Data.Products
                     {
                         if (!deleteAll)
                         {
-                            var productProvider = new ProductPricingInfoProvider();
+                            var productProvider = new ProductPricingInfoProvider(_configurationService);
 
                             product = productProvider.GetProductPricingByC3Style(brandID, pricing.C3Style);
 
@@ -113,7 +121,7 @@ namespace C3Apparel.Data.Products
                         
                     }else if (pricing.Action == "Update")
                     {
-                        var productProvider = new ProductPricingInfoProvider();
+                        var productProvider = new ProductPricingInfoProvider(_configurationService);
 
                         product = productProvider.GetProductPricingByC3Style(brandID, pricing.C3Style);
 

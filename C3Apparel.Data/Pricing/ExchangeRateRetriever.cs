@@ -23,10 +23,7 @@ namespace C3Apparel.Data.Pricing
                 return null;
             }
             
-            var whereCondition = 
-                $@"({nameof(ExchangeRateInfo.ExchangeRateSourceCurrency)} = '{sourceCurrency}') AND ({nameof(ExchangeRateInfo.ExchangeRateValidFrom)} IS NULL OR {nameof(ExchangeRateInfo.ExchangeRateValidFrom)} <=GETDATE())
-                                    AND ({nameof(ExchangeRateInfo.ExchangeRateValidTo)} IS NULL OR {nameof(ExchangeRateInfo.ExchangeRateValidTo)} >=GETDATE())";
-            var exchangeItem = _exchangeRateInfoProvider.Get(whereCondition).FirstOrDefault();
+            var exchangeItem = _exchangeRateInfoProvider.GetCurrentExchangeRate(sourceCurrency);
 
             if (exchangeItem == null)
             {

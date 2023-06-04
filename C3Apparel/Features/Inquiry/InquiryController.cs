@@ -104,8 +104,11 @@ namespace C3Apparel.Web.Features.Content
             ResultItem result;
 
             var vm = new PriceListingPageViewModel();
-            var settingsString = _inquirySettingsInfoProvider.Get($"{nameof(InquirySettingsInfo.InquirySettingsGuid)} = '{SQLHelper.SqlString(id)}'")
-                .Select(a => a.InquirySettingsJsonString).FirstOrDefault();
+
+            Guid guid;
+            Guid.TryParse(id, out guid);
+            var settings = _inquirySettingsInfoProvider.GetSettingsByGuid(guid);
+            var settingsString =  settings?.InquirySettingsJsonString;
 
             if (string.IsNullOrWhiteSpace(settingsString))
             {
@@ -187,10 +190,10 @@ namespace C3Apparel.Web.Features.Content
             IEnumerable<ProductItem> products;
             ResultItem result;
 
+            Guid guid;
+            Guid.TryParse(id, out guid);
             var vm = new PriceListingPageViewModel();
-            var settingsString = _inquirySettingsInfoProvider.Get($"{nameof(InquirySettingsInfo.InquirySettingsGuid)} = '{SQLHelper.SqlString(id)}'")
-                .Select(a => a.InquirySettingsJsonString).FirstOrDefault();
-
+            var settingsString = _inquirySettingsInfoProvider.GetSettingsByGuid(guid)?.InquirySettingsJsonString;
             if (string.IsNullOrWhiteSpace(settingsString))
             {
                 vm.ErrorMessage = "Settings not found";

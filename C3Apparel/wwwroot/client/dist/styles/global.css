@@ -652,7 +652,7 @@ body .main-wrapper .main-content {
   display: flex;
 }
 .field label {
-  width: 60px;
+  margin-right: 20px;
   display: flex;
   align-items: center;
   font-size: 1.4em;
@@ -686,4 +686,89 @@ input.text-number {
   width: 60px;
   text-align: right;
   padding-right: 10px;
+}
+
+.filter-container {
+  margin-bottom: 40px;
+}
+
+.main-caption {
+  font-size: 30px;
+  font-weight: bold;
+  padding: 0px 0 40px;
+  text-align: center;
+}
+
+.listing-container {
+  width: 100%;
+  overflow-x: auto;
+}
+.listing-container .listing-table {
+  width: 100%;
+}
+.listing-container .listing-table td, .listing-container .listing-table th {
+  border: 1px solid black;
+  padding: 5px;
+}
+.listing-container .listing-table td.thick, .listing-container .listing-table th.thick {
+  border-right: 5px solid #000;
+}
+.listing-container .listing-table td.thick-left, .listing-container .listing-table th.thick-left {
+  border-left: 5px solid #000;
+}
+.listing-container .listing-table tr.row:nth-child(even) {
+  background-color: #eeeeee;
+}
+.listing-container .listing-table .listing-header .col-header {
+  font-weight: bold;
+  padding: 5px;
+  /*background-color: $color-header;*/
+  text-align: center;
+  vertical-align: middle;
+}
+.listing-container .listing-table .listing-header .col-header.col-group {
+  text-align: center;
+}
+.listing-container .listing-table .listing-header .col-header.green {
+  background-color: #15b885;
+}
+.listing-container .listing-table .green {
+  background-color: #15b885;
+}
+.listing-container .listing-table .row .field {
+  padding: 5px;
+}
+.listing-container .instruction {
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+}
+
+.pagination {
+  padding-top: 20px;
+}
+.pagination a {
+  font-weight: bold;
+}
+.pagination .page {
+  display: flex;
+  align-items: center;
+}
+.pagination .page div {
+  padding: 0 5px;
+  font-weight: bold;
+}
+
+.disclaimer {
+  font-size: 10px;
+}
+
+.modal-content {
+  background-color: #fff;
+  width: 500px;
+  padding: 40px;
+}
+.modal-content .modal-description {
+  margin-bottom: 20px;
+  font-size: 14px;
 }

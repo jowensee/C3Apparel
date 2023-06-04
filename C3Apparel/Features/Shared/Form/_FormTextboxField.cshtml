@@ -1,0 +1,8 @@
+@model (string Name, string Label, string Value, string ValidationMessage)
+
+<div class="field" data-validation="@Model.ValidationMessage">
+  <label class="label">@Model.Label</label>
+  <div class="control">
+    <input class="input" type="text" value="@Model.Value">
+  </div>
+</div>

@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace C3Apparel.Web.Features.Pricing
 {
-    [TypeFilter(typeof(C3AuthorizationFilter))]
+    //[TypeFilter(typeof(C3AuthorizationFilter))]
     public class PricingController : Controller
     {
         private readonly IProductRepository _productRepository;

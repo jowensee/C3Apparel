@@ -1,67 +1,11 @@
 @import "../../styles/variables";
 //@import "../../widgets/xxx/xxx";
-.main-caption{
-    font-size: 30px;
-    font-weight: bold;
-    padding:0px 0 40px;
-    text-align: center;
-
-}
-
-.filter-container{
-
-    margin-bottom:40px;
-
-}
 
 .listing-container{
 
-    width:100%;
-    overflow-x: auto;
     .listing-table{
-        width:100%;
-        td,th{
-            border:1px solid black;
-            padding:5px;
 
-            &.thick{
-                border-right:5px solid #000
-            }
 
-            &.thick-left{
-                border-left:5px solid #000
-            }
-        }
-        tr.row:nth-child(even){
-            background-color: #eeeeee;
-        }
-        .listing-header{
-
-            .col-header{
-               font-weight: bold;
-                padding:5px;                
-                /*background-color: $color-header;*/
-                text-align: center;
-                vertical-align: middle;
-                &.col-group{
-                    text-align:center;
-                }
-                
-                &.green{
-                    background-color: $color-price;
-                }
-            }
-        }
-
-        .green{
-            background-color: $color-price;
-        }
-        .row{
-
-            .field{
-                padding:5px;
-            }
-        }
 
         .col-brand{
         }
@@ -90,33 +34,5 @@
         }
     }
 
-    .instruction{
-        font-weight: bold;
-        font-size:16px;
-        text-align: center;
-    }
 }
 
-
-.pagination{
-    padding-top:20px;
-
-    a{
-        font-weight: bold;
-    }
-
-    .page {
-        display: flex;
-        align-items: center;
-        div{
-            padding:0 5px;
-            font-weight: bold;
-        }
-    }
-    
-    
-}
-
-.disclaimer{
-    font-size: 10px;
-}

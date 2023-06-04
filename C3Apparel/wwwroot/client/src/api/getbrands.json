@@ -1,0 +1,41 @@
+{
+  "totalPage": 5,
+  "brands":[
+    {
+      "brandId": 1,
+      "brand": "Pure Waste",
+      "focus": "Healthcare",
+      "currency": "USD",
+      "enabled":true,
+      "publishDate": "1/2/2023"
+    },{
+      "brandId": 2,
+      "brand": "Pure Waste 1 ",
+      "focus": "Promo",
+      "currency": "EURO",
+      "enabled":true,
+      "publishDate": "1/2/2023"
+    },{
+      "brandId": 3,
+      "brand": "Pure Waste 2",
+      "focus": "Healthcare",
+      "currency": "USD",
+      "enabled":true,
+      "publishDate": "1/2/2023"
+    },{
+      "brandId": 4,
+      "brand": "Pure Waste 3",
+      "focus": "Healthcare",
+      "currency": "USD",
+      "enabled":true,
+      "publishDate": "1/2/2023"
+    },{
+      "brandId": 5,
+      "brand": "Pure Waste",
+      "focus": "Healthcare",
+      "currency": "USD",
+      "enabled":true,
+      "publishDate": "1/3/2023"
+    }
+  ]
+}

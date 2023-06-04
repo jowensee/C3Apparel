@@ -1,5 +1,7 @@
 
 
+using C3Apparel.Data.Pricing;
+
 namespace C3Apparel.Frontend.Data.Membership
 {
     public class CurrentUserProvider : ICurrentUserProvider
@@ -13,7 +15,7 @@ namespace C3Apparel.Frontend.Data.Membership
         public AccountUser GetCurrentUserInfo()
         {
             //TODO
-            return null;
+            return new AccountUser("AUClient", "AUClient", "AUClient", "AUClient", AccountConstants.ROLE_AU, "au", false);
             /*var user = Get();
 
             var role = string.Empty;

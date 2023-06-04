@@ -66,7 +66,6 @@ namespace C3Apparel.Data.Pricing
                 resultItem.Message = "Cannot find exchange rate";
 
                 return (Enumerable.Empty<ProductItem>(), resultItem);
-
             }
 
             var productList = products.ToList();
@@ -80,7 +79,6 @@ namespace C3Apparel.Data.Pricing
             var products = _productRepository.GetProducts(brandPricing.Brand.BrandID, null);
    
             return ConvertPrices(products, brandPricing, targetCurrency);
-
         }
 
         public (IEnumerable<ProductItem>, ResultItem) GetProductsWithConvertedPrice(BrandPricing brandPricing, string targetCurrency, int pageNumber, int itemPerPage)

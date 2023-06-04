@@ -1,0 +1,14 @@
+@model (string Name, string Label, string Value, Dictionary<string, string> Options,  string ValidationMessage)
+
+<div class="field" data-validation="@Model.ValidationMessage">
+  <label class="label">@Model.Label</label>
+  <div class="control">
+    <select>
+      <option value="">Please select</option>
+      @foreach (var option in Model.Options)
+      {
+        <!option value="@option.Key" @(option.Key == Model.Value ? "selected" : "")>@option.Value</!option>
+      }
+    </select>
+  </div>
+</div>

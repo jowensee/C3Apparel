@@ -2,6 +2,7 @@ using System;
 using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Data.Pricing;
 using C3Apparel.Data.Products;
+using C3Apparel.Data.Sql;
 using C3Apparel.Frontend.Data.Identity;
 using C3Apparel.Frontend.Data.Membership;
 using Microsoft.AspNetCore.Builder;
@@ -12,21 +13,28 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace BlankSiteCore
 {
     public class Startup
     {
-        public IWebHostEnvironment Environment { get; }
+        private IWebHostEnvironment Environment { get; }
+        private readonly IConfiguration _configuration;
         private const string AuthCookieName = "identity.auth";
 
-        public Startup(IWebHostEnvironment environment)
+        public Startup(IWebHostEnvironment environment, IConfiguration configuration)
         {
             Environment = environment;
+            _configuration = configuration;
         }
 
-        private static void ConfigureMembershipServices(IServiceCollection services)
+        private void ConfigureMembershipServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>((option) =>
+            {
+                option.UseSqlServer(_configuration.GetConnectionString("ConnectionString"));
+            });
             services.AddDefaultIdentity<IdentityUser>(options =>
                 {
                     // Note: These settings are effective only when password policies are turned off in the administration settings.
@@ -70,18 +78,24 @@ namespace BlankSiteCore
                 o.ViewLocationFormats.Add("/Components/ViewComponents/{0}" + RazorViewEngine.ViewExtension);
             });
             
-            ConfigureMembershipServices(services);
             services.AddControllersWithViews();
+            
+            services.AddScoped<IConfigurationService, ConfigurationService>();
             services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
+            services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IProductPricingInfoProvider, ProductPricingInfoProvider>();
-            services.AddScoped<IPriceSettingsInfoProvider, PriceSettingsInfoProvider>();
-            services.AddScoped<IProductPricingService, ProductPricingService>();
             services.AddScoped<IProductSettingsRepository, ProductSettingsRepository>();
             services.AddScoped<IPriceCalculator, PriceCalculator>();
             services.AddScoped<IExchangeRateRetriever, ExchangeRateRetriever>();
+            services.AddScoped<IProductPricingService, ProductPricingService>();
+            services.AddScoped<IProductPricingInfoProvider, ProductPricingInfoProvider>();
+            services.AddScoped<IPriceSettingsInfoProvider, PriceSettingsInfoProvider>();
             services.AddScoped<IExchangeRateInfoProvider, ExchangeRateInfoProvider>();
-            services.AddScoped<IBrandRepository, BrandRepository>();
+            services.AddScoped<IBrandInfoProvider, BrandInfoProvider>();
+            services.AddScoped<IInquirySettingsInfoProvider, InquirySettingsInfoProvider>();
+            services.AddScoped<IImportDutyInfoProvider, ImportDutyInfoProvider>();
+            
+            ConfigureMembershipServices(services);
             
         }
 
@@ -124,9 +138,22 @@ namespace BlankSiteCore
             app.UseAuthentication();
             // app.UseAuthorization();
 
-
+            
+            app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute("Pricing", "pricing/{brandId}",
+                    defaults: new { controller = "Pricing", action = "PriceListingPage" });
+                endpoints.MapControllerRoute("Login", "login",
+                    defaults: new { controller = "Account", action = "LoginPage" });
+                
+                
+                //Admin
+                endpoints.MapControllerRoute("Brand Listing", "admin/brands",
+                    defaults: new { controller = "Brand", action = "BrandListing" });
+                
+                endpoints.MapControllerRoute("Brand Edit", "admin/brands/{brandId}",
+                    defaults: new { controller = "Brand", action = "BrandEdit" });
                 //endpoints.MapRazorPages();
             });
 

@@ -73,7 +73,7 @@ body{
     display: flex;
     
     label{
-        width:60px;
+        margin-right:20px;
         display: flex;
         align-items: center;
         font-size:1.4em
@@ -108,4 +108,113 @@ input.text-number{
     width:60px;
     text-align: right;
     padding-right:10px;
+}
+
+.filter-container{
+
+    margin-bottom:40px;
+
+}
+
+.main-caption{
+    font-size: 30px;
+    font-weight: bold;
+    padding:0px 0 40px;
+    text-align: center;
+
+}
+
+  
+.listing-container{
+
+    width:100%;
+    overflow-x: auto;
+    .listing-table{
+        width:100%;
+        td,th{
+            border:1px solid black;
+            padding:5px;
+
+            &.thick{
+                border-right:5px solid #000
+            }
+
+            &.thick-left{
+                border-left:5px solid #000
+            }
+        }
+        tr.row:nth-child(even){
+            background-color: #eeeeee;
+        }
+        .listing-header{
+
+            .col-header{
+               font-weight: bold;
+                padding:5px;                
+                /*background-color: $color-header;*/
+                text-align: center;
+                vertical-align: middle;
+                &.col-group{
+                    text-align:center;
+                }
+                
+                &.green{
+                    background-color: $color-price;
+                }
+            }
+        }
+
+        .green{
+            background-color: $color-price;
+        }
+        .row{
+
+            .field{
+                padding:5px;
+            }
+        }
+
+    }
+
+    .instruction{
+        font-weight: bold;
+        font-size:16px;
+        text-align: center;
+    }
+}
+
+
+.pagination{
+    padding-top:20px;
+
+    a{
+        font-weight: bold;
+    }
+
+    .page {
+        display: flex;
+        align-items: center;
+        div{
+            padding:0 5px;
+            font-weight: bold;
+        }
+    }
+    
+    
+}
+
+.disclaimer{
+    font-size: 10px;
+}
+
+.modal-content{
+    background-color:#fff;
+    width:500px;
+    padding: 40px;
+
+    .modal-description{
+        margin-bottom:20px;
+        font-size:14px;
+    }
+
 }
