@@ -1,0 +1,34 @@
+.dashboard .tiles {
+  margin-top: 120px;
+  width: 500px;
+  display: flex;
+}
+.dashboard .tiles a {
+  padding: 20px;
+  margin-right: 40px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  text-align: center;
+  border: 2px solid black;
+  border-radius: 25px;
+  text-decoration: none;
+}
+.dashboard .tiles a svg {
+  width: 70px;
+  height: 70px;
+  display: block;
+  margin-bottom: 10px;
+}
+.dashboard .tiles a span {
+  display: block;
+  text-decoration: none;
+  font-size: 16px;
+}
+.dashboard .tiles a:hover {
+  background-color: #eeeeee;
+}

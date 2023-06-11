@@ -6,10 +6,11 @@ function BrandListing(){
     const { createApp } = Vue
     let thisObject = this;
     this.el = document.getElementById("main-app");
-    this.filterName = '';
+    
+    this.itemsPerPage = Number(this.el.getAttribute("data-item-per-page"))
+    /*this.filterName = '';
     this.filterFocus = '';
     this.filterCurrency = '';
-    this.itemsPerPage = Number(this.el.getAttribute("data-item-per-page"))
     if (document.getElementById("filterName").value != ''){
         this.filterName = document.getElementById("filterName").value
     }
@@ -18,7 +19,7 @@ function BrandListing(){
     }
     if (document.getElementById("filterCurrency").value != ''){
         this.filterCurrency = document.getElementById("filterCurrency").value
-    }
+    }*/
     const endpoint = thisObject.el.getAttribute("data-endpoint")
     const deleteEndpoint = thisObject.el.getAttribute("data-delete-endpoint")
     const method = thisObject.el.getAttribute("data-method")
@@ -35,6 +36,11 @@ function BrandListing(){
                         rowPerPage:20
                     },
                     rows:[]
+                },
+                filter:{
+                    name:'',
+                    focus:'',
+                    currency:''
                 }
             }
         },
@@ -48,9 +54,9 @@ function BrandListing(){
             populateGrid(pageNumber){
                 let data = {
                     filters:{
-                       filterName: this.filterName,
-                        filterFocus:this.filterFocus,
-                        filterCurrency:this.filterCurrency
+                       filterName: this.filter.name,
+                        filterFocus:this.filter.focus,
+                        filterCurrency:this.filter.currency
 
                     },
                     pageNumber:pageNumber,
@@ -77,6 +83,10 @@ function BrandListing(){
                         }
                     });
 
+            },
+            filterResults(){
+                console.log('filterresults')
+                this.populateGrid(1);
             },
             gotoPage(event){
                 this.grid.pagination.currentPage = Number(event.srcElement.value);
@@ -125,32 +135,10 @@ function BrandListing(){
                     });
             }
         }
-    }).mount('#listingMain')
+    }).mount('#main-app')
 }
 
 document.addEventListener("DOMContentLoaded", function(){
-
-    document.addEventListener('click', function (event) {
-
-        if (event.target.id != 'buttonSearch') return;
-
-        event.preventDefault();
-        let container = document.querySelector(".filter-container");
-        container.classList.remove("show-error");
-        var brandSelect = document.getElementById("selectBrand");
-
-        if (brandSelect.value == ''){
-            
-
-            container.classList.add("show-error");
-            container.querySelector(".error").textContent = "Please select a brand";
-
-            return;
-        }
-
-        location = "?brandid=" + brandSelect.value
-    
-    }, false);
 
     Page.BrandListing = new BrandListing();
 })

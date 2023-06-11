@@ -86,6 +86,15 @@ namespace C3Apparel.Data.Extensions
 
             return obj;
         }
-        
+
+        public static object DBNullIfNull(this string str)
+        {
+            if (str == null)
+            {
+                return DBNull.Value;
+            }
+
+            return str;
+        }
     }
 }

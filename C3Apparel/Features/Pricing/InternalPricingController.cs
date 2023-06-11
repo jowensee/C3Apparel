@@ -21,9 +21,7 @@ namespace C3Apparel.Web.Features.Pricing
             _productRepository = productRepository;
             _productSettingsRepository = productSettingsRepository;
         }
-        
        
-        //[EnableCors("CMSPolicy")]
         public async Task<ActionResult> InternalPriceListingPage(int brandId = 0)
         {
 

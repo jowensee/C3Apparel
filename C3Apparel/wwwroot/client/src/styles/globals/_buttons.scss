@@ -65,4 +65,5 @@ a{
 
 .button.is-link{
   @include button-variant($color-primary, #fff, $color-primary-hover);
+  text-decoration:none;
 }

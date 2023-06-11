@@ -48,8 +48,12 @@
     "webpack-stream": "^7.0.0"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^38.0.1",
+    "@ckeditor/ckeditor5-vue": "^5.1.0",
+    "@vuepic/vue-datepicker": "^5.2.0",
     "bulma": "^0.9.4",
     "lodash": "^4.17.21",
-    "normalize.css": "^8.0.1"
+    "normalize.css": "^8.0.1",
+    "vue": "^3.3.4"
   }
 }

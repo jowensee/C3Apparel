@@ -435,6 +435,35 @@ form legend {
   color: #FF5B5B;
 }
 
+.form {
+  margin-top: 40px;
+}
+.form .field {
+  align-items: flex-start;
+}
+.form .field .label {
+  width: 200px;
+}
+.form input[type=text], .form select, .form textarea {
+  width: 400px;
+}
+.form textarea {
+  height: 150px;
+}
+.form .ck.ck-editor__main > .ck-editor__editable {
+  height: 200px;
+}
+
+.action {
+  margin-bottom: 20px;
+}
+
+.form-error {
+  color: red;
+  font-size: 14px;
+  padding-top: 40px;
+}
+
 .btn {
   cursor: pointer;
   position: relative;
@@ -531,6 +560,7 @@ a:hover {
   color: #fff;
   background-color: #000;
   border-color: #000;
+  text-decoration: none;
 }
 .button.is-link svg {
   fill: #fff;
@@ -715,6 +745,15 @@ input.text-number {
 }
 .listing-container .listing-table td.thick-left, .listing-container .listing-table th.thick-left {
   border-left: 5px solid #000;
+}
+.listing-container .listing-table td.center, .listing-container .listing-table th.center {
+  text-align: center;
+}
+.listing-container .listing-table th.col-action {
+  width: 80px;
+}
+.listing-container .listing-table td.col-action a {
+  margin-right: 10px;
 }
 .listing-container .listing-table tr.row:nth-child(even) {
   background-color: #eeeeee;

@@ -40,19 +40,25 @@
       <div class="main-caption">
         Brands
       </div>
-      <div class="filter-container">
-        <form action="">
+
+
+      <div id="main-app" data-endpoint="api/getbrands.json" data-delete-endpoint="api/deleteResponse.json" data-method="GET" data-item-per-page="50">
+
+        <div class="action">
+          <a class="button is-link" href="/admin/brands/0">New Supplier</a>
+        </div>
+        <div class="filter-container">
           <div class="field">
             <label>Name</label>
             <div class="control">
-              <input type="text" id="filterName" name="filterName" />
+              <input type="text" id="filterName" name="filterName" v-model="filter.name" />
             </div>
           </div>
           <div class="field">
             <label>Focus</label>
             <div class="control">
               <div class="select">
-                <select id="filterFocus" name="filterFocus">
+                <select id="filterFocus" name="filterFocus" v-model="filter.focus">
                   <option value="">Select</option>
                   <option value="3">Decky</option>
                   <option value="1" selected>PureWaste</option>
@@ -64,7 +70,7 @@
             <label>Currency</label>
             <div class="control">
               <div class="select">
-                <select id="filterCurrency" name="filterCurrency">
+                <select id="filterCurrency" name="filterCurrency" v-model="filter.currency">
                   <option value="">Select</option>
                   <option value="3">Decky</option>
                   <option value="1" selected>PureWaste</option>
@@ -73,15 +79,11 @@
             </div>
           </div>
           <div class="buttons">
-            <button id="buttonSearch" class="button is-link">Search</button>
+            <button id="buttonSearch" class="button is-link" v-on:click.prevent="filterResults()">Search</button>
           </div>
 
           <div class="error"></div>
-        </form>
-      </div>
-
-
-      <div id="main-app" data-endpoint="api/getbrands.json" data-delete-endpoint="api/deleteResponse.json" data-method="GET" data-item-per-page="50">
+        </div>
 
         <div id="listingMain">
           <div class="listing-container" v-if="grid.rows.length == 0">
@@ -91,48 +93,44 @@
           </div>
           <div class="listing-container" v-if="grid.rows.length>0">
 
-            <table class="listing-table">
+            <table class="listing-table brand-table">
               <thead class="listing-header">
                 <tr>
-                  <th class="col-header">
+                  <th class="col-header col-action">
 
                   </th>
-                  <th class="col-header">
+                  <th class="col-header col-brand">
                     Name
                   </th>
-                  <th class="col-header">
+                  <th class="col-header col-focus">
                     Focus
                   </th>
-                  <th class="col-header">
+                  <th class="col-header col-currency">
                     Currency
                   </th>
-                  <th class="col-header">
+                  <th class="col-header col-publish-date">
                     C3 Published Price List Date
                   </th>
-                  <th class="col-header">
+                  <th class="col-header col-enabled">
                     Enabled
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr class="row" v-for="(row, index) in grid.rows">
-                  <td>
-                    <a href="#" v-on:click.prevent="loadDeleteConfirmation(row.brandId)" class="remove has-confirmation">
-                      <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M13.5938 0.8125H1.40625C0.615234 0.8125 0 1.45703 0 2.21875V4.09375C0 4.62109 0.410156 5.03125 0.908203 5.03125L0.9375 12.0625C0.9375 13.1172 1.75781 13.9375 2.8125 13.9375H12.1875C13.2129 13.9375 14.0625 13.1172 14.0625 12.0625V5.03125C14.5605 5.03125 15 4.62109 15 4.12305V2.21875C15 1.45703 14.3555 0.8125 13.5938 0.8125ZM12.1875 12.5312H2.8125C2.54883 12.5312 2.34375 12.3262 2.34375 12.0625V5.03125H12.6562V12.0625C12.6562 12.3262 12.4219 12.5312 12.1875 12.5312ZM13.5938 3.625H1.40625V2.21875H13.5938V3.625ZM5.36133 7.84375H9.58008C9.99023 7.84375 10.3125 7.55078 10.3125 7.14062C10.3125 6.75977 9.99023 6.4375 9.60938 6.4375H5.36133C4.98047 6.4375 4.6875 6.75977 4.6875 7.14062C4.6875 7.55078 4.98047 7.84375 5.36133 7.84375Z" fill="#008EAA"></path>
-                      </svg>
+                  <td class="col-action center">
+                    <a :href="'/admin/brands/' + row.brandId">
+                      <i class="fa-solid fa-pen"></i>
                     </a>
-                    <a :href="'/admin-users/user-details?userid=' + row.userGuid">
-                      <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15.4434 2.54492L14.3301 1.43164C13.9785 1.08008 13.4805 0.875 13.0117 0.875C12.543 0.875 12.0449 1.08008 11.6934 1.43164L1.9082 11.2168C1.82031 11.2754 1.79102 11.3633 1.76172 11.4512L1 15.2891C0.941406 15.6113 1.17578 15.875 1.43945 15.875C1.46875 15.875 1.52734 15.875 1.55664 15.875L5.39453 15.1133C5.48242 15.084 5.57031 15.0547 5.6582 14.9668L15.4434 5.18164C16.1758 4.44922 16.1758 3.27734 15.4434 2.54492ZM4.83789 13.7949L2.64062 14.2344L3.08008 12.0371L3.8125 11.3047V13.0625H5.57031L4.83789 13.7949ZM5.21875 11.6562V9.89844L10.375 4.74219L12.1621 6.5L6.97656 11.6562H5.21875Z" fill="#008EAA"></path>
-                      </svg>
+                    <a href="#" v-on:click.prevent="loadDeleteConfirmation(row.brandId)" class="remove has-confirmation">
+                      <i class="fa-solid fa-trash-can"></i>
                     </a>
                   </td>
-                  <td class=" col-brand" nowrap="nowrap">{{row.brand}}</td>
-                  <td class=" col-style">{{row.focus}}</td>
-                  <td class=" col-name">{{row.currency}}</td>
-                  <td class=" col-sizes">{{row.publishDate}}</td>
-                  <td class=" col-color">{{row.enabled}}</td>
+                  <td nowrap="nowrap">{{row.brand}}</td>
+                  <td>{{row.focus}}</td>
+                  <td class="center">{{row.currency}}</td>
+                  <td class="center">{{row.publishDate}}</td>
+                  <td class="center">{{row.enabled}}</td>
                 </tr>
               </tbody>
             </table>
@@ -185,6 +183,8 @@
     </div>
   </footer>
   <!-- END widget footer -->
+
+  <script src="https://kit.fontawesome.com/3419b5ff01.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <!-- start scripts -->
   <script src="scripts/global.js"></script>

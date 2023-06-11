@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using C3Apparel.Data.Extensions;
@@ -232,7 +234,7 @@ namespace C3Apparel.Data.Modules.Classes
             ExecuteCommand($@"INSERT INTO COM_Brand (BrandDisplayName, BrandDescription, BrandCurrency,BrandEnabled,
                              BrandFocus, BrandHomepage,BrandBusinessName,
                        BrandPricingDisclaimerTextAU, BrandPricingDisclaimerTextNZ) VALUES   
-                     (@displayName, @description @currency, @enabled, @focus, @website, @buinessName, @disclaimerAU, @disclaimerNZ)", parameters);
+                     (@displayName, @description, @currency, @enabled, @focus, @website, @buinessName, @disclaimerAU, @disclaimerNZ)", parameters);
         }
 
         public void UpdateBrand(BrandInfo brand)
@@ -245,15 +247,16 @@ namespace C3Apparel.Data.Modules.Classes
                 { "@enabled", brand.BrandEnabled },
                 { "@focus", brand.BrandFocus },
                 { "@website", brand.BrandHomepage },
-                { "@description", brand.BrandDescription },
-                { "@buinessName", brand.BrandBusinessName },
+                { "@description", brand.BrandDescription.DBNullIfNull() },
+                { "@businessName", brand.BrandBusinessName.DBNullIfNull() },
                 { "@disclaimerAU", brand.BrandPricingDisclaimerTextAU },
-                { "@disclaimerNZ", brand.BrandPricingDisclaimerTextNZ }
+                { "@disclaimerNZ", brand.BrandPricingDisclaimerTextNZ },
+                { "@publishedDate", brand.BrandPriceListPublishedDate },
                 
             };
             
             ExecuteCommand($@"UPDATE COM_Brand SET BrandDisplayName=@displayName, BrandDescription=@description, BrandCurrency=@currency,
-                                BrandEnabled=@enabled, BrandFocus= @focus, BrandHomepage=@website,BrandBusinessName=@buinessName,
+                                BrandEnabled=@enabled, BrandFocus= @focus, BrandHomepage=@website,BrandBusinessName=@businessName,
                                     BrandPricingDisclaimerTextAU=@disclaimerAU, BrandPricingDisclaimerTextNZ=  @disclaimerNZ
                                     WHERE BrandID=@Id", parameters);
         }

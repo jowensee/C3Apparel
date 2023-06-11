@@ -11,6 +11,7 @@ using C3Apparel.Features.Admin.Brand.API;
 using C3Apparel.Frontend.Data.Settings;
 using C3Apparel.Web.Features.Pricing.API.Requests;
 using C3Apparel.Web.Features.Pricing.API.Responses;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace C3Apparel.Features.Admin.Brand
@@ -40,7 +41,7 @@ namespace C3Apparel.Features.Admin.Brand
 
             if (brandId > 0)
             {
-                vm.EditItem = _brandInfoProvider.GetBrand(brandId);   
+                vm.ID = brandId;   
             }
             vm.OptionsFocus = C3Definitions.BrandFocuses.ToDictionary(a => a, a => a);
             vm.OptionsCurrency = C3Definitions.Currencies.ToDictionary(a => a, a => a);
@@ -108,6 +109,7 @@ namespace C3Apparel.Features.Admin.Brand
             }
         }
         
+        //[EnableCors("FEPolicy")]
         [Route("get-brand")]
         [HttpPost]
         public async Task<ActionResult> GetBrandForEdit([FromBody] IDParameter requests)
@@ -127,10 +129,12 @@ namespace C3Apparel.Features.Admin.Brand
                         BrandId = brand.BrandID,
                         Enabled = brand.BrandEnabled,
                         Currency = brand.BrandCurrency,
+                        Description = brand.BrandDescription,
                         Focus = brand.BrandFocus,
+                        BusinessName = brand.BrandBusinessName,
                         DisclaimerTextAU = brand.BrandPricingDisclaimerTextAU,
                         DisclaimerTextNZ = brand.BrandPricingDisclaimerTextNZ,
-                        Website = brand.Website,
+                        Website = brand.BrandHomepage,
                         PublishDate = brand.BrandPriceListPublishedDate.ToString("dd/MM/yyyy")
                     }
                 });
@@ -163,6 +167,7 @@ namespace C3Apparel.Features.Admin.Brand
                     BrandCurrency = requests.Currency,
                     BrandBusinessName = requests.BusinessName,
                     BrandHomepage = requests.Website,
+                    BrandDescription = requests.Description,
                     BrandPricingDisclaimerTextAU = requests.DisclaimerTextAU,
                     BrandPricingDisclaimerTextNZ = requests.DisclaimerTextNZ,
                     BrandPriceListPublishedDate = publishDate
@@ -179,7 +184,8 @@ namespace C3Apparel.Features.Admin.Brand
 
                 return Ok(new CommandAPIResult
                 {
-                   Success = true
+                   Success = true,
+                   RedirectUrl = "/admin/brands"
                 });
             }
             catch (Exception ex)

@@ -77,7 +77,13 @@ namespace BlankSiteCore
                 o.ViewLocationFormats.Add("/Features/Shared/{0}" + RazorViewEngine.ViewExtension);
                 o.ViewLocationFormats.Add("/Components/ViewComponents/{0}" + RazorViewEngine.ViewExtension);
             });
-            
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "FEPolicy", policy =>
+                {
+                    policy.WithOrigins("http://localhost:3030");
+                });
+            });
             services.AddControllersWithViews();
             
             services.AddScoped<IConfigurationService, ConfigurationService>();
@@ -149,6 +155,9 @@ namespace BlankSiteCore
                 
                 
                 //Admin
+                endpoints.MapControllerRoute("Dashboard", "admin/dashboard",
+                    defaults: new { controller = "Dashboard", action = "Index" });
+                
                 endpoints.MapControllerRoute("Brand Listing", "admin/brands",
                     defaults: new { controller = "Brand", action = "BrandListing" });
                 

@@ -1,60 +1,98 @@
 <!-- @@master = /src/masterpages/default.html-->
 
 <!-- @@block = head-->
+<link rel="stylesheet" href="https://unpkg.com/@vuepic/vue-datepicker@latest/dist/main.css">
 <link rel="stylesheet" href="styles/brand-edit.css">
 <!-- @@close-->
 
 <!-- @@block = body-->
 
 
-<div id="editMain" data-endpoint-get="" data-endpoint-save="deleteResponse.json">
-    <div class="action">
-        <button id="btnSave" class="button is-link">Save</button>
+<div id="editMain" data-method="GET" data-endpoint-get="api/editbrand.json" data-endpoint-save="api/deleteResponse.json" data-brand-id="1">
+    <div v-if="formErrorMessage != ''" class="form-error">
+        {{formErrorMessage}}
     </div>
     <div class="form">
-       
+        <div class="action">
+            <button id="btnSave" class="button is-link" v-on:click.prevent="saveBrand()">Save</button>
+        </div>
         <div class="field" data-validation="">
-        <label class="label">Display name</label>
-        <div class="control">
-            <input class="input" type="text" value="Toma">
+            <label class="label">Display name</label>
+            <div class="control">
+                <input class="input" v-model="brand.name" type="text">
+            </div>
         </div>
-        </div>
-        
-            
         <div class="field" data-validation="">
-        <label class="label">Display name</label>
-        <div class="control">
-            <input class="input" type="text" value="Toma Srl">
-        </div>
-        </div>
-        
-            
+            <label class="label">Business name</label>
+            <div class="control">
+                <input class="input" v-model="brand.businessName" type="text">
+            </div>
+        </div>            
         <div class="field" data-validation="">
-        <label class="label">Focus</label>
-        <div class="control">
-            <select>
-            <option value="">Please select</option>
-                <option value="Footwear" >Footwear</option>
-                <option value="Healthcare" >Healthcare</option>
-                <option value="Hospitality" selected>Hospitality</option>
-                <option value="Promo" >Promo</option>
-            </select>
+            <label class="label">Description</label>
+            <div class="control">
+                <textarea  v-model="brand.description"></textarea>
+            </div>
         </div>
-        </div>
-        
-            
         <div class="field" data-validation="">
-        <label class="label">Website</label>
-        <div class="control">
-            <input class="input" type="text" value="Toma">
+            <label class="label">Focus</label>
+            <div class="control">
+                <select  v-model="brand.focus">
+                <option value="">Please select</option>
+                    <option value="Footwear" >Footwear</option>
+                    <option value="Healthcare" >Healthcare</option>
+                    <option value="Hospitality" selected>Hospitality</option>
+                    <option value="Promo" >Promo</option>
+                </select>
+            </div>
         </div>
+        <div class="field" data-validation="">
+            <label class="label">Website</label>
+            <div class="control">
+                <input class="input"  v-model="brand.website" type="text">
+            </div>
         </div>
- 
+        <div class="field" data-validation="">
+            <label class="label">Currency</label>
+            <div class="control">
+                <select  v-model="brand.currency">
+                <option value="">Please select</option>
+                    <option value="USD" >Footwear</option>
+                    <option value="EURO" >Healthcare</option>
+                </select>
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Enabled</label>
+            <div class="control">
+                <input type="checkbox"  v-model="brand.enabled" />
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Disclaimer Text (Australia)</label>
+            <div class="control">
+                <ckeditor :editor="editor" v-model="brand.disclaimerAU"></ckeditor>
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Disclaimer Text (NZ)</label>
+            <div class="control">
+                <ckeditor :editor="editor" v-model="brand.disclaimerNZ"></ckeditor>
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Price list published date</label>
+            <div class="control">
+                <DatePicker v-model="brand.publishDate"  format="dd/MM/yyyy" model-type="dd/MM/yyyy"></DatePicker>
+            </div>
+        </div>
     </div>
  </div>
 
 <!-- @@close-->
 
 <!-- @@block = scripts-->
+<script src="https://unpkg.com/vue@latest"></script>
+<script src="https://unpkg.com/@vuepic/vue-datepicker@latest"></script>
 <script src="scripts/brand-edit.js"></script>
 <!-- @@close-->

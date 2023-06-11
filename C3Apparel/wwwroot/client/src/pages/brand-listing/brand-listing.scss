@@ -1,1 +1,30 @@
 //@import "../../widgets/xxx/xxx";
+.brand-table{
+    width:auto!important;
+    th{
+        &.col-brand{
+            width:300px
+        }
+        &.col-focus{
+            width:200px
+        }
+        &.col-currency{
+            width:200px
+        }
+        &.col-publish-date{
+            width:200px
+        }
+        &.col-enabled{
+            width:80px
+        }
+    }
+
+}
+
+.filter-container{
+    .field{
+        label{
+            width:100px;
+        }
+    }
+}

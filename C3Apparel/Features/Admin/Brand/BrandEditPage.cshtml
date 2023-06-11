@@ -4,19 +4,98 @@
    Layout = "_CMSLayout";
 }
 @section Styles {
-   <link rel="stylesheet" href="/client/dist/styles/internal-inquiry.css" asp-append-version="true">
+    <link rel="stylesheet" href="https://unpkg.com/@@vuepic/vue-datepicker@latest/dist/main.css">
+    <link rel="stylesheet" href="/client/dist/styles/brand-edit.css">
 }
 
 @section Scripts {
-   <script src="/client/dist/scripts/internal-inquiry.js" asp-append-version="true"></script>
+    <script src="https://unpkg.com/vue@latest"></script>
+    <script src="https://unpkg.com/@@vuepic/vue-datepicker@latest"></script>
+   <script src="/client/dist/scripts/brand-edit.js" asp-append-version="true"></script>
 }
 
-<div id="editMain" data-endpoint-get="@Url.Action("SaveBrand", "Brand")" data-endpoint-save="@Url.Action("SaveBrand", "Brand")">
-
-   <div class="form">
-      <partial name="/Features/Shared/Form/_FormTextboxField.cshtml" model='("displayName","Display name", @Model.EditItem?.BrandDisplayName, "")' />
-      <partial name="/Features/Shared/Form/_FormTextboxField.cshtml" model='("businessName","Business name", @Model.EditItem?.BrandBusinessName, "")' />
-      <partial name="/Features/Shared/Form/_FormDropdownField.cshtml" model='("focus","Focus", @Model.EditItem?.BrandFocus, @Model.OptionsFocus, "")' />
-      <partial name="/Features/Shared/Form/_FormTextboxField.cshtml" model='("website","Website", @Model.EditItem?.BrandDisplayName, "")' />
-   </div>
+<div id="editMain" data-method="POST" data-endpoint-get="@Url.Action("GetBrandForEdit", "Brand")" data-endpoint-save="@Url.Action("SaveBrand", "Brand")" data-brand-id="@Model.ID">
+    <div v-if="formErrorMessage != ''">
+            {{formErrorMessage}}
+    </div>
+    <div class="form">
+        <div class="action">
+            <button id="btnSave" class="button is-link" v-on:click.prevent="saveBrand()">Save</button>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Display name</label>
+            <div class="control">
+                <input class="input" v-model="brand.name" type="text">
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Business name</label>
+            <div class="control">
+                <input class="input" v-model="brand.businessName" type="text">
+            </div>
+        </div>            
+        <div class="field" data-validation="">
+            <label class="label">Description</label>
+            <div class="control">
+                <textarea  v-model="brand.description"></textarea>
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Focus</label>
+            <div class="control">
+                <select  v-model="brand.focus">
+                    <option value="">Please select</option>
+                    @foreach (var option in Model.OptionsFocus)
+                    {
+                        <option value="@option.Key">@option.Value</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Website</label>
+            <div class="control">
+                <input class="input"  v-model="brand.website" type="text">
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Currency</label>
+            <div class="control">
+                <select  v-model="brand.currency">
+                    <option value="">Please select</option>
+                    @foreach (var option in Model.OptionsCurrency)
+                    {
+                        <option value="@option.Key">@option.Value</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Enabled</label>
+            <div class="control">
+                <input type="checkbox"  v-model="brand.enabled" />
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Disclaimer Text (Australia)</label>
+            <div class="control">
+                <ckeditor :editor="editor" v-model="brand.disclaimerAU"></ckeditor>
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Disclaimer Text (NZ)</label>
+            <div class="control">
+                <ckeditor :editor="editor" v-model="brand.disclaimerNZ"></ckeditor>
+            </div>
+        </div>
+        @if (Model.ID > 0)
+        {
+            <div class="field" data-validation="">
+                <label class="label">Price list published date</label>
+                <div class="control">
+                    <DatePicker v-model="brand.publishDate"  input-class-name="form-control" format="dd/MM/yyyy" model-type="dd/MM/yyyy"></DatePicker>
+                </div>
+            </div>   
+        }
+    </div>
 </div>

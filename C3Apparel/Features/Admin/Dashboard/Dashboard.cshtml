@@ -1,0 +1,38 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model C3Apparel.Features.Admin.Dashboard.DashboardViewModel
+@{
+   Layout = "_CMSLayout";
+}
+@section Styles {
+    <link rel="stylesheet" href="/client/dist/styles/dashboard.css">
+}
+
+@section Scripts {
+   <script src="/client/dist/scripts/dashboard.js" asp-append-version="true"></script>
+}
+
+<div class="dashboard">
+    <div class="tiles">
+        <a href="#">
+            <i class="fa-solid fa-shirt"></i>
+            <span>Product Menu</span>
+        </a>
+        <a href="#">
+            <i class="fa-solid fa-money-bill-transfer"></i>            
+            <span>Set Exchange Rate</span>
+        </a>
+        <a href="#">
+            <i class="fa-solid fa-truck"></i>            
+            <span>Set Freight-weight Prices</span>
+        </a>
+        <a href="#">
+            <i class="fa-solid fa-plane-arrival"></i>            
+            <span>Set Import Duty</span>
+        </a>
+        <a href="/admin/brands">
+            <i class="fa-solid fa-store"></i>            
+            <span>Suppliers</span>
+        </a>
+    </div>
+</div>
+

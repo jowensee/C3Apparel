@@ -156,3 +156,39 @@ form legend {
   }
 }
 
+.form{
+  margin-top:40px;
+  .field{
+    align-items: flex-start;
+    .label{
+      width:200px
+    }
+
+    .control{
+
+    }
+  }
+
+  input[type=text], select, textarea{
+    width:400px
+  }
+  textarea{
+    height:150px
+  }
+
+  .ck.ck-editor__main>.ck-editor__editable{
+    height:200px;
+  }
+
+ 
+}
+
+.action{
+  margin-bottom:20px;
+}
+
+.form-error{
+  color:red;
+  font-size:14px;
+  padding-top:40px
+}
