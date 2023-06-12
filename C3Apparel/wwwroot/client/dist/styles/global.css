@@ -435,9 +435,6 @@ form legend {
   color: #FF5B5B;
 }
 
-.form {
-  margin-top: 40px;
-}
 .form .field {
   align-items: flex-start;
 }

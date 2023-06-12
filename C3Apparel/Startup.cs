@@ -163,6 +163,13 @@ namespace BlankSiteCore
                 
                 endpoints.MapControllerRoute("Brand Edit", "admin/brands/{brandId}",
                     defaults: new { controller = "Brand", action = "BrandEdit" });
+                
+                endpoints.MapControllerRoute("Import Duty", "admin/import-duty",
+                    defaults: new { controller = "ImportDuty", action = "Index" });
+                
+                endpoints.MapControllerRoute("FreightSettings", "admin/freight-settings",
+                    defaults: new { controller = "FreightWeightSettings", action = "Index" });
+                
                 //endpoints.MapRazorPages();
             });
 

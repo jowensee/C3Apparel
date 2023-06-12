@@ -1,0 +1,39 @@
+<!-- @@master = /src/masterpages/default.html-->
+
+<!-- @@block = head-->
+<link rel="stylesheet" href="styles/import-duty.css">
+<!-- @@close-->
+
+<!-- @@block = body-->
+<div class="main-caption">
+    Import Duties
+ </div>
+<div id="editMain" data-method="GET" data-endpoint-get="api/importDuty.json" data-endpoint-save="api/deleteResponse.json">
+    <div v-if="formErrorMessage != ''" class="form-error">
+        {{formErrorMessage}}
+    </div>
+    <div class="form">
+        <div class="action">
+            <button id="btnSave" class="button is-link" v-on:click.prevent="saveImportDuty()">Save</button>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Australia</label>
+            <div class="control">
+                <input class="input" v-model="importDutyAU" type="text">
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">New Zealand</label>
+            <div class="control">
+                <input class="input" v-model="importDutyNZ" type="text">
+            </div>
+        </div>            
+        
+    </div>
+ </div>
+
+<!-- @@close-->
+
+<!-- @@block = scripts-->
+<script src="scripts/import-duty.js"></script>
+<!-- @@close-->

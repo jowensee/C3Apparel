@@ -1,0 +1,94 @@
+{
+    "euroFreightSettings": [
+        {
+            "codeName": "EURO.Price1",
+            "weightInKg": 0.0000,
+            "marginInDecimal": 0.400000,
+            "auFreightPerKg": 27.0000,
+            "nzFreightPerKg": 40.0000,
+            "auFreightSurcharge": 36.0000,
+            "nzFreightSurcharge": 36.0000,
+            "columnHeader1": "Air",
+            "columnHeader2": "5-7 days"
+        },
+        {
+            "codeName": "EURO.Price2",
+            "weightInKg": 15.3000,
+            "marginInDecimal": 0.400000,
+            "auFreightPerKg": 23.0000,
+            "nzFreightPerKg": 26.0000,
+            "auFreightSurcharge": 0,
+            "nzFreightSurcharge": 0,
+            "columnHeader1": "Air",
+            "columnHeader2": "5-7 days"
+        },
+        {
+            "codeName": "EURO.Price3",
+            "weightInKg": 75.0000,
+            "marginInDecimal": 0.400000,
+            "auFreightPerKg": 20.0000,
+            "nzFreightPerKg": 24.5000,
+            "auFreightSurcharge": 0,
+            "nzFreightSurcharge": 0,
+            "columnHeader1": "Air",
+            "columnHeader2": "5-7 days"
+        },
+        {
+            "codeName": "EURO.Price4",
+            "weightInKg": 330.0000,
+            "marginInDecimal": 0.400000,
+            "auFreightPerKg": 19.5000,
+            "nzFreightPerKg": 24.0000,
+            "auFreightSurcharge": 0,
+            "nzFreightSurcharge": 0,
+            "columnHeader1": "Air",
+            "columnHeader2": "5-7 days"
+        }
+    ],
+    "usFreightSettings": [
+        {
+            "codeName": "US.Price1",
+            "weightInKg": 0.0000,
+            "marginInDecimal": 0.400000,
+            "auFreightPerKg": 24.0000,
+            "nzFreightPerKg": 32.0000,
+            "auFreightSurcharge": 36.0000,
+            "nzFreightSurcharge": 36.0000,
+            "columnHeader1": "Air",
+            "columnHeader2": "5-7 days"
+        },
+        {
+            "codeName": "US.Price2",
+            "weightInKg": 15.3000,
+            "marginInDecimal": 0.400000,
+            "auFreightPerKg": 22.0000,
+            "nzFreightPerKg": 24.0000,
+            "auFreightSurcharge": 0,
+            "nzFreightSurcharge": 0,
+            "columnHeader1": "Air",
+            "columnHeader2": "5-7 days"
+        },
+        {
+            "codeName": "US.Price3",
+            "weightInKg": 75.0000,
+            "marginInDecimal": 0.400000,
+            "auFreightPerKg": 20.0000,
+            "nzFreightPerKg": 22.5000,
+            "auFreightSurcharge": 0,
+            "nzFreightSurcharge": 0,
+            "columnHeader1": "Air",
+            "columnHeader2": "5-7 days"
+        },
+        {
+            "codeName": "US.Price4",
+            "weightInKg": 330.0000,
+            "marginInDecimal": 0.400000,
+            "auFreightPerKg": 19.5000,
+            "nzFreightPerKg": 22.0000,
+            "auFreightSurcharge": 0,
+            "nzFreightSurcharge": 0,
+            "columnHeader1": "Air",
+            "columnHeader2": "5-7 days"
+        }
+    ]
+}

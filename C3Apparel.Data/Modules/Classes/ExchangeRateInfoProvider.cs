@@ -33,5 +33,34 @@ namespace C3Apparel.Data.Modules.Classes
             };
         }
 
+        public IEnumerable<ExchangeRateInfo> GetAllExchangeRates(int pageNumber, int defaultPageSize)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int GetAllExchangeRatesCount()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ExchangeRateInfo GetExchangerRate(int requestsId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Delete(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Insert(ExchangeRateInfo exchangeRate)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Update(ExchangeRateInfo exchangeRate)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

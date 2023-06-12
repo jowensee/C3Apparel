@@ -1,0 +1,9 @@
+.form-settings h3 {
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.table-freight-weight th {
+  width: 100px;
+}

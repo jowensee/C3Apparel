@@ -4,6 +4,7 @@ namespace C3Apparel.Data.Modules.Classes
 {
     public interface IImportDutyInfoProvider
     {
-        IEnumerable<ImportDutyInfo> Get();
+        ImportDutyInfo Get();
+        void Set(ImportDutyInfo importDutyInfo);
     }
 }

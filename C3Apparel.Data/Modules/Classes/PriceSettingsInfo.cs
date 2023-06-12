@@ -85,5 +85,19 @@ namespace C3Apparel.Data.Modules.Classes
             set;
         }
 
+        public static PriceSettingsInfo Create(string codeName, decimal weightInKg, decimal marginInDecimal, 
+            decimal auFreightPerKg, decimal nzFreightPerKg, decimal auFreightSurcharge, decimal nzFreightSurcharge,
+            string columnHeader1, string colunmHeader2)
+        {
+            return new PriceSettingsInfo
+            {
+                PriceSettingsCodeName = codeName, Weight = weightInKg, C3MarginPercent = marginInDecimal,
+                AUFreightPerKg = auFreightPerKg, NZFreightPerKg = nzFreightPerKg,
+                AUFreightSurcharge = auFreightSurcharge,
+                NZFreightSurcharge = nzFreightSurcharge,
+                ColumnHeaderText1 = columnHeader1,
+                ColumnHeaderText2 = colunmHeader2
+            };
+        }
     }
 }

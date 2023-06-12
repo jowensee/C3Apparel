@@ -157,16 +157,12 @@ form legend {
 }
 
 .form{
-  margin-top:40px;
   .field{
     align-items: flex-start;
     .label{
       width:200px
     }
 
-    .control{
-
-    }
   }
 
   input[type=text], select, textarea{

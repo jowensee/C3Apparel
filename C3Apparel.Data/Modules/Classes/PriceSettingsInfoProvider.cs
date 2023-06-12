@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using C3Apparel.Data.Extensions;
 using C3Apparel.Data.Sql;
+using C3Apparel.Data.Utilities;
 
 namespace C3Apparel.Data.Modules.Classes
 {
@@ -48,5 +49,29 @@ namespace C3Apparel.Data.Modules.Classes
             return results;
         }
 
+        public void Update(PriceSettingsInfo priceSettings)
+        {
+            var parameters = new Dictionary<string, object>
+            {
+                { "@C3MarginPercent", priceSettings.C3MarginPercent },
+                { "@AUFreightSurcharge", priceSettings.AUFreightSurcharge },
+                { "@NZFreightSurcharge", priceSettings.NZFreightSurcharge },
+                { "@AUFreightPerKg", priceSettings.AUFreightPerKg },
+                { "@NZFreightPerKg", priceSettings.NZFreightPerKg },
+                { "@Weight", priceSettings.Weight },
+                { "@ColumnHeaderText1", priceSettings.ColumnHeaderText1 },
+                { "@ColumnHeaderText2", priceSettings.ColumnHeaderText2 },
+                { "@PriceSettingsCodeName", priceSettings.PriceSettingsCodeName }
+            };
+            
+            var sSql = 
+                $@"UPDATE C3_PriceSettings SET C3MarginPercent = @C3MarginPercent, AUFreightSurcharge = @AUFreightSurcharge,
+                NZFreightSurcharge = @NZFreightSurcharge, AUFreightPerKg=@AUFreightPerKg, NZFreightPerKg=@NZFreightPerKg,
+                Weight = @Weight, ColumnHeaderText1=@ColumnHeaderText1, ColumnHeaderText2=@ColumnHeaderText2
+                WHERE PriceSettingsCodeName = @PriceSettingsCodeName";
+            
+            ExecuteCommand(sSql, parameters);
+
+        }
     }
 }

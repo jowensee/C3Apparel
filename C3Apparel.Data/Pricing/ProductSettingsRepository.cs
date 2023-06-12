@@ -15,7 +15,7 @@ namespace C3Apparel.Data.Pricing
         
         public PriceGlobalSettings GetPriceGlobalSettings()
         {
-            var importDuty = _importDutyInfoProvider.Get().FirstOrDefault();
+            var importDuty = _importDutyInfoProvider.Get();
 
             if (importDuty == null)
             {

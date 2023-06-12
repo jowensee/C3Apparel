@@ -12,9 +12,9 @@ namespace C3Apparel.Data.Modules.Classes
         public ImportDutyInfoProvider(IConfigurationService configurationService) : base(configurationService)
         {
         }
-        public IEnumerable<ImportDutyInfo> Get()
+        public ImportDutyInfo Get()
         {
-            var sSql = @"SELECT [ImportDutyID]
+            var sSql = @"SELECT TOP 1 [ImportDutyID]
                               ,[ImportDutyGuid]
                               ,[ImportDutyLastModified]
                               ,[ImportDutyAustralia]
@@ -25,19 +25,48 @@ namespace C3Apparel.Data.Modules.Classes
 
             if (DataHelper.IsEmpty(ds))
             {
-                return Enumerable.Empty<ImportDutyInfo>();
+                return null;
             }
 
-            var brands = new List<ImportDutyInfo>();
             for (var i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
                 var row = ds.Tables[0].Rows[i];
                 
-                brands.Add(CreateImportInfo(row));
+                return CreateImportInfo(row);
             }
             
-            return brands;
+            return null;
         }
+
+        public void Set(ImportDutyInfo importDutyInfo)
+        {
+            var sSql = @"SELECT *
+                          FROM [dbo].[C3_ImportDuty]";
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@importDutyAU", importDutyInfo.ImportDutyAustralia },
+                { "@importDutyNZ", importDutyInfo.ImportDutyNewZealand }
+                
+            };
+            
+            var ds = ExecuteQuery(sSql);
+
+            if (DataHelper.IsEmpty(ds))
+            {
+                sSql =
+                    $@"INSERT INTO C3_ImportDuty (ImportDutyGuid, ImportDutyLastModified, ImportDutyAustralia, ImportDutyNewZealand)
+                            VALUES (NEWID(), GETDATE(), @importDutyAU, @importDutyNZ)";
+            }
+            else
+            {
+                sSql =
+                    $@"UPDATE C3_ImportDuty SET ImportDutyLastModified = GETDATE(), ImportDutyAustralia = @importDutyAU, ImportDutyNewZealand = @importDutyNZ";
+            }
+            
+            ExecuteCommand(sSql, parameters);
+        }
+
         private ImportDutyInfo CreateImportInfo(DataRow row)
         {
             if (row == null)

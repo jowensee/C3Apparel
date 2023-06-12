@@ -1,0 +1,38 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model C3Apparel.Features.Admin.ImportDuty.ImportDutyEditViewModel
+@{
+   Layout = "_CMSLayout";
+}
+@section Styles {
+    <link rel="stylesheet" href="/client/dist/styles/import-duty.css">
+}
+
+@section Scripts {
+   <script src="/client/dist/scripts/import-duty.js" asp-append-version="true"></script>
+}
+<div class="main-caption">
+   Import Duties
+</div>
+<div id="editMain" data-method="POST" data-endpoint-get="@Url.Action("GetImportDuty", "ImportDuty")" data-endpoint-save="@Url.Action("SaveImportDuties", "ImportDuty")">
+    <div v-if="formErrorMessage != ''" class="form-error">
+        {{formErrorMessage}}
+    </div>
+    <div class="form">
+        <div class="action">
+            <button id="btnSave" class="button is-link" v-on:click.prevent="saveImportDuty()">Save</button>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Australia</label>
+            <div class="control">
+                <input class="input" v-model="importDutyAU" type="text">
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">New Zealand</label>
+            <div class="control">
+                <input class="input" v-model="importDutyNZ" type="text">
+            </div>
+        </div>            
+        
+    </div>
+</div>

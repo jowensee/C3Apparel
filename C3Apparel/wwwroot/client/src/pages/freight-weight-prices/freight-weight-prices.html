@@ -1,0 +1,108 @@
+<!-- @@master = /src/masterpages/default.html-->
+
+<!-- @@block = head-->
+<link rel="stylesheet" href="styles/freight-weight-prices.css">
+<!-- @@close-->
+
+<!-- @@block = body-->
+<div class="main-caption">
+    Freight-weight Prices
+ </div>
+<div id="editMain" data-method="GET" data-endpoint-get="api/getfreightsettings.json" data-endpoint-save="api/deleteResponse.json">
+    <div v-if="formErrorMessage != ''" class="form-error">
+        {{formErrorMessage}}
+    </div>
+    <div class="form-settings">
+        <div class="action">
+            <button id="btnSave" class="button is-link" v-on:click.prevent="saveSettings()">Save</button>
+        </div>
+        <h3>US</h3>
+        <table class="table-freight-weight">
+            <tr>
+                <th></th>
+                <th>Weight (kg)</th>
+                <th>C3 Markup %</th>
+                <th>AU Freight per KG</th>
+                <th>AU Freight per Surcharge</th>
+                <th>NZ Freight per KG</th>
+                <th>NZ Freight per Surcharge</th>
+                <th>Column Header 1</th>
+                <th>Column Header 2</th>
+            </tr>
+            <tr v-for="(row, index) in usFreightSettings">
+                <th>{{row.codeName}}</th>
+                <td>
+                    <input type="text" v-model="row.weightInKg" class="text-number" />
+                </td>
+                <td>
+                    <input type="text" v-model="row.marginInDecimal" class="text-number" />
+                </td>
+                <td>
+                    <input type="text"v-model="row.auFreightPerKg" class="text-number" />
+                </td>
+                <td>
+                    <input type="text"v-model="row.auFreightSurcharge" class="text-number" />
+                </td>
+                <td>
+                    <input type="text" v-model="row.nzFreightPerKg" class="text-number" />
+                </td>
+                <td>
+                    <input type="text" v-model="row.nzFreightSurcharge" class="text-number" />
+                </td>
+                <td>
+                    <input type="text" v-model="row.columnHeader1" />
+                </td>
+                <td>
+                    <input type="text" v-model="row.columnHeader2" />
+                </td>
+            </tr>
+        </table>
+        <h3>EURO</h3>
+        <table class="table-freight-weight">
+            <tr>
+                <th></th>
+                <th>Weight (kg)</th>
+                <th>C3 Markup %</th>
+                <th>AU Freight per KG</th>
+                <th>AU Freight per Surcharge</th>
+                <th>NZ Freight per KG</th>
+                <th>NZ Freight per Surcharge</th>
+                <th>Column Header 1</th>
+                <th>Column Header 2</th>
+            </tr>
+            <tr v-for="(row, index) in euroFreightSettings">
+                <th>{{row.codeName}}</th>
+                <td>
+                    <input type="text" v-model="row.weightInKg" class="text-number" />
+                </td>
+                <td>
+                    <input type="text" v-model="row.marginInDecimal" class="text-number" />
+                </td>
+                <td>
+                    <input type="text"v-model="row.auFreightPerKg" class="text-number" />
+                </td>
+                <td>
+                    <input type="text"v-model="row.auFreightSurcharge" class="text-number" />
+                </td>
+                <td>
+                    <input type="text" v-model="row.nzFreightPerKg" class="text-number" />
+                </td>
+                <td>
+                    <input type="text" v-model="row.nzFreightSurcharge" class="text-number" />
+                </td>
+                <td>
+                    <input type="text" v-model="row.columnHeader1" />
+                </td>
+                <td>
+                    <input type="text" v-model="row.columnHeader2" />
+                </td>
+            </tr>
+        </table>
+    </div>
+ </div>
+
+<!-- @@close-->
+
+<!-- @@block = scripts-->
+<script src="scripts/freight-weight-prices.js"></script>
+<!-- @@close-->

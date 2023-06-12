@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using C3Apparel.Data.Pricing;
 using Newtonsoft.Json;
 
 namespace C3Apparel.Web.Features.Pricing.API.Responses;
@@ -6,6 +7,7 @@ namespace C3Apparel.Web.Features.Pricing.API.Responses;
 // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
 public class WeightBasedSettingsResponse
 {
+    public string CodeName { get; set; }
     public decimal WeightInKg { get; set; }
     public decimal MarginInDecimal { get; set; }
         
@@ -14,6 +16,24 @@ public class WeightBasedSettingsResponse
 
     public decimal AUFreightSurcharge { get; set; }
     public decimal NZFreightSurcharge { get; set; }
+    public string ColumnHeader1 { get; set; }
+    public string ColumnHeader2 { get; set; }
+
+    public static WeightBasedSettingsResponse Create(PriceWeightbasedSettings a)
+    {
+        return new WeightBasedSettingsResponse
+        {
+            CodeName = a.KeyName,
+            WeightInKg = a.WeightInKg,
+            MarginInDecimal = a.MarginInDecimal,
+            AUFreightPerKg = a.AUFreightPerKg,
+            NZFreightPerKg = a.NZFreightPerKg,
+            AUFreightSurcharge = a.FreightSurcharge(CurrencyConstants.AUD),
+            NZFreightSurcharge = a.FreightSurcharge(CurrencyConstants.NZD),
+            ColumnHeader1 = a.ColumnHeader1,
+            ColumnHeader2 = a.ColumnHeader2
+        };
+    }
 }
 
 public class GetInquiryFilterResponse

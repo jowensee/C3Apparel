@@ -6,5 +6,6 @@ namespace C3Apparel.Data.Modules.Classes
     public interface IPriceSettingsInfoProvider
     {
         IEnumerable<PriceSettingsInfo> Get();
+        void Update(PriceSettingsInfo priceSettings);
     }
 }

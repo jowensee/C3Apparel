@@ -42,4 +42,9 @@
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Features\Content\ContentPage.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="Features\Admin\ExchangeRates\ExchangeRatesEditPage.cshtml" />
+    <AdditionalFiles Include="Features\Admin\ExchangeRates\ExchangeRatesListingPage.cshtml" />
+    <AdditionalFiles Include="Features\Admin\ImportDuty\ImportDutyEditPage.cshtml" />
+  </ItemGroup>
 </Project>

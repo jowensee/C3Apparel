@@ -1,0 +1,65 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model C3Apparel.Features.Admin.ExchangeRates.ExchangeRatesEditViewModel
+@{
+   Layout = "_CMSLayout";
+}
+@section Styles {
+    <link rel="stylesheet" href="https://unpkg.com/@@vuepic/vue-datepicker@latest/dist/main.css">
+    <link rel="stylesheet" href="/client/dist/styles/brand-edit.css">
+}
+
+@section Scripts {
+    <script src="https://unpkg.com/vue@latest"></script>
+    <script src="https://unpkg.com/@@vuepic/vue-datepicker@latest"></script>
+   <script src="/client/dist/scripts/brand-edit.js" asp-append-version="true"></script>
+}
+
+<div id="editMain" data-method="POST" data-endpoint-get="@Url.Action("GetBrandForEdit", "Brand")" data-endpoint-save="@Url.Action("SaveBrand", "Brand")" data-id="@Model.ID">
+    <div v-if="formErrorMessage != ''">
+            {{formErrorMessage}}
+    </div>
+    <div class="form">
+        <div class="action">
+            <button id="btnSave" class="button is-link" v-on:click.prevent="saveBrand()">Save</button>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Display name</label>
+            <div class="control">
+                <input class="input" v-model="brand.name" type="text">
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Business name</label>
+            <div class="control">
+                <input class="input" v-model="brand.businessName" type="text">
+            </div>
+        </div>            
+        <div class="field" data-validation="">
+            <label class="label">Description</label>
+            <div class="control">
+                <textarea  v-model="brand.description"></textarea>
+            </div>
+        </div>
+        
+        <div class="field" data-validation="">
+            <label class="label">Website</label>
+            <div class="control">
+                <input class="input"  v-model="brand.website" type="text">
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Enabled</label>
+            <div class="control">
+                <input type="checkbox"  v-model="brand.enabled" />
+            </div>
+        </div>
+        
+        <div class="field" data-validation="">
+            <label class="label">Price list published date</label>
+            <div class="control">
+                <DatePicker v-model="brand.publishDate"  input-class-name="form-control" format="dd/MM/yyyy" model-type="dd/MM/yyyy"></DatePicker>
+            </div>
+        </div>   
+    
+    </div>
+</div>

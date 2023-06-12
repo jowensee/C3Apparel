@@ -66,31 +66,14 @@ namespace C3Apparel.Web.Features.Content
             response.RateAuUsd = GetRate(exchangeRates, CurrencyConstants.USD, CurrencyConstants.AUD);
             response.RateNzEuro = GetRate(exchangeRates, CurrencyConstants.EURO, CurrencyConstants.NZD);
             response.RateNzUsd = GetRate(exchangeRates, CurrencyConstants.USD, CurrencyConstants.NZD);
-            var allWeightBasedPriceSettings = _productSettingsRepository.GetAllWeightBasedPriceSettings();
-
-            response.EuroFreightSettings = allWeightBasedPriceSettings.AllPriceWeightbasedSettings
+           
+            response.EuroFreightSettings = _weightbasedSettings.AllPriceWeightbasedSettings
                 .Where(a => a.Key.Contains(Region.CODE_EUROPE))
-                .Select(a => new WeightBasedSettingsResponse
-                {
-                    WeightInKg = a.Value.WeightInKg,
-                    MarginInDecimal=a.Value.MarginInDecimal,
-                    AUFreightPerKg=a.Value.AUFreightPerKg,
-                    NZFreightPerKg=a.Value.NZFreightPerKg,
-                    AUFreightSurcharge=a.Value.FreightSurcharge(CurrencyConstants.AUD),
-                    NZFreightSurcharge=a.Value.FreightSurcharge(CurrencyConstants.NZD),
-                }).ToList();
+                .Select(a=>WeightBasedSettingsResponse.Create(a.Value)).ToList();
             
-            response.USFreightSettings = allWeightBasedPriceSettings.AllPriceWeightbasedSettings
+            response.USFreightSettings = _weightbasedSettings.AllPriceWeightbasedSettings
                 .Where(a => a.Key.Contains(Region.CODE_US))
-                .Select(a => new WeightBasedSettingsResponse
-                {
-                    WeightInKg = a.Value.WeightInKg,
-                    MarginInDecimal=a.Value.MarginInDecimal,
-                    AUFreightPerKg=a.Value.AUFreightPerKg,
-                    NZFreightPerKg=a.Value.NZFreightPerKg,
-                    AUFreightSurcharge=a.Value.FreightSurcharge(CurrencyConstants.AUD),
-                    NZFreightSurcharge=a.Value.FreightSurcharge(CurrencyConstants.NZD),
-                }).ToList();
+                .Select(a=>WeightBasedSettingsResponse.Create(a.Value)).ToList();
             
             return Ok(response);
 

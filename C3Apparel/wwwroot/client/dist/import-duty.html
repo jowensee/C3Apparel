@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="styles/bulma.min.css">
   <link rel="stylesheet" href="styles/global.css">
   <!-- start head -->
-
+  <link rel="stylesheet" href="styles/import-duty.css">
 
   <!-- end head -->
 </head>
@@ -37,15 +37,33 @@
   <div class="main-wrapper">
     <div class="main-content">
       <!-- start body -->
-      <a href="login-page.html">Login Page</a><br>
-      <a href="customer-listing.html">Customer listing</a><br>
-      <a href="internal-inquiry.html">Internal Inquiry</a><br>
+      <div class="main-caption">
+        Import Duties
+      </div>
+      <div id="editMain" data-method="GET" data-endpoint-get="api/importDuty.json" data-endpoint-save="api/deleteResponse.json">
+        <div v-if="formErrorMessage != ''" class="form-error">
+          {{formErrorMessage}}
+        </div>
+        <div class="form">
+          <div class="action">
+            <button id="btnSave" class="button is-link" v-on:click.prevent="saveImportDuty()">Save</button>
+          </div>
+          <div class="field" data-validation="">
+            <label class="label">Australia</label>
+            <div class="control">
+              <input class="input" v-model="importDutyAU" type="text">
+            </div>
+          </div>
+          <div class="field" data-validation="">
+            <label class="label">New Zealand</label>
+            <div class="control">
+              <input class="input" v-model="importDutyNZ" type="text">
+            </div>
+          </div>
 
-      <a href="dashboard.html">Dashboard</a><br>
-      <a href="brand-listing.html">Brand Listing</a><br>
-      <a href="brand-edit.html">Brand Edit Form</a><br>
-      <a href="import-duty.html">Import Duty</a><br>
-      <a href="freight-weight-prices.html">Freight Settings</a><br>
+        </div>
+      </div>
+
 
       <!-- end body -->
     </div>
@@ -64,7 +82,7 @@
   <script src="https://kit.fontawesome.com/3419b5ff01.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <!-- start scripts -->
-
+  <script src="scripts/import-duty.js"></script>
 
   <!-- end scripts -->
 </body>
