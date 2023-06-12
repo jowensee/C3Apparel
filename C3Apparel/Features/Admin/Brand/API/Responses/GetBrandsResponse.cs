@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using BlankSiteCore.Features.Base.API;
 using Newtonsoft.Json;
 
-namespace C3Apparel.Web.Features.Pricing.API.Responses;
+namespace C3Apparel.Web.Features.Brand.API.Responses;
 
 // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
 public class BrandAPIItem

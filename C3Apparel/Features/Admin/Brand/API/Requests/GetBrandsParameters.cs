@@ -2,7 +2,7 @@
 
 using Newtonsoft.Json;
 
-namespace C3Apparel.Web.Features.Pricing.API.Requests;
+namespace C3Apparel.Web.Features.Brand.API.Requests;
 
 public class GetBrandsParameters
 {
