@@ -170,6 +170,11 @@ namespace BlankSiteCore
                 endpoints.MapControllerRoute("FreightSettings", "admin/freight-settings",
                     defaults: new { controller = "FreightWeightSettings", action = "Index" });
                 
+                endpoints.MapControllerRoute("Exchange Rates Listing", "admin/exchange-rates",
+                    defaults: new { controller = "ExchangeRates", action = "ExchangeRatesListing" });
+                
+                endpoints.MapControllerRoute("Exchange Rates Edit", "admin/exchange-rates/{id}",
+                    defaults: new { controller = "ExchangeRates", action = "ExchangeRatesEdit" });
                 //endpoints.MapRazorPages();
             });
 

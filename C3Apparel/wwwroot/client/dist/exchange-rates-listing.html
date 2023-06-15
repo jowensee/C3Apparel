@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>C3 Apparel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/favicon/site.webmanifest">
+  <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#FFFFFF">
+  <meta name="msapplication-TileColor" content="#283b83">
+  <meta name="theme-color" content="#f4f3f2">
+  <link rel="stylesheet" href="styles/bulma.min.css">
+  <link rel="stylesheet" href="styles/global.css">
+  <!-- start head -->
+  <link rel="stylesheet" href="styles/exchange-rates-listing.css">
+
+  <!-- end head -->
+</head>
+
+<body>
+  <!-- START widget header -->
+  <header>
+    <div class="wrapper">
+      <a href="/">
+        <img src="../images/C3_logo_print-small-600_800x.webp" class="logo" />
+      </a>
+      <div class="right-panel">
+        <a>Logout</a>
+      </div>
+    </div>
+  </header>
+  <!-- END widget header -->
+  <div class="main-wrapper">
+    <div class="main-content">
+      <!-- start body -->
+      <div class="main-caption">
+        Exchange Rates
+      </div>
+
+      <div id="main-app" data-endpoint="api/getexchangerates.json" data-delete-endpoint="api/deleteResponse.json" data-method="POST" data-item-per-page="50">
+        <div class="action">
+          <a class="button is-link" href="/admin/exchange-rates/0">New Exchange Rate</a>
+        </div>
+        <div id="listingMain">
+          <div class="listing-container" v-if="grid.rows.length == 0">
+            <div class="instruction">
+              <p>No result for your search criteria</p>
+            </div>
+          </div>
+          <div class="listing-container" v-if="grid.rows.length>0">
+            <table class="listing-table brand-table">
+              <thead class="listing-header">
+                <tr>
+                  <th class="col-header col-action">
+
+                  </th>
+                  <th class="col-header col-brand">
+                    Source Currency
+                  </th>
+                  <th class="col-header col-focus">
+                    AUD Value
+                  </th>
+                  <th class="col-header col-currency">
+                    NZD Value
+                  </th>
+                  <th class="col-header col-publish-date">
+                    Valid From
+                  </th>
+                  <th class="col-header col-enabled">
+                    Valid To
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="row" v-for="(row, index) in grid.rows">
+                  <td class="col-action center">
+                    <a :href="'/admin/exchange-rates/' + row.id">
+                      <i class="fa-solid fa-pen"></i>
+                    </a>
+                    <a href="#" v-on:click.prevent="loadDeleteConfirmation(row.id)" class="remove has-confirmation">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </a>
+                  </td>
+                  <td nowrap="nowrap">{{row.sourceCurrency}}</td>
+                  <td>{{row.audValue}}</td>
+                  <td class="center">{{row.nzdValue}}</td>
+                  <td class="center">{{row.validFrom}}</td>
+                  <td class="center">{{row.validTo}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination" v-if="grid.rows.length>0">
+            <div>
+              <a v-if="grid.pagination.currentPage > 1" v-on:click="(event) => gotoPreviousPage(event)">&lt; Previous</a>
+            </div>
+            <div class="page">
+              <div>Page </div>
+              <div class="select">
+                <select v-model="grid.pagination.currentPage" v-on:change="(event) => gotoPage(event)">
+                  <option v-for="(n, index) in grid.pagination.totalPage">{{n}}</option>
+                </select>
+              </div>
+
+              <div> of</div>
+              <div>{{grid.pagination.totalPage}} </div>
+            </div>
+            <div>
+              <a v-if="grid.pagination.currentPage < grid.pagination.totalPage" v-on:click="(event) => gotoNextPage(event)">Next &gt;</a>
+            </div>
+          </div>
+
+          <div id="confirmation-delete" :class="!showDeletePopup ? 'modal' : 'modal is-active'">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+              <div class="modal-description">
+                <p>Are you sure you want to delete?</p>
+              </div>
+              <div>
+                <button id="btnDelete" class="button is-link" aria-label="delete" v-on:click.prevent="deleteExchangeRate()">Yes</button>
+              </div>
+            </div>
+            <button id="modal-close" class="modal-close is-large" aria-label="close"></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- end body -->
+    </div>
+  </div>
+  <!-- START widget footer -->
+  <footer>
+    <div class="footer-copyright">
+      <div class="wrapper">
+        <p class="text-small">&copy;2022 C-3 APPAREL</p>
+
+      </div>
+    </div>
+  </footer>
+  <!-- END widget footer -->
+
+  <script src="https://kit.fontawesome.com/3419b5ff01.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <!-- start scripts -->
+  <script src="scripts/exchange-rates-listing.js"></script>
+
+  <!-- end scripts -->
+</body>
+
+</html>

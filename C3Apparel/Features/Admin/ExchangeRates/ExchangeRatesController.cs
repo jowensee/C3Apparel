@@ -1,15 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using BlankSiteCore.Features.Base.API;
-using C3Apparel.Data.Common;
+using C3Apparel.Data.Extensions;
 using C3Apparel.Data.Modules.Classes;
-using C3Apparel.Data.Modules.Filters;
-using C3Apparel.Features.Admin.Brand;
-using C3Apparel.Features.Admin.Brand.API;
-using C3Apparel.Features.Admin.ExchangeRates.API;
 using C3Apparel.Frontend.Data.Settings;
 using C3Apparel.Web.Features.ExchangeRates.API.Requests;
 using C3Apparel.Web.Features.ExchangeRates.API.Responses;
@@ -27,26 +22,25 @@ namespace C3Apparel.Features.Admin.ExchangeRates
         }
         
        
-        public async Task<ActionResult> BrandListing(int brandId = 0)
+        public async Task<ActionResult> ExchangeRatesListing()
         {
 
-            var vm = new BrandListingPageViewModel();
+            var vm = new ExchangeRatesListingPageViewModel();
 
-            return View("~/Features/Admin/Brand/BrandListingPage.cshtml",vm);
+            return View("~/Features/Admin/ExchangeRates/ExchangeRatesListingPage.cshtml",vm);
         }
         
-        public async Task<ActionResult> BrandEdit(int brandId = 0)
+        public async Task<ActionResult> ExchangeRatesEdit(int id = 0)
         {
 
-            var vm = new BrandEditViewModel();
+            var vm = new ExchangeRatesEditViewModel();
 
-            if (brandId > 0)
+            if (id > 0)
             {
-                vm.ID = brandId;   
+                vm.ID = id;   
             }
-            vm.OptionsFocus = C3Definitions.BrandFocuses.ToDictionary(a => a, a => a);
-            vm.OptionsCurrency = C3Definitions.Currencies.ToDictionary(a => a, a => a);
-            return View("~/Features/Admin/Brand/BrandEditPage.cshtml",vm);
+            
+            return View("~/Features/Admin/ExchangeRates/ExchangeRatesEditPage.cshtml",vm);
         }
         
         [Route("getExchangeRates")]
@@ -71,6 +65,12 @@ namespace C3Apparel.Features.Admin.ExchangeRates
             response.TotalPage = GetTotalPage(totalCount, requests.ItemsPerPage);
             response.ExchangeRates = exchangeRates.Select(p => new ExchangeRateAPIItem()
             {
+                Id = p.ExchangeRateID,
+                SourceCurrency = p.ExchangeRateSourceCurrency,
+                AudValue = p.ExchangeRateAUDValue,
+                NzdValue = p.ExchangeRateNZDValue,
+                ValidFrom = p.ExchangeRateValidFrom == DateTime.MinValue ? string.Empty : p.ExchangeRateValidFrom.ToString("dd/MM/yyyy"),
+                ValidTo = p.ExchangeRateValidTo == DateTime.MinValue ? string.Empty : p.ExchangeRateValidTo.ToString("dd/MM/yyyy"),
                 
 
             }).ToList();
@@ -115,7 +115,17 @@ namespace C3Apparel.Features.Admin.ExchangeRates
                 }
                 return Ok(new GetEditExchangeRateResponse()
                 {
-                    
+                    Rate = new ExchangeRateAPIItem()
+                    {
+                        Id = exchangerRate.ExchangeRateID,
+                        SourceCurrency = exchangerRate.ExchangeRateSourceCurrency,
+                        AudValue = exchangerRate.ExchangeRateAUDValue,
+                        NzdValue = exchangerRate.ExchangeRateNZDValue,
+                        ValidFrom = exchangerRate.ExchangeRateValidFrom == DateTime.MinValue ? string.Empty : exchangerRate.ExchangeRateValidFrom.ToString("dd/MM/yyyy"),
+                        ValidTo = exchangerRate.ExchangeRateValidTo == DateTime.MinValue ? string.Empty : exchangerRate.ExchangeRateValidTo.ToString("dd/MM/yyyy"),
+                
+
+                    }
                 });
             }
             catch (Exception ex)
@@ -129,13 +139,19 @@ namespace C3Apparel.Features.Admin.ExchangeRates
         
         [Route("save-exchange-rate")]
         [HttpPost]
-        public async Task<ActionResult> SaveExchangeRate([FromBody] ExchangeRatesFullDetail requests)
+        public async Task<ActionResult> SaveExchangeRate([FromBody] ExchangeRateAPIItem requests)
         {
             try
             {
                 
                 var exchangeRate = new ExchangeRateInfo()
                 {
+                    ExchangeRateID = requests.Id,
+                    ExchangeRateSourceCurrency = requests.SourceCurrency,
+                    ExchangeRateAUDValue = requests.AudValue,
+                    ExchangeRateNZDValue = requests.NzdValue,
+                    ExchangeRateValidFrom = requests.ValidFrom.ToDateTime("dd/MM/yyyy"),
+                    ExchangeRateValidTo = requests.ValidTo.ToDateTime("dd/MM/yyyy"),
                 };
 
                 if (exchangeRate.ExchangeRateID == 0)

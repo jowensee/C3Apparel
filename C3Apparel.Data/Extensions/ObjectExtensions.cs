@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace C3Apparel.Data.Extensions
 {
@@ -45,6 +46,25 @@ namespace C3Apparel.Data.Extensions
             }
         }
         
+        public static DateTime ToDateTime(this object obj, string format)
+        {
+            if (obj == null)
+                return DateTime.MinValue;
+            if (obj is DateTime dateTime)
+                return dateTime;
+            try
+            {
+                DateTime dt;
+                DateTime.TryParseExact(obj.ToString(), format, System.Globalization.CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out dt);
+                
+                return  dt;
+            }
+            catch
+            {
+                return DateTime.MinValue;
+            }
+        }
         
         public static bool ToBool(this object obj)
         {

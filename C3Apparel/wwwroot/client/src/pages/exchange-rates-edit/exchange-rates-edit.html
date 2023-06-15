@@ -1,22 +1,11 @@
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@model C3Apparel.Features.Admin.ExchangeRates.ExchangeRatesEditViewModel
-@{
-   Layout = "_CMSLayout";
-}
-@section Styles {
-    <link rel="stylesheet" href="https://unpkg.com/@@vuepic/vue-datepicker@latest/dist/main.css">
-    <link rel="stylesheet" href="/client/dist/styles/exchange-rates-edit.css">
-}
+<!-- @@master = /src/masterpages/default.html-->
 
-@section Scripts {
-    <script src="https://unpkg.com/vue@latest"></script>
-    <script src="https://unpkg.com/@@vuepic/vue-datepicker@latest"></script>
-   <script src="/client/dist/scripts/exchange-rates-edit.js" asp-append-version="true"></script>
-}
-<div class="main-caption">
-   Add/Edit Exchange Rates
-</div>
-<div id="editMain" data-method="POST" data-endpoint-get="@Url.Action("GetExchangeRateForEdit", "ExchangeRates")" data-endpoint-save="@Url.Action("SaveExchangeRate", "ExchangeRates")" data-id="@Model.ID">
+<!-- @@block = head-->
+<link rel="stylesheet" href="styles/exchange-rates-edit.css">
+<!-- @@close-->
+
+<!-- @@block = body-->
+<div id="editMain" data-method="POST" data-endpoint-get="api/editbrand.json" data-endpoint-save="api/deleteResponse.json" data-id="1">
     <div v-if="formErrorMessage != ''">
             {{formErrorMessage}}
     </div>
@@ -43,7 +32,7 @@
         <div class="field" data-validation="">
             <label class="label">NZ Value</label>
             <div class="control">
-                 <input class="input" v-model="rate.nzdValue" type="text">
+                <input class="input" v-model="rate.nzdValue" type="text">
             </div>
         </div>
         
@@ -62,3 +51,8 @@
     
     </div>
 </div>
+<!-- @@close-->
+
+<!-- @@block = scripts-->
+<script src="scripts/exchange-rates-edit.js"></script>
+<!-- @@close-->

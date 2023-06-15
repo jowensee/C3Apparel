@@ -4,12 +4,20 @@ using Newtonsoft.Json;
 
 namespace C3Apparel.Web.Features.ExchangeRates.API.Responses;
 
-// Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
 public class ExchangeRateAPIItem
 {
-    [JsonProperty("exchangeRateId")]
-    public int ExchangeRateId { get; set; }
-    
+    [JsonProperty("id")]
+    public int Id { get; set; }
+    [JsonProperty("sourceCurrency")]
+    public string SourceCurrency { get; set; }
+    [JsonProperty("nzdValue")]
+    public decimal NzdValue { get; set; }
+    [JsonProperty("audValue")]
+    public decimal AudValue { get; set; }
+    [JsonProperty("validFrom")]
+    public string ValidFrom { get; set; }
+    [JsonProperty("validTo")]
+    public string ValidTo { get; set; }
 }
 
 public class GetExchangeRatesResponse : BaseListingResponse

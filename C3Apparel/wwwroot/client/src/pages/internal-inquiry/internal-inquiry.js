@@ -135,7 +135,6 @@ function InternalInquiry(){
 
                 }
                 
-                console.log(data)
                 let _this = this;
                 let grid = this.grid;
                 fetch(listEndpoint, {
