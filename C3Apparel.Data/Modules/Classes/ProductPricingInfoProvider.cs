@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using C3Apparel.Data.Extensions;
+using C3Apparel.Data.Modules.Filters;
 using C3Apparel.Data.Pricing;
 using C3Apparel.Data.Sql;
 using C3Apparel.Data.Utilities;
@@ -21,7 +23,7 @@ namespace C3Apparel.Data.Modules.Classes
                 nameof(BrandInfo.BrandDisplayName),
                 nameof(ProductPricingInfo.ProductPricingStatus),
                 nameof(ProductPricingInfo.ProductPricingC3Style),
-                nameof(ProductPricingInfo.ProducPricingDescription),
+                nameof(ProductPricingInfo.ProductPricingDescription),
                 nameof(ProductPricingInfo.ProductPricingGroup),
                 nameof(ProductPricingInfo.ProductPricingColours),
                 nameof(ProductPricingInfo.ProductPricingSizes),
@@ -67,7 +69,7 @@ namespace C3Apparel.Data.Modules.Classes
                     nameof(BrandInfo.BrandDisplayName),
                     nameof(ProductPricingInfo.ProductPricingStatus),
                     nameof(ProductPricingInfo.ProductPricingC3Style),
-                    nameof(ProductPricingInfo.ProducPricingDescription),
+                    nameof(ProductPricingInfo.ProductPricingDescription),
                     nameof(ProductPricingInfo.ProductPricingGroup),
                     nameof(ProductPricingInfo.ProductPricingColours),
                     nameof(ProductPricingInfo.ProductPricingSizes),
@@ -135,7 +137,7 @@ namespace C3Apparel.Data.Modules.Classes
             var row = ds.Tables[0].Rows[0];
             return new ProductPricingInfo
             {
-                ProducPricingDescription = row[nameof(ProductPricingInfo.ProducPricingDescription)].ToSafeString(),
+                ProductPricingDescription = row[nameof(ProductPricingInfo.ProductPricingDescription)].ToSafeString(),
                 ProductPricingCollection = row[nameof(ProductPricingInfo.ProductPricingCollection)].ToSafeString(),
                 ProductPricingColours = row[nameof(ProductPricingInfo.ProductPricingColours)].ToSafeString(),
                 ProductPricingCoo = row[nameof(ProductPricingInfo.ProductPricingCoo)].ToSafeString(),
@@ -155,5 +157,233 @@ namespace C3Apparel.Data.Modules.Classes
 
         }
 
+        public void InsertProductPricing(ProductPricingInfo productPricing)
+        {
+            var parameters = new Dictionary<string, object>
+            {
+                { "@ProductPricingDescription", productPricing.ProductPricingDescription },
+                { "@ProductPricingC3Style", productPricing.ProductPricingC3Style },
+                { "@ProductPricingSupplierStyle", productPricing.ProductPricingSupplierStyle },
+                { "@ProductPricingSupplierID", productPricing.ProductPricingSupplierID },
+                { "@ProductPricingCollection", productPricing.ProductPricingCollection },
+                { "@ProductPricingColours", productPricing.ProductPricingColours },
+                { "@ProductPricingColourDesc", productPricing.ProductPricingColourDesc },
+                { "@ProductPricingGroup", productPricing.ProductPricingGroup },
+                { "@ProductPricingCoo", productPricing.ProductPricingCoo },
+                { "@ProductPricingC3BuyPrice", productPricing.ProductPricingC3BuyPrice },
+                { "@ProductPricingSKUWeight", productPricing.ProductPricingSKUWeight },
+                { "@ProductPricingC3OverrideWeight", productPricing.ProductPricingC3OverrideWeight },
+                { "@ProductPricingStatus", productPricing.ProductPricingStatus }
+                
+            };
+            
+            ExecuteCommand($@"INSERT INTO C3_ProductPricing (ProductPricingDescription, ProductPricingC3Style, ProductPricingSupplierStyle,ProductPricingSupplierID,
+                             ProductPricingCollection, ProductPricingColours,ProductPricingColourDesc, ProductPricingGroup, ProductPricingCoo, 
+                       ProductPricingC3BuyPrice, ProductPricingSKUWeight, ProductPricingC3OverrideWeight,ProductPricingStatus,
+                       ProductPricingLastModified, ProductPricingGuid) VALUES   
+                     (@ProductPricingDescription, @ProductPricingC3Style, @ProductPricingSupplierStyle, @ProductPricingSupplierID, 
+                      @ProductPricingCollection, @ProductPricingColours, @ProductPricingColourDesc, @ProductPricingGroup, @ProductPricingCoo,
+                      @ProductPricingC3BuyPrice,@ProductPricingSKUWeight,@ProductPricingC3OverrideWeight,@ProductPricingStatus,
+                      GETDATE(), NewID())", parameters);
+        }
+
+        public void UpdateProductPricing(ProductPricingInfo productPricing)
+        {
+            var parameters = new Dictionary<string, object>
+            {
+                { "@ProductPricingID", productPricing.ProductPricingID },
+                { "@ProductPricingDescription", productPricing.ProductPricingDescription },
+                { "@ProductPricingC3Style", productPricing.ProductPricingC3Style },
+                { "@ProductPricingSupplierStyle", productPricing.ProductPricingSupplierStyle },
+                { "@ProductPricingSupplierID", productPricing.ProductPricingSupplierID },
+                { "@ProductPricingCollection", productPricing.ProductPricingCollection },
+                { "@ProductPricingColours", productPricing.ProductPricingColours },
+                { "@ProductPricingColourDesc", productPricing.ProductPricingColourDesc },
+                { "@ProductPricingGroup", productPricing.ProductPricingGroup },
+                { "@ProductPricingCoo", productPricing.ProductPricingCoo },
+                { "@ProductPricingC3BuyPrice", productPricing.ProductPricingC3BuyPrice },
+                { "@ProductPricingSKUWeight", productPricing.ProductPricingSKUWeight },
+                { "@ProductPricingC3OverrideWeight", productPricing.ProductPricingC3OverrideWeight },
+                { "@ProductPricingStatus", productPricing.ProductPricingStatus }
+                
+            };
+            
+            ExecuteCommand($@"UPDATE C3_ProductPricing SET
+                                    ProductPricingDescription = @ProductPricingDescription, 
+                                    ProductPricingC3Style = @ProductPricingC3Style, 
+                                    ProductPricingSupplierStyle = @ProductPricingSupplierStyle,
+                                    ProductPricingSupplierID = @ProductPricingSupplierID,                             
+                                    ProductPricingCollection = @ProductPricingCollection, 
+                                    ProductPricingColours = @ProductPricingColours,
+                                    ProductPricingColourDesc = @ProductPricingColourDesc, 
+                                    ProductPricingGroup = @ProductPricingGroup, 
+                                    ProductPricingCoo = @ProductPricingCoo,                        
+                                    ProductPricingC3BuyPrice = @ProductPricingC3BuyPrice, 
+                                    ProductPricingSKUWeight = @ProductPricingSKUWeight, 
+                                    ProductPricingC3OverrideWeight = @ProductPricingC3OverrideWeight,
+                                    ProductPricingStatus = @ProductPricingStatus,
+                                    ProductPricingLastModified = GETDATE()
+                                    WHERE ProductPricingID = @ProductPricingID", parameters);
+        }
+
+        public void Delete(int id)
+        {
+            var parameters = new Dictionary<string, object> { { "@Id", id } };
+            ExecuteCommand("DELETE FROM C3_ProductPricing WHERE ProductPricingID = @Id", parameters);
+        }
+
+        private string GetFilter(ProductPricingFilter filter)
+        {
+            var sFilterSql = new StringBuilder();
+            if (filter != null )
+            {
+                if (!string.IsNullOrWhiteSpace(filter.C3Style))
+                {
+                    sFilterSql.Append(
+                        $" AND {nameof(ProductPricingInfo.ProductPricingC3Style)} LIKE '%{SQLHelper.SqlString(filter.C3Style)}%'");
+                }
+                
+                if (!string.IsNullOrWhiteSpace(filter.Collection))
+                {
+                    sFilterSql.Append(
+                        $" AND {nameof(ProductPricingInfo.ProductPricingCollection)} LIKE '%{SQLHelper.SqlString(filter.Collection)}%'");
+                }
+                
+                if (!string.IsNullOrWhiteSpace(filter.Colour))
+                {
+                    sFilterSql.Append(
+                        $" AND {nameof(ProductPricingInfo.ProductPricingColours)} LIKE '%{SQLHelper.SqlString(filter.Colour)}%'");
+                }
+                
+                if (!string.IsNullOrWhiteSpace(filter.Description))
+                {
+                    sFilterSql.Append(
+                        $" AND {nameof(ProductPricingInfo.ProductPricingDescription)} LIKE '%{SQLHelper.SqlString(filter.Description)}%'");
+                }
+                
+                if (!string.IsNullOrWhiteSpace(filter.Sizes))
+                {
+                    sFilterSql.Append(
+                        $" AND {nameof(ProductPricingInfo.ProductPricingSizes)} LIKE '%{SQLHelper.SqlString(filter.Sizes)}%'");
+                }
+                
+                if (!string.IsNullOrWhiteSpace(filter.ProductGroup))
+                {
+                    sFilterSql.Append(
+                        $" AND {nameof(ProductPricingInfo.ProductPricingGroup)} LIKE '%{SQLHelper.SqlString(filter.ProductGroup)}%'");
+                }
+                
+                if (!string.IsNullOrWhiteSpace(filter.SupplierStyle))
+                {
+                    sFilterSql.Append(
+                        $" AND {nameof(ProductPricingInfo.ProductPricingSupplierStyle)} LIKE '%{SQLHelper.SqlString(filter.SupplierStyle)}%'");
+                }
+                
+                if (!string.IsNullOrWhiteSpace(filter.COO))
+                {
+                    sFilterSql.Append(
+                        $" AND {nameof(ProductPricingInfo.ProductPricingCoo)} LIKE '%{SQLHelper.SqlString(filter.COO)}%'");
+                }
+                
+                if (filter.Supplier > 0)
+                {
+                    sFilterSql.Append(
+                        $" AND {nameof(ProductPricingInfo.ProductPricingSupplierID)} = {filter.Supplier}");
+                }
+                
+            }
+
+            return sFilterSql.ToString();
+        }
+        public IEnumerable<ProductPricingInfo> GetAllProductPricings(ProductPricingFilter filter, int pageNumber, int itemsPerPage)
+        {
+            var sFilterSql = GetFilter(filter);
+            
+            var sSql = $@"SELECT * FROM C3_ProductPricing
+                       WHERE 1 = 1 {sFilterSql}
+                        ORDER BY ProductPricingDescription";
+
+            if (itemsPerPage > 0)
+            {
+                sSql += $" OFFSET {(pageNumber - 1) * itemsPerPage} ROWS FETCH NEXT {itemsPerPage} ROWS ONLY";
+            }
+            var ds = ExecuteQuery(sSql);
+
+            if (DataHelper.IsEmpty(ds))
+            {
+                return Enumerable.Empty<ProductPricingInfo>();
+            }
+
+            
+            var results = new List<ProductPricingInfo>();
+
+            for (var i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                results.Add(CreateProductPricingInfo(ds.Tables[0].Rows[i]));
+            }
+
+            return results;
+
+        }
+
+        private ProductPricingInfo CreateProductPricingInfo(DataRow row)
+        {
+            if (row == null)
+            {
+                return null;
+            }
+            return new ProductPricingInfo
+            {
+                ProductPricingID =  row[nameof(ProductPricingInfo.ProductPricingID)].ToInt(),
+                ProductPricingDescription = row[nameof(ProductPricingInfo.ProductPricingDescription)].ToSafeString(),
+                ProductPricingC3Style = row[nameof(ProductPricingInfo.ProductPricingC3Style)].ToSafeString(),
+                ProductPricingSupplierStyle = row[nameof(ProductPricingInfo.ProductPricingSupplierStyle)].ToSafeString(),
+                ProductPricingSupplierID = row[nameof(ProductPricingInfo.ProductPricingSupplierID)].ToInt(),
+                ProductPricingCollection = row[nameof(ProductPricingInfo.ProductPricingCollection)].ToSafeString(),
+                ProductPricingColours = row[nameof(ProductPricingInfo.ProductPricingColours)].ToSafeString(),
+                ProductPricingColourDesc = row[nameof(ProductPricingInfo.ProductPricingColourDesc)].ToSafeString(),
+                ProductPricingGroup = row[nameof(ProductPricingInfo.ProductPricingGroup)].ToSafeString(),
+                ProductPricingCoo = row[nameof(ProductPricingInfo.ProductPricingCoo)].ToSafeString(),
+                ProductPricingC3BuyPrice =  row[nameof(ProductPricingInfo.ProductPricingC3BuyPrice)].ToDecimal(),
+                ProductPricingSKUWeight = row[nameof(ProductPricingInfo.ProductPricingSKUWeight)].ToDecimal(),
+                ProductPricingC3OverrideWeight =  row[nameof(ProductPricingInfo.ProductPricingC3OverrideWeight)].ToDecimal(),
+                ProductPricingStatus = row[nameof(ProductPricingInfo.ProductPricingStatus)].ToSafeString(),
+                ProductPricingSizes = row[nameof(ProductPricingInfo.ProductPricingSizes)].ToSafeString(),
+                
+            };
+        }
+
+        public int GetAllProductPricingsCount(ProductPricingFilter filter)
+        {
+            var sFilterSql = GetFilter(filter);
+            
+            var sSql = $@"SELECT COUNT(*) FROM C3_ProductPricing
+                       WHERE 1 = 1 {sFilterSql}";
+
+           
+            var ds = ExecuteQuery(sSql);
+
+            if (DataHelper.IsEmpty(ds))
+            {
+                return 0;
+            }
+
+            return ds.Tables[0].Rows[0][0].ToInt();
+        }
+
+        public ProductPricingInfo GetProductPricing(int productPricingId)
+        {
+            var sSql = $"SELECT * FROM C3_ProductPricing WHERE ProductPricingID={productPricingId}";
+
+         
+            var ds = ExecuteQuery(sSql);
+
+            if (DataHelper.IsEmpty(ds))
+            {
+                return null;
+            }
+
+            return CreateProductPricingInfo(ds.Tables[0].Rows[0]);
+        }
     }
 }

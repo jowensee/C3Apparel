@@ -1,0 +1,112 @@
+<!-- @@master = /src/masterpages/default.html-->
+
+<!-- @@block = head-->
+<link rel="stylesheet" href="styles/admin-pricing-edit.css">
+<!-- @@close-->
+
+<!-- @@block = body-->
+<div id="editMain" data-method="POST" data-endpoint-get="api/editbrand.json" data-endpoint-save="api/deleteResponse.json" data-id="1">
+    <div v-if="formErrorMessage != ''">
+            {{formErrorMessage}}
+    </div>
+    <div class="form">
+        <div class="action">
+            <button id="btnSave" class="button is-link" v-on:click.prevent="savePricing()">Save</button>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Status</label>
+            <div class="control">
+                <input class="input" v-model="pricing.status" type="text">
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Supplier</label>
+            <div class="control">
+                <select  v-model="pricing.brandId">
+                    <option value="">Please select</option>
+                    @foreach (var option in Model.Brands)
+                    {
+                        <option value="@option.Key">@option.Value</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Collection</label>
+            <div class="control">
+                <input class="input" v-model="pricing.collection" type="text">
+            </div>
+        </div>            
+        <div class="field" data-validation="">
+            <label class="label">C3 Style</label>
+            <div class="control">
+                <input class="input" v-model="pricing.c3Style" type="text">
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Supplier Style</label>
+            <div class="control">
+                <input class="input" v-model="pricing.supplierStyle" type="text">
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Description</label>
+            <div class="control">
+                <input class="input"  v-model="pricing.description" type="text">
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">COO</label>
+            <div class="control">
+                 <input class="input"  v-model="pricing.coo" type="text">
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Product Group</label>
+            <div class="control">
+                <input class="input"  v-model="pricing.productGroup" type="text">
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Sizes</label>
+            <div class="control">
+                <input class="input"  v-model="pricing.sizes" type="text">
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Product Colours</label>
+            <div class="control">
+                 <input class="input"  v-model="pricing.productColours" type="text">
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Colour Descriptions</label>
+            <div class="control">
+                <input class="input"  v-model="pricing.colourDescriptions" type="text">
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">Buy Price</label>
+            <div class="control">
+                <input class="input"  v-model="pricing.buyPrice" type="text">
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">SKU Weight</label>
+            <div class="control">
+                 <input class="input"  v-model="pricing.skuWeight" type="text">
+            </div>
+        </div>
+        <div class="field" data-validation="">
+            <label class="label">C3 Override Weight</label>
+            <div class="control">
+                <input class="input" v-model="pricing.c3OverrideWeight" type="text">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- @@close-->
+
+<!-- @@block = scripts-->
+<script src="scripts/admin-pricing-edit.js"></script>
+<!-- @@close-->

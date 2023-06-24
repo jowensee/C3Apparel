@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using System.Data;
+using C3Apparel.Data.Modules.Filters;
 using C3Apparel.Data.Pricing;
 
 namespace C3Apparel.Data.Modules.Classes
@@ -11,5 +12,11 @@ namespace C3Apparel.Data.Modules.Classes
         int GetProductPricingCount(int brandId, SearchFilter filter);
 
         ProductPricingInfo GetProductPricingByC3Style(int brandId, string c3Style);
+        void InsertProductPricing(ProductPricingInfo productPricing);
+        void UpdateProductPricing(ProductPricingInfo productPricing);
+        void Delete(int id);
+        IEnumerable<ProductPricingInfo> GetAllProductPricings(ProductPricingFilter filter, int pageNumber, int itemsPerPage);
+        int GetAllProductPricingsCount(ProductPricingFilter filter);
+        ProductPricingInfo GetProductPricing(int productPricingId);
     }
 }

@@ -42,7 +42,7 @@ namespace C3Apparel.Data.Modules.Classes
             set;
         }
 
-        public string ProducPricingDescription
+        public string ProductPricingDescription
         {
             get;
             set;

@@ -1,0 +1,225 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using C3Apparel.Frontend.Data.Settings
+@model C3Apparel.Features.Admin.ProductPricing.ProductPricingListingPageViewModel
+@{
+   Layout = "_CMSLayout";
+}
+@section Styles {
+   <link rel="stylesheet" href="/client/dist/styles/admin-pricing-listing.css" asp-append-version="true">
+}
+
+@section Scripts {
+   <script src="/client/dist/scripts/admin-pricing-listing.js" asp-append-version="true"></script>
+}
+<div class="main-caption">
+   Product Pricing
+</div>
+
+<div id="main-app" data-endpoint="@Url.Action("GetProductPricings", "ProductPricing")"
+     data-delete-endpoint="@Url.Action("DeleteProductPricing", "ProductPricing")"
+     data-method="POST" data-item-per-page="@AdminSettings.DEFAULT_PAGE_SIZE">
+   <div class="action">
+      <a class="button is-link" href="/admin/product-pricings/0">New Product Pricing</a>       
+   </div>
+   <div class="filter-container">
+      <form action="">
+         <div class="field">
+            <label>Supplier</label>
+            <div class="control">
+               <div class="select">
+                  <select id="filterBrand" name="filterBrand" v-model="filter.brandId">
+                     <option value="0">Select</option>
+                     @foreach (var brand in Model.Brands)
+                     {
+                        <option value="@brand.Value">@brand.Text</option>
+                     }
+                  </select>
+               </div>
+            </div>
+         </div>
+         <div class="field">
+            <label>C3 Style</label>
+            <div class="control">
+               <div>
+                  <input type="text" v-model="filter.c3Style">
+               </div>
+            </div>
+         </div>
+         <div class="field">
+            <label>Collection</label>
+            <div class="control">
+               <div>
+                  <input type="text" v-model="filter.collection">
+               </div>
+            </div>
+         </div>
+         <div class="field">
+            <label>Supplier Style</label>
+            <div class="control">
+               <div>
+                  <input type="text" v-model="filter.supplierStyle">
+               </div>
+            </div>
+         </div>
+         <div class="field">
+            <label>Description</label>
+            <div class="control">
+               <div>
+                  <input type="text" v-model="filter.description">
+               </div>
+            </div>
+         </div>
+         <div class="field">
+            <label>COO</label>
+            <div class="control">
+               <div>
+                  <input type="text" v-model="filter.coo">
+               </div>
+            </div>
+         </div>
+         <div class="field">
+            <label>Product group</label>
+            <div class="control">
+               <div>
+                  <input type="text" v-model="filter.productGroup">
+               </div>
+            </div>
+         </div>
+         <div class="field">
+            <label>Sizes</label>
+            <div class="control">
+               <div>
+                  <input type="text" v-model="filter.sizes">
+               </div>
+            </div>
+         </div>
+         <div class="field">
+            <label>Colour</label>
+            <div class="control">
+               <div>
+                  <input type="text" v-model="filter.colour">
+               </div>
+            </div>
+         </div>             
+         <div class="buttons">
+            <button id="buttonSearch" class="button is-link" v-on:click.prevent="filterResults()">Search</button>
+         </div>
+
+         <div class="error"></div>
+      </form>
+   </div>
+   <div id="listingMain">
+      <div class="listing-container" v-if="grid.rows.length == 0">
+         <div class="instruction">
+            <p>No result for your search criteria</p>
+         </div>
+      </div>
+      <div class="listing-container" v-if="grid.rows.length>0">
+         <table class="listing-table brand-table">
+            <thead class="listing-header">
+            <tr>
+               <th class="col-header col-action">
+
+               </th>
+               <th class="col-header col-brand">
+                  Supplier
+               </th>
+               <th class="col-header col-focus">
+                  C3 Style
+               </th>
+               <th class="col-header col-currency">
+                  Collection
+               </th>
+               <th class="col-header col-publish-date">
+                  Supplier Style
+               </th>
+               <th class="col-header col-enabled">
+                  Description
+               </th>
+               <th class="col-header col-enabled">
+                  COO
+               </th>
+               <th class="col-header col-enabled">
+                  Product group
+               </th>
+               <th class="col-header col-enabled">
+                  Sizes
+               </th>
+               <th class="col-header col-enabled">
+                  Colour
+               </th>
+               <th class="col-header col-enabled">
+                  Colour Description
+               </th>
+               <th class="col-header col-enabled">
+                  C3 Buy Price
+               </th>
+               <th class="col-header col-enabled">
+                  SKU Weight
+               </th>
+               <th class="col-header col-enabled">
+                  C3 Override Weight
+               </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="row" v-for="(row, index) in grid.rows">
+               <td class="col-action center">
+                   <a :href="'/admin/product-pricings/' + row.id">
+                      <i class="fa-solid fa-pen"></i>
+                   </a>
+                   <a href="#" v-on:click.prevent="loadDeleteConfirmation(row.id)" class="remove has-confirmation">
+                      <i class="fa-solid fa-trash-can"></i>
+                   </a>
+                </td>
+               <td>{{row.supplierName}}</td>
+                <td>{{row.c3Style}}</td>
+                <td>{{row.collection}}</td>
+                <td>{{row.supplierStyle}}</td>
+                <td>{{row.description}}</td>
+                <td>{{row.coo}}</td>
+                <td>{{row.productGroup}}</td>
+                <td>{{row.sizes}}</td>
+                <td>{{row.productColours}}</td>
+                <td>{{row.colourDescription}}</td>
+                <td>{{row.c3BuyPrice}}</td>
+                <td>{{row.skuWeight}}</td>
+                <td>{{row.c3OverrideWeight}}</td>
+            </tr>
+            </tbody>
+         </table>
+      </div>
+      <div class="pagination" v-if="grid.rows.length>0">
+         <div>
+            <a v-if="grid.pagination.currentPage > 1" v-on:click="(event) => gotoPreviousPage(event)">&lt; Previous</a>
+         </div>
+         <div class="page">
+            <div>Page </div>
+            <div class="select">
+               <select v-model="grid.pagination.currentPage" v-on:change="(event) => gotoPage(event)">
+                  <option v-for="(n, index) in grid.pagination.totalPage">{{n}}</option>
+               </select>
+            </div>
+
+            <div> of</div>
+            <div>{{grid.pagination.totalPage}} </div>
+         </div>
+         <div>
+            <a v-if="grid.pagination.currentPage < grid.pagination.totalPage" v-on:click="(event) => gotoNextPage(event)">Next &gt;</a>
+         </div>
+      </div>
+
+      <div id="confirmation-delete" :class="!showDeletePopup ? 'modal' : 'modal is-active'">
+         <div class="modal-background"></div>
+         <div class="modal-content">
+            <div class="modal-description">
+               <p>Are you sure you want to delete?</p>
+            </div>
+            <div>
+               <button id="btnDelete" class="button is-link" aria-label="delete" v-on:click.prevent="deleteProductPrice()">Yes</button>
+            </div>
+         </div>
+         <button id="modal-close" class="modal-close is-large" aria-label="close"></button>
+      </div>
+   </div>
+</div>

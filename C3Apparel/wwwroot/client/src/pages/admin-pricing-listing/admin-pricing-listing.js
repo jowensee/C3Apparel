@@ -2,13 +2,12 @@ import "../../scripts/global"
 
 var Page = new Object()
 
-function BrandListing(){
+function PricingListing(){
     const { createApp } = Vue
     let thisObject = this;
     this.el = document.getElementById("main-app");
     
     this.itemsPerPage = Number(this.el.getAttribute("data-item-per-page"))
-
     const endpoint = thisObject.el.getAttribute("data-endpoint")
     const deleteEndpoint = thisObject.el.getAttribute("data-delete-endpoint")
     const method = thisObject.el.getAttribute("data-method")
@@ -27,9 +26,15 @@ function BrandListing(){
                     rows:[]
                 },
                 filter:{
-                    name:'',
-                    focus:'',
-                    currency:''
+                    brandId:0,
+                    c3Style:'',
+                    collection:'',
+                    supplierStyle:'',
+                    description:'',
+                    coo:'',
+                    productGroup:'',
+                    sizes:'',
+                    colour:''
                 }
             }
         },
@@ -43,10 +48,15 @@ function BrandListing(){
             populateGrid(pageNumber){
                 let data = {
                     filters:{
-                       filterName: this.filter.name,
-                        filterFocus:this.filter.focus,
-                        filterCurrency:this.filter.currency
-
+                       filterSupplier: this.filter.brandId,
+                       filterC3Style:this.filter.c3Style,
+                       filterCollection:this.filter.collection,
+                       filterSupplierStyle:this.filter.supplierStyle,
+                       filterDescription:this.filter.description,
+                       FilterCOO:this.filter.coo,
+                       filterProductGroup:this.filter.productGroup,
+                       filterSizes:this.filter.sizes,
+                       filterColour:this.filter.colour
                     },
                     pageNumber:pageNumber,
                     itemsPerPage:thisObject.itemsPerPage
@@ -63,10 +73,10 @@ function BrandListing(){
                 }).then(res=>res.json())
                     .then(function (response) {
                         grid.pagination.totalPage = response.totalPage;
-                        if (response.brands !== undefined)
+                        if (response.pricings !== undefined)
                         {
                             grid.rows = []
-                            response.brands.forEach(element => {
+                            response.pricings.forEach(element => {
                                 grid.rows.push(element)
                             });
                         }
@@ -101,7 +111,7 @@ function BrandListing(){
                 this.showDeletePopup = true
                 this.deleteId = id
             },
-            deleteBrand(){
+            deleteProductPrice(){
                 let data = {
                     id:this.deleteId
                 }
@@ -129,5 +139,5 @@ function BrandListing(){
 
 document.addEventListener("DOMContentLoaded", function(){
 
-    Page.BrandListing = new BrandListing();
+    Page.PricingListing = new PricingListing();
 })

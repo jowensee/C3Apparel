@@ -175,6 +175,13 @@ namespace BlankSiteCore
                 
                 endpoints.MapControllerRoute("Exchange Rates Edit", "admin/exchange-rates/{id}",
                     defaults: new { controller = "ExchangeRates", action = "ExchangeRatesEdit" });
+                
+                endpoints.MapControllerRoute("Product Pricing Listing", "admin/product-pricings",
+                    defaults: new { controller = "ProductPricing", action = "ProductPricingListing" });
+                
+                endpoints.MapControllerRoute("Product Pricing Edit", "admin/product-pricings/{id}",
+                    defaults: new { controller = "ProductPricing", action = "ProductPricingEdit" });
+
                 //endpoints.MapRazorPages();
             });
 

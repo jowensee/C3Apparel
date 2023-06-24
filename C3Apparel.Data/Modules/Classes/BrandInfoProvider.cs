@@ -36,7 +36,7 @@ namespace C3Apparel.Data.Modules.Classes
 
             if (!includeDisabled)
             {
-                sSql += " BrandEnabled=1";
+                sSql += " WHERE BrandEnabled=1";
             }
 
             sSql += " ORDER BY BrandDisplayName";

@@ -99,7 +99,7 @@ namespace C3Apparel.Data.Products
                             ProductPricingLastModified = DateTime.Now,
                             ProductPricingStatus = pricing.Status,
                             ProductPricingSupplierID  = brandID,
-                            ProducPricingDescription = pricing.Description,
+                            ProductPricingDescription = pricing.Description,
                             ProductPricingCollection = pricing.Collection,
                             ProductPricingC3Style = pricing.C3Style,
                             ProductPricingSupplierStyle = pricing.SupplierStyle,
@@ -130,7 +130,7 @@ namespace C3Apparel.Data.Products
                    
                             product.ProductPricingLastModified = DateTime.Now;
                             product.ProductPricingStatus = pricing.Status;
-                            product.ProducPricingDescription = pricing.Description;
+                            product.ProductPricingDescription = pricing.Description;
                             product.ProductPricingCollection = pricing.Collection;
                             product.ProductPricingC3Style = pricing.C3Style;
                             product.ProductPricingCoo = pricing.COO;

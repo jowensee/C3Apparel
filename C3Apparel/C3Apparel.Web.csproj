@@ -46,5 +46,7 @@
     <AdditionalFiles Include="Features\Admin\ExchangeRates\ExchangeRatesEditPage.cshtml" />
     <AdditionalFiles Include="Features\Admin\ExchangeRates\ExchangeRatesListingPage.cshtml" />
     <AdditionalFiles Include="Features\Admin\ImportDuty\ImportDutyEditPage.cshtml" />
+    <AdditionalFiles Include="Features\Admin\ProductPricing\ProductPricingEditPage.cshtml" />
+    <AdditionalFiles Include="Features\Admin\ProductPricing\ProductPricingListingPage.cshtml" />
   </ItemGroup>
 </Project>

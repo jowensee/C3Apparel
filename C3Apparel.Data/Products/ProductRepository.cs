@@ -25,7 +25,7 @@ namespace C3Apparel.Data.Products
             {
                 BrandName = dr[nameof(BrandInfo.BrandDisplayName)].ToString(),
                 ProductCode = dr[nameof(ProductPricingInfo.ProductPricingC3Style)].ToString(),
-                ProductName = dr[nameof(ProductPricingInfo.ProducPricingDescription)].ToString(),
+                ProductName = dr[nameof(ProductPricingInfo.ProductPricingDescription)].ToString(),
                 ProductSizes = dr[nameof(ProductPricingInfo.ProductPricingSizes)].ToString(),
                 ProductColours = dr[nameof(ProductPricingInfo.ProductPricingColours)].ToString(),
                 C3BuyPrice = dr[nameof(ProductPricingInfo.ProductPricingC3BuyPrice)].ToDecimal(),
