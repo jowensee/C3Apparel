@@ -181,7 +181,22 @@ namespace BlankSiteCore
                 
                 endpoints.MapControllerRoute("Product Pricing Edit", "admin/product-pricings/{id}",
                     defaults: new { controller = "ProductPricing", action = "ProductPricingEdit" });
+                
+                endpoints.MapControllerRoute("Upload pricings page", "admin/upload-pricings",
+                    defaults: new { controller = "ProductPricing", action = "UploadPage" });
 
+                endpoints.MapControllerRoute("Print pricings page", "admin/print-pricings",
+                    defaults: new { controller = "ProductPricing", action = "PrintPage" });
+                
+                endpoints.MapControllerRoute("Customer Print pricings", "print-pricing",
+                    defaults: new { controller = "Pricing", action = "CustomerPricePrintVersionPage" });
+                endpoints.MapControllerRoute("Print version", "print",
+                    defaults: new { controller = "Pricing", action = "PricePrintVersionPage" });
+                
+                endpoints.MapControllerRoute("Inquiry Page", "admin/inquiry",
+                    defaults: new { controller = "InternalPricing", action = "InternalPriceListingPage" });
+                endpoints.MapControllerRoute("Inquiry Print version", "print",
+                    defaults: new { controller = "Inquiry", action = "PricePrintVersionPage" });
                 //endpoints.MapRazorPages();
             });
 

@@ -167,6 +167,7 @@ namespace C3Apparel.Data.Modules.Classes
                 { "@ProductPricingSupplierID", productPricing.ProductPricingSupplierID },
                 { "@ProductPricingCollection", productPricing.ProductPricingCollection },
                 { "@ProductPricingColours", productPricing.ProductPricingColours },
+                { "@ProductPricingSizes", productPricing.ProductPricingSizes },
                 { "@ProductPricingColourDesc", productPricing.ProductPricingColourDesc },
                 { "@ProductPricingGroup", productPricing.ProductPricingGroup },
                 { "@ProductPricingCoo", productPricing.ProductPricingCoo },
@@ -178,11 +179,11 @@ namespace C3Apparel.Data.Modules.Classes
             };
             
             ExecuteCommand($@"INSERT INTO C3_ProductPricing (ProductPricingDescription, ProductPricingC3Style, ProductPricingSupplierStyle,ProductPricingSupplierID,
-                             ProductPricingCollection, ProductPricingColours,ProductPricingColourDesc, ProductPricingGroup, ProductPricingCoo, 
+                             ProductPricingCollection, ProductPricingSizes, ProductPricingColours,ProductPricingColourDesc, ProductPricingGroup, ProductPricingCoo, 
                        ProductPricingC3BuyPrice, ProductPricingSKUWeight, ProductPricingC3OverrideWeight,ProductPricingStatus,
                        ProductPricingLastModified, ProductPricingGuid) VALUES   
                      (@ProductPricingDescription, @ProductPricingC3Style, @ProductPricingSupplierStyle, @ProductPricingSupplierID, 
-                      @ProductPricingCollection, @ProductPricingColours, @ProductPricingColourDesc, @ProductPricingGroup, @ProductPricingCoo,
+                      @ProductPricingCollection, @ProductPricingSizes, @ProductPricingColours, @ProductPricingColourDesc, @ProductPricingGroup, @ProductPricingCoo,
                       @ProductPricingC3BuyPrice,@ProductPricingSKUWeight,@ProductPricingC3OverrideWeight,@ProductPricingStatus,
                       GETDATE(), NewID())", parameters);
         }
@@ -197,6 +198,7 @@ namespace C3Apparel.Data.Modules.Classes
                 { "@ProductPricingSupplierStyle", productPricing.ProductPricingSupplierStyle },
                 { "@ProductPricingSupplierID", productPricing.ProductPricingSupplierID },
                 { "@ProductPricingCollection", productPricing.ProductPricingCollection },
+                { "@ProductPricingSizes", productPricing.ProductPricingSizes },
                 { "@ProductPricingColours", productPricing.ProductPricingColours },
                 { "@ProductPricingColourDesc", productPricing.ProductPricingColourDesc },
                 { "@ProductPricingGroup", productPricing.ProductPricingGroup },
@@ -214,6 +216,7 @@ namespace C3Apparel.Data.Modules.Classes
                                     ProductPricingSupplierStyle = @ProductPricingSupplierStyle,
                                     ProductPricingSupplierID = @ProductPricingSupplierID,                             
                                     ProductPricingCollection = @ProductPricingCollection, 
+                                    ProductPricingSizes = @ProductPricingSizes,
                                     ProductPricingColours = @ProductPricingColours,
                                     ProductPricingColourDesc = @ProductPricingColourDesc, 
                                     ProductPricingGroup = @ProductPricingGroup, 
@@ -230,6 +233,16 @@ namespace C3Apparel.Data.Modules.Classes
         {
             var parameters = new Dictionary<string, object> { { "@Id", id } };
             ExecuteCommand("DELETE FROM C3_ProductPricing WHERE ProductPricingID = @Id", parameters);
+        }
+
+        public void Delete(int brandId, string pricingC3Style)
+        {
+            var parameters = new Dictionary<string, object> { { "@Id", brandId },
+            {
+                "@style", pricingC3Style
+            } };
+            ExecuteCommand($@"DELETE FROM C3_ProductPricing WHERE {nameof(ProductPricingInfo.ProductPricingSupplierID)}=@Id
+                                                                AND {nameof(ProductPricingInfo.ProductPricingC3Style)}=@style", parameters);
         }
 
         private string GetFilter(ProductPricingFilter filter)
@@ -384,6 +397,12 @@ namespace C3Apparel.Data.Modules.Classes
             }
 
             return CreateProductPricingInfo(ds.Tables[0].Rows[0]);
+        }
+
+        public void DeleteAll(int brandId)
+        {
+            var parameters = new Dictionary<string, object> { { "@Id", brandId } };
+            ExecuteCommand($"DELETE FROM C3_ProductPricing WHERE {nameof(ProductPricingInfo.ProductPricingSupplierID)} = @Id", parameters);
         }
     }
 }

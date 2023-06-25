@@ -26,6 +26,8 @@
   <ItemGroup>
     <Compile Remove="wwwroot\scripts\**" />
     <Compile Remove="wwwroot\styles\**" />
+    <Compile Remove="Features\Pricing\InternalPriceListingPageViewModel.cs" />
+    <Compile Remove="Features\Pricing\InternalPricingController.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="wwwroot\scripts\**" />
@@ -38,6 +40,7 @@
   <ItemGroup>
     <Content Remove="wwwroot\scripts\**" />
     <Content Remove="wwwroot\styles\**" />
+    <Content Remove="Features\Pricing\InternalPriceListingPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Features\Content\ContentPage.cshtml" />

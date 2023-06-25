@@ -31,5 +31,17 @@ namespace C3Apparel.Data.Modules.Classes{
             };
         }
 
+        public void Save(InquirySettingsInfo settings)
+        {
+            var parameters = new Dictionary<string, object>
+            {
+                { "@InquirySettingsGuid", settings.InquirySettingsGuid },
+                { "@InquirySettingsJsonString", settings.InquirySettingsJsonString }
+                
+            };
+            
+            ExecuteCommand($@"INSERT INTO C3Apparel_InquirySettings (InquirySettingsGuid, InquirySettingsJsonString) VALUES   
+                     (@InquirySettingsGuid, @InquirySettingsJsonString)", parameters);
+        }
     }
 }

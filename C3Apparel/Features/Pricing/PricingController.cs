@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using C3Apparel.Data.Common;
+using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Data.Pricing;
 using C3Apparel.Data.Products;
 using C3Apparel.Frontend.Data.Common;
@@ -13,6 +14,7 @@ using C3Apparel.Web.Authentication;
 using C3Apparel.Web.Features.Pricing;
 using C3Apparel.Web.Features.Pricing.API.Requests;
 using C3Apparel.Web.Features.Pricing.API.Responses;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace C3Apparel.Web.Features.Pricing
@@ -26,15 +28,16 @@ namespace C3Apparel.Web.Features.Pricing
         private readonly IProductSettingsRepository _productSettingsRepository;
         private readonly AllPriceWeightBasedSettings _weightbasedSettings;
         private readonly IBrandRepository _brandRepository;
-        
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public PricingController(IProductRepository productRepository, IProductPricingService productPricingService, ICurrentUserProvider currentUserProvider, 
-            IProductSettingsRepository productSettingsRepository, IBrandRepository brandRepository)
+            IProductSettingsRepository productSettingsRepository, IBrandRepository brandRepository, IHttpContextAccessor httpContextAccessor)
         {
             _productRepository = productRepository;
             _productPricingService = productPricingService;
             _currentUserProvider = currentUserProvider;
             _productSettingsRepository = productSettingsRepository;
             _brandRepository = brandRepository;
+            _httpContextAccessor = httpContextAccessor;
             _weightbasedSettings = _productSettingsRepository.GetAllWeightBasedPriceSettings();
         }
         
@@ -172,9 +175,11 @@ namespace C3Apparel.Web.Features.Pricing
             }
             
             var pdfGenerator = new PDFGenerator();
+
+            var baseUrl = $"{(_httpContextAccessor.HttpContext.Request.IsHttps ? "https://" : "http://")}{_httpContextAccessor.HttpContext.Request.Host.Value}"; ;
+
             
-            //TODO presentation url
-            var bytes = pdfGenerator.GeneratePDF($"http://localhost/print?brandid={brandId}&currency={currency}");
+            var bytes = pdfGenerator.GeneratePDF($"{baseUrl}/print?brandid={brandId}&currency={currency}");
 
             return new FileContentResult(bytes, "application/octet-stream")
             {

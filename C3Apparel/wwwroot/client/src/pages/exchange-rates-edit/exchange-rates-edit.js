@@ -1,5 +1,4 @@
 import "../../scripts/global"
-import "../../scripts/global"
 
 var Page = new Object()
 

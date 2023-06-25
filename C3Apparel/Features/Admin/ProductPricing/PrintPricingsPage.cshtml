@@ -1,0 +1,58 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using C3Apparel.Frontend.Data.Settings
+@model C3Apparel.Features.Admin.ProductPricing.PrintPricingsPageViewModel
+@{
+   Layout = "_CMSLayout";
+}
+@section Styles {
+   <link rel="stylesheet" href="/client/dist/styles/print-pricing.css" asp-append-version="true">
+}
+
+@section Scripts {
+   <script src="/client/dist/scripts/print-pricing.js" asp-append-version="true"></script>
+}
+<partial name="~/Features/Admin/_ProductPricingNavigation.cshtml" model="3"/>
+<div class="main-caption">
+   Print C3 Pricings
+</div>
+ 
+<div id="main-app">
+   <div class="filter-container">
+      <form>
+         <div class="field">
+            <label>Supplier</label>
+            <div class="control">
+               <div class="select">
+                  <select id="filterBrand" name="brand" v-model="form.brandId">
+                     <option value="0">Select</option>
+                     @foreach (var brand in Model.Brands)
+                     {
+                        <option value="@brand.Value">@brand.Text</option>
+                     }
+                  </select>
+               </div>
+               <div :class="{error: true, show: !validation.supplier}">Please select supplier</div>
+            </div>
+         </div>
+         <div class="field">
+            <label>Target currency</label>
+            <div class="control">
+               <div>
+                  <select name="currency" v-model="form.currency">
+                     <option value="">Select</option>
+                     <option value="AUD">Australian Dollar</option>
+                     <option value="NZD">New Zealand Dollar</option>
+                  </select>
+               </div>
+               <div :class="{error: true, show: !validation.currency}">Please select currency</div>
+            </div>
+         </div>
+         <div class="buttons">
+            <button class="button is-link" v-on:click.prevent="print()">Print</button>
+         </div>
+ 
+         <div class="error"></div>
+      </form>
+   </div>
+ 
+</div>

@@ -12,11 +12,18 @@ namespace C3Apparel.Web.Component.ViewComponents.PageHeader
             _currentUserProvider = currentUserProvider;
         }
         
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(bool admin)
         {
             var currentUser = _currentUserProvider.GetCurrentUserInfo();
-            
-            return View("~/Components/ViewComponents/PageHeader/Default.cshtml", new HeaderViewModel(currentUser));
+
+            if (admin)
+            {
+                return View("~/Components/ViewComponents/PageHeader/Admin.cshtml", new HeaderViewModel(currentUser));   
+            }
+            else
+            {
+                return View("~/Components/ViewComponents/PageHeader/Default.cshtml", new HeaderViewModel(currentUser));
+            }
         }
     }
 }

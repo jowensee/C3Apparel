@@ -613,6 +613,19 @@ header .wrapper img.logo {
   margin: 0 auto;
 }
 
+nav {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+nav a {
+  text-decoration: none;
+  font-size: 16px;
+  margin-right: 20px;
+}
+nav a.active {
+  font-weight: bold;
+}
+
 footer {
   background-color: #000;
   color: #fff;
@@ -681,7 +694,7 @@ body .main-wrapper .main-content {
 .field label {
   margin-right: 20px;
   display: flex;
-  align-items: center;
+  /*align-items: center;*/
   font-size: 1.4em;
 }
 
@@ -807,4 +820,8 @@ input.text-number {
 .modal-content .modal-description {
   margin-bottom: 20px;
   font-size: 14px;
+}
+
+.show {
+  display: block;
 }

@@ -75,7 +75,7 @@ body{
     label{
         margin-right:20px;
         display: flex;
-        align-items: center;
+        /*align-items: center;*/
         font-size:1.4em
     }
 }
@@ -234,3 +234,8 @@ input.text-number{
     }
 
 }
+
+
+.show{
+    display:block;
+  }

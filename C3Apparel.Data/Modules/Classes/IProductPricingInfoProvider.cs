@@ -15,8 +15,10 @@ namespace C3Apparel.Data.Modules.Classes
         void InsertProductPricing(ProductPricingInfo productPricing);
         void UpdateProductPricing(ProductPricingInfo productPricing);
         void Delete(int id);
+        void Delete(int brandId, string pricingC3Style);
         IEnumerable<ProductPricingInfo> GetAllProductPricings(ProductPricingFilter filter, int pageNumber, int itemsPerPage);
         int GetAllProductPricingsCount(ProductPricingFilter filter);
         ProductPricingInfo GetProductPricing(int productPricingId);
+        void DeleteAll(int brandId);
     }
 }

@@ -10,7 +10,7 @@
 @section Scripts {
    <script src="/client/dist/scripts/admin-pricing-edit.js" asp-append-version="true"></script>
 }
-
+<partial name="~/Features/Admin/_ProductPricingNavigation.cshtml" model="1"/>
 <div id="editMain" data-method="POST" data-endpoint-get="@Url.Action("GetProductPricingsForEdit", "ProductPricing")" 
      data-endpoint-save="@Url.Action("SaveProductPricings", "ProductPricing")" data-id="@Model.ID">
     <div v-if="formErrorMessage != ''">

@@ -1,0 +1,15 @@
+@model C3Apparel.Web.Component.ViewComponents.PageHeader.HeaderViewModel
+<header>
+    <div class="wrapper">
+        <a href="/admin/dashboard">
+            <img src="/client/dist/images/C3_logo_print-small-600_800x.webp" class="logo"/>
+        </a>
+        <div class="middle">Admin</div>
+        @if (!Model.CurrentUser.IsPublicUser)
+        {
+            <div class="right-panel">
+                <a href="@Url.Action("Logout", "Account")">Logout</a>
+            </div>
+        }
+    </div>
+</header>

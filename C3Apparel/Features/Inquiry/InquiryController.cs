@@ -16,6 +16,7 @@ using C3Apparel.Web.Features.Pricing;
 using C3Apparel.Web.Features.Pricing.API.Responses;
 using CsvHelper;
 using CsvHelper.Configuration;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -33,10 +34,11 @@ namespace C3Apparel.Web.Features.Content
         private readonly IBrandRepository _brandRepository;
         private readonly AllPriceWeightBasedSettings _weightbasedSettings;
         private readonly IInquirySettingsInfoProvider _inquirySettingsInfoProvider;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         
         public InquiryController(IProductSettingsRepository productSettingsRepository, IExchangeRateRetriever exchangeRateRetriever, 
             IProductPricingService productPricingService, IProductRepository productRepository, IBrandRepository brandRepository, 
-            IInquirySettingsInfoProvider inquirySettingsInfoProvider)
+            IInquirySettingsInfoProvider inquirySettingsInfoProvider, IHttpContextAccessor httpContextAccessor)
         {
             _productSettingsRepository = productSettingsRepository;
             _exchangeRateRetriever = exchangeRateRetriever;
@@ -44,6 +46,7 @@ namespace C3Apparel.Web.Features.Content
             _productRepository = productRepository;
             _brandRepository = brandRepository;
             _inquirySettingsInfoProvider = inquirySettingsInfoProvider;
+            _httpContextAccessor = httpContextAccessor;
             _weightbasedSettings = _productSettingsRepository.GetAllWeightBasedPriceSettings();
         }
 
@@ -242,8 +245,9 @@ namespace C3Apparel.Web.Features.Content
             }
             
             var pdfGenerator = new PDFGenerator();
-            //TODO presentation url
-            var bytes = pdfGenerator.GeneratePDF($"http://localhost/inquiry/print?id={id}");
+            var baseUrl = $"{(_httpContextAccessor.HttpContext.Request.IsHttps ? "https://" : "http://")}{_httpContextAccessor.HttpContext.Request.Host.Value}"; ;
+
+            var bytes = pdfGenerator.GeneratePDF($"{baseUrl}/inquiry/print?id={id}");
 
             return new FileContentResult(bytes, "application/octet-stream")
             {
@@ -336,12 +340,9 @@ namespace C3Apparel.Web.Features.Content
             {
                 var settings = new InquirySettingsInfo();
                 settings.InquirySettingsGuid = Guid.NewGuid();
-                settings.InquirySettingsModifiedWhen = DateTime.Now;
-                settings.InquirySettingsName = $"Settings-{DateTime.Now:ddMMyyyyHHmmss}";
                 settings.InquirySettingsJsonString = JsonConvert.SerializeObject(requests);
                 
-                //TODO insert
-                //settings.Insert();
+                _inquirySettingsInfoProvider.Save(settings);
 
                 response.SettingsGuid = settings.InquirySettingsGuid.ToString();
             }

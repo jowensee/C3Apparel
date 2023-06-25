@@ -1,0 +1,58 @@
+<!-- @@master = /src/masterpages/default.html-->
+
+<!-- @@block = head-->
+<link rel="stylesheet" href="styles/print-pricing.css">
+<!-- @@close-->
+
+<!-- @@block = body-->
+<nav>
+    <a href="/admin/product-pricings">C3 Product Pricing</a>
+    <a href="/admin/upload-pricings">Upload Pricings</a>
+    <a href="/admin/print-pricings" class="active">Print C3 Pricings</a>
+ </nav>
+ <div class="main-caption">
+    Print C3 Pricings
+ </div>
+  
+ <div id="main-app">
+    <div class="filter-container">
+       <form>
+          <div class="field">
+             <label>Supplier</label>
+             <div class="control">
+                <div class="select">
+                   <select id="filterBrand" name="brand" v-model="form.brandId">
+                      <option value="0">Select</option>
+                      <option value="1">Pure Waste</option>
+                   </select>
+                </div>                
+                <div :class="{error: true, show: !validation.supplier}">Please select supplier</div>
+             </div>
+          </div>
+          <div class="field">
+             <label>Target currency</label>
+             <div class="control">
+                <div>
+                   <select name="currency" v-model="form.currency">
+                      <option value="">Select</option>
+                      <option value="AUD">Australian Dollar</option>
+                      <option value="NZD">New Zealand Dollar</option>
+                   </select>
+                </div>            
+                <div :class="{error: true, show: !validation.currency}">Please select supplier</div>
+             </div>
+          </div>
+          <div class="buttons">
+             <button class="button is-link" v-on:click.prevent="print()">Print</button>
+          </div>
+  
+          <div class="error"></div>
+       </form>
+    </div>
+  
+ </div>
+<!-- @@close-->
+
+<!-- @@block = scripts-->
+<script src="scripts/print-pricing.js"></script>
+<!-- @@close-->
