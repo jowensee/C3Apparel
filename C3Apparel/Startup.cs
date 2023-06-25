@@ -21,7 +21,7 @@ namespace BlankSiteCore
     {
         private IWebHostEnvironment Environment { get; }
         private readonly IConfiguration _configuration;
-        private const string AuthCookieName = "identity.auth";
+        //private const string AuthCookieName = "identity.auth";
 
         public Startup(IWebHostEnvironment environment, IConfiguration configuration)
         {
@@ -31,7 +31,7 @@ namespace BlankSiteCore
 
         private void ConfigureMembershipServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>((option) =>
+            /*services.AddDbContext<ApplicationDbContext>((option) =>
             {
                 option.UseSqlServer(_configuration.GetConnectionString("ConnectionString"));
             });
@@ -46,17 +46,17 @@ namespace BlankSiteCore
                     options.Password.RequiredUniqueChars = 0;
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>();;
-
+            */
             services.AddAuthorization();
             services.AddAuthentication();
 
-            services.ConfigureApplicationCookie(c =>
+            /*services.ConfigureApplicationCookie(c =>
             {
                 c.LoginPath = new PathString("/login");
                 c.ExpireTimeSpan = TimeSpan.FromDays(14);
                 c.SlidingExpiration = true;
                 c.Cookie.Name = AuthCookieName;
-            });
+            });*/
 
         }
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -150,8 +150,8 @@ namespace BlankSiteCore
             {
                 endpoints.MapControllerRoute("Pricing", "pricing/{brandId}",
                     defaults: new { controller = "Pricing", action = "PriceListingPage" });
-                endpoints.MapControllerRoute("Login", "login",
-                    defaults: new { controller = "Account", action = "LoginPage" });
+                //endpoints.MapControllerRoute("Login", "login",
+                //    defaults: new { controller = "Account", action = "LoginPage" });
                 
                 
                 //Admin
@@ -197,7 +197,7 @@ namespace BlankSiteCore
                     defaults: new { controller = "InternalPricing", action = "InternalPriceListingPage" });
                 endpoints.MapControllerRoute("Inquiry Print version", "print",
                     defaults: new { controller = "Inquiry", action = "PricePrintVersionPage" });
-                //endpoints.MapRazorPages();
+                endpoints.MapRazorPages();
             });
 
         }
