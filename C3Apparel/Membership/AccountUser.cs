@@ -1,6 +1,6 @@
 using C3Apparel.Data.Pricing;
 
-namespace C3Apparel.Frontend.Data.Membership;
+namespace C3Apparel.Web.Membership;
 
 public class AccountUser
 {
@@ -38,5 +38,10 @@ public class AccountUser
         CountryRole = countryRole;
         FullName = fullName;
         IsGlobalAdministrator = isGlobalAdministrator;
+    }
+
+    public AccountUser(string username)
+    {
+        Username = username;
     }
 }

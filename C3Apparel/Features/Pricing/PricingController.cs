@@ -4,22 +4,20 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using C3Apparel.Data.Common;
-using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Data.Pricing;
 using C3Apparel.Data.Products;
 using C3Apparel.Frontend.Data.Common;
-using C3Apparel.Frontend.Data.Membership;
 using C3Apparel.PDF;
 using C3Apparel.Web.Authentication;
-using C3Apparel.Web.Features.Pricing;
 using C3Apparel.Web.Features.Pricing.API.Requests;
 using C3Apparel.Web.Features.Pricing.API.Responses;
+using C3Apparel.Web.Membership;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace C3Apparel.Web.Features.Pricing
 {
-    //[TypeFilter(typeof(C3AuthorizationFilter))]
+    [TypeFilter(typeof(C3AuthorizationFilter))]
     public class PricingController : Controller
     {
         private readonly IProductRepository _productRepository;
@@ -49,7 +47,7 @@ namespace C3Apparel.Web.Features.Pricing
 
             vm.Brands = _productRepository.GetBrandsWithPricing().Select(a=> new ListItem(a.BrandName, a.BrandID.ToString(), brandId == a.BrandID));
 
-            var targetCurrency = _currentUserProvider.GetCurrentUserInfo().Currency;
+            var targetCurrency = (await _currentUserProvider.GetCurrentUserInfo()).Currency;
 
             if (targetCurrency == CurrencyConstants.AUD)
             {
@@ -66,6 +64,7 @@ namespace C3Apparel.Web.Features.Pricing
 
             if (brand != null)
             {
+                
                 vm.CurrentBrandRegionCode = brand.BrandRegionCode;
                 vm.PriceCol1HasFreightSurcharge = PriceColumnHasFreightSurcharge(brand.BrandRegionCode, WeightbasedSettings.Price1KeyName, targetCurrency);
                 vm.PriceCol2HasFreightSurcharge = PriceColumnHasFreightSurcharge(brand.BrandRegionCode, WeightbasedSettings.Price2KeyName, targetCurrency);
@@ -161,7 +160,7 @@ namespace C3Apparel.Web.Features.Pricing
             if (string.IsNullOrEmpty(currency))
             {
 
-                currency = _currentUserProvider.GetCurrentUserInfo().Currency;
+                currency = (await _currentUserProvider.GetCurrentUserInfo()).Currency;
                 
             }
             
@@ -204,14 +203,15 @@ namespace C3Apparel.Web.Features.Pricing
             IEnumerable<ProductItem> products;
             ResultItem result;
 
-            var brandPricing = _brandRepository.GetBrandPricingInfo(requests.BrandID, _currentUserProvider.GetCurrentUserInfo().Currency);
+            var currency = (await _currentUserProvider.GetCurrentUserInfo()).Currency;
+            var brandPricing = _brandRepository.GetBrandPricingInfo(requests.BrandID, currency);
 
             if (!brandPricing.IsValid)
             {
                 return BadRequest();
             }
             
-            (products, result) = _productPricingService.GetProductsWithConvertedPrice(brandPricing, _currentUserProvider.GetCurrentUserInfo().Currency, requests.PageNumber, requests.ItemsPerPage);
+            (products, result) = _productPricingService.GetProductsWithConvertedPrice(brandPricing,currency, requests.PageNumber, requests.ItemsPerPage);
 
             if (result.HasError)
             {

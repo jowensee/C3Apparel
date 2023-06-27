@@ -11,6 +11,7 @@ using C3Apparel.Data.Pricing;
 using C3Apparel.Features.Admin.FreightWeighPricing.API;
 using C3Apparel.Features.Admin.FreightWeighPricing.API.Requests;
 using C3Apparel.Frontend.Data.Settings;
+using C3Apparel.Web.Authentication;
 using C3Apparel.Web.Features.AdminImportDuty.API.Responses;
 using C3Apparel.Web.Features.Pricing.API.Requests;
 using C3Apparel.Web.Features.Pricing.API.Responses;
@@ -19,7 +20,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace C3Apparel.Features.Admin.FreightWeighPricing
 {
-    //[TypeFilter(typeof(AdminAuthorizationFilter))]
+    [TypeFilter(typeof(AdminAuthorizationFilter))]
     public class FreightWeightSettingsController : Controller
     {
         private readonly IPriceSettingsInfoProvider _priceSettingsInfoProvider;

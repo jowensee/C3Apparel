@@ -1,5 +1,5 @@
 using System;
-using C3Apparel.Frontend.Data.Membership;
+using C3Apparel.Web.Membership;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -19,7 +19,7 @@ public class AdminAuthorizationFilter : Attribute, IAuthorizationFilter
 
     public void OnAuthorization(AuthorizationFilterContext context)
     {
-        var urlReferrer = string.Empty;
+        /*var urlReferrer = string.Empty;
 
         if (_httpContextRetriever.HttpContext.Request.Headers.ContainsKey("Referer"))
         {
@@ -30,9 +30,9 @@ public class AdminAuthorizationFilter : Attribute, IAuthorizationFilter
         if (string.IsNullOrEmpty(urlReferrer) )
         {
             return;
-        }
+        }*/
         
-        var currentUser = _currentUserProvider.GetCurrentUserInfo();
+        var currentUser =  _currentUserProvider.GetCurrentUserInfo().Result;
         
         if (currentUser.IsPublicUser)
         {

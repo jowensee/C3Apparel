@@ -3,16 +3,12 @@ using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Data.Pricing;
 using C3Apparel.Data.Products;
 using C3Apparel.Data.Sql;
-using C3Apparel.Frontend.Data.Identity;
-using C3Apparel.Frontend.Data.Membership;
+using C3Apparel.Web.Membership;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace BlankSiteCore
@@ -100,7 +96,6 @@ namespace BlankSiteCore
             services.AddScoped<IBrandInfoProvider, BrandInfoProvider>();
             services.AddScoped<IInquirySettingsInfoProvider, InquirySettingsInfoProvider>();
             services.AddScoped<IImportDutyInfoProvider, ImportDutyInfoProvider>();
-            
             ConfigureMembershipServices(services);
             
         }
@@ -142,13 +137,14 @@ namespace BlankSiteCore
             app.UseCors();
 
             app.UseAuthentication();
-            // app.UseAuthorization();
 
             
             app.UseRouting();
+            
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("Pricing", "pricing/{brandId}",
+                endpoints.MapControllerRoute("Pricing", "pricing",
                     defaults: new { controller = "Pricing", action = "PriceListingPage" });
                 //endpoints.MapControllerRoute("Login", "login",
                 //    defaults: new { controller = "Account", action = "LoginPage" });

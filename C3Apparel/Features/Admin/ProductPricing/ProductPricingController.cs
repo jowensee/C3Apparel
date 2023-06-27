@@ -11,6 +11,7 @@ using C3Apparel.Features.Admin.Brand;
 using C3Apparel.Features.Admin.ProductPricing.API;
 using C3Apparel.Frontend.Data.Common;
 using C3Apparel.Frontend.Data.Settings;
+using C3Apparel.Web.Authentication;
 using C3Apparel.Web.Features.ProductPricing.API.Requests;
 using C3Apparel.Web.Features.ProductPricing.API.Responses;
 using Microsoft.AspNetCore.Http;
@@ -19,7 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace C3Apparel.Features.Admin.ProductPricing
 {
-    //[TypeFilter(typeof(AdminAuthorizationFilter))]
+    [TypeFilter(typeof(AdminAuthorizationFilter))]
     public class ProductPricingController : Controller
     {
         private readonly IBrandInfoProvider _brandInfoProvider;

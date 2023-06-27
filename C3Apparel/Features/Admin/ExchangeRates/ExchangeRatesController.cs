@@ -6,13 +6,14 @@ using BlankSiteCore.Features.Base.API;
 using C3Apparel.Data.Extensions;
 using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Frontend.Data.Settings;
+using C3Apparel.Web.Authentication;
 using C3Apparel.Web.Features.ExchangeRates.API.Requests;
 using C3Apparel.Web.Features.ExchangeRates.API.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace C3Apparel.Features.Admin.ExchangeRates
 {
-    //[TypeFilter(typeof(AdminAuthorizationFilter))]
+    [TypeFilter(typeof(AdminAuthorizationFilter))]
     public class ExchangeRatesController : Controller
     {
         private readonly IExchangeRateInfoProvider _exchangeRateInfoProvider;

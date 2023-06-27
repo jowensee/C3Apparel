@@ -4,12 +4,10 @@
         <a href="/admin/dashboard">
             <img src="/client/dist/images/C3_logo_print-small-600_800x.webp" class="logo"/>
         </a>
-        <div class="middle">Admin</div>
-        @if (!Model.CurrentUser.IsPublicUser)
-        {
-            <div class="right-panel">
-                <a href="@Url.Action("Logout", "Account")">Logout</a>
-            </div>
-        }
+        <div class="right-panel">
+            @{
+                await Html.RenderPartialAsync("~/Pages/Shared/_LoginPartial.cshtml");   
+            }
+        </div>
     </div>
 </header>

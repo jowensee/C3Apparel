@@ -1,5 +1,4 @@
-
-using C3Apparel.Frontend.Data.Membership;
+using C3Apparel.Web.Membership;
 
 namespace C3Apparel.Web.Component.ViewComponents.PageHeader
 {

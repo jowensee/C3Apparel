@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using C3Apparel.Frontend.Data.Membership;
+using C3Apparel.Web.Membership;
 using Microsoft.AspNetCore.Mvc;
 
 namespace C3Apparel.Web.Component.ViewComponents.PageHeader
@@ -14,7 +14,7 @@ namespace C3Apparel.Web.Component.ViewComponents.PageHeader
         
         public async Task<IViewComponentResult> InvokeAsync(bool admin)
         {
-            var currentUser = _currentUserProvider.GetCurrentUserInfo();
+            var currentUser = await _currentUserProvider.GetCurrentUserInfo();
 
             if (admin)
             {

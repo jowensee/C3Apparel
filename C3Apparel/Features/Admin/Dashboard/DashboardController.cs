@@ -1,10 +1,11 @@
 using System.Threading.Tasks;
 using C3Apparel.Data.Modules.Classes;
+using C3Apparel.Web.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace C3Apparel.Features.Admin.Dashboard
 {
-    //[TypeFilter(typeof(AdminAuthorizationFilter))]
+    [TypeFilter(typeof(AdminAuthorizationFilter))]
     public class DashboardController : Controller
     {
         public DashboardController()

@@ -30,7 +30,8 @@ namespace C3Apparel.Data.Pricing
     
     public static class AccountConstants
     {
-        public const string ROLE_AU = "AURole";
-        public const string ROLE_NZ = "NZRole";
+        public const string ROLE_ADMIN = "Admin";
+        public const string ROLE_AU = "AUClient";
+        public const string ROLE_NZ = "NZClient";
     }
 }

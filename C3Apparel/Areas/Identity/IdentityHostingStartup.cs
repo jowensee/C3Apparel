@@ -21,6 +21,7 @@ namespace C3Apparel.Areas.Identity
                         context.Configuration.GetConnectionString("C3ApparelContextConnection")));
 
                 services.AddDefaultIdentity<C3ApparelUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<C3ApparelContext>();
             });
         }

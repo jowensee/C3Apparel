@@ -3,12 +3,13 @@ using System.Threading.Tasks;
 using BlankSiteCore.Features.Base.API;
 using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Features.Admin.ImportDuty.API.Requests;
+using C3Apparel.Web.Authentication;
 using C3Apparel.Web.Features.AdminImportDuty.API.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace C3Apparel.Features.Admin.ImportDuty
 {
-    //[TypeFilter(typeof(AdminAuthorizationFilter))]
+    [TypeFilter(typeof(AdminAuthorizationFilter))]
     public class ImportDutyController : Controller
     {
         private readonly IImportDutyInfoProvider _importDutyInfoProvider;

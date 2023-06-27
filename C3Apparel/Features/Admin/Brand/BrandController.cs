@@ -8,13 +8,14 @@ using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Data.Modules.Filters;
 using C3Apparel.Features.Admin.Brand.API;
 using C3Apparel.Frontend.Data.Settings;
+using C3Apparel.Web.Authentication;
 using C3Apparel.Web.Features.Brand.API.Requests;
 using C3Apparel.Web.Features.Brand.API.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace C3Apparel.Features.Admin.Brand
 {
-    //[TypeFilter(typeof(AdminAuthorizationFilter))]
+    [TypeFilter(typeof(AdminAuthorizationFilter))]
     public class BrandController : Controller
     {
         private readonly IBrandInfoProvider _brandInfoProvider;
