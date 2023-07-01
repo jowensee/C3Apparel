@@ -1,14 +1,25 @@
 <!-- @@master = /src/masterpages/default.html-->
 
 <!-- @@block = head-->
+<link rel="stylesheet" href="https://unpkg.com/@vuepic/vue-datepicker@latest/dist/main.css">
 <link rel="stylesheet" href="styles/exchange-rates-edit.css">
 <!-- @@close-->
 
 <!-- @@block = body-->
 <div id="editMain" data-method="POST" data-endpoint-get="api/editbrand.json" data-endpoint-save="api/deleteResponse.json" data-id="1">
-    <div v-if="formErrorMessage != ''">
+
+    <div v-if="showSuccess" class="success-panel">
+        Form was saved.
+    </div>
+    <div v-if="formErrorMessage != ''" class="error-panel">
             {{formErrorMessage}}
     </div>
+    <div v-if="errors.length" class="error-panel">
+        <p>Please correct the following error(s):</p><br>
+        <ul>
+            <li v-for="error in errors" v-html="error"></li>
+        </ul>
+    </div>    
     <div class="form">
         <div class="action">
             <button id="btnSave" class="button is-link" v-on:click.prevent="saveExchangeRate()">Save</button>
@@ -54,5 +65,7 @@
 <!-- @@close-->
 
 <!-- @@block = scripts-->
+<script src="https://unpkg.com/vue@latest"></script>
+<script src="https://unpkg.com/@vuepic/vue-datepicker@latest"></script>
 <script src="scripts/exchange-rates-edit.js"></script>
 <!-- @@close-->

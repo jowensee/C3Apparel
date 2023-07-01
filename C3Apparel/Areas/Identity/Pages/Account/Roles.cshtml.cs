@@ -1,14 +1,12 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using C3Apparel.Web.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
 
 namespace C3Apparel.Areas.Identity.Pages.Account;
-
+[TypeFilter(typeof(AdminAuthorizationFilter))]
 public class Roles : PageModel
 {
     private RoleManager<IdentityRole> _roleManager;

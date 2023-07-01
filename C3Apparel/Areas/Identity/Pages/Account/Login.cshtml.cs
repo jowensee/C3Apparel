@@ -9,12 +9,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using C3Apparel.Areas.Identity.Data;
+using C3Apparel.Web.Membership;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace C3Apparel.Areas.Identity.Pages.Account
 {
@@ -22,11 +24,12 @@ namespace C3Apparel.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<C3ApparelUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-
-        public LoginModel(SignInManager<C3ApparelUser> signInManager, ILogger<LoginModel> logger)
+        private readonly ICurrentUserProvider _currentUserProvider;
+        public LoginModel(SignInManager<C3ApparelUser> signInManager, ILogger<LoginModel> logger, ICurrentUserProvider currentUserProvider)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _currentUserProvider = currentUserProvider;
         }
 
         /// <summary>
@@ -85,7 +88,7 @@ namespace C3Apparel.Areas.Identity.Pages.Account
             public bool RememberMe { get; set; }
         }
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
@@ -100,6 +103,21 @@ namespace C3Apparel.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             ReturnUrl = returnUrl;
+
+            var currentUser = await _currentUserProvider.GetCurrentUserInfo();
+
+            if (!currentUser.IsPublicUser)
+            {
+                if (currentUser.IsGlobalAdministrator)
+                {
+                    return  Redirect("/admin");
+                }else if (!currentUser.CountryRole.IsNullOrEmpty())
+                {
+                    return  Redirect("/pricing");
+                }
+            }
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)

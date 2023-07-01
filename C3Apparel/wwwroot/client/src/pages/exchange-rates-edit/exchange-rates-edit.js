@@ -18,12 +18,14 @@ function RateEdit(){
                 rate:{
                     id:Number(thisObject.el.getAttribute("data-id")),
                     sourceCurrency:'',
-                    audValue:'',
-                    nzdValue:'',
+                    audValue:0,
+                    nzdValue:0,
                     validFrom:'',
                     validTo:'',
                 },
-                formErrorMessage:''
+                formErrorMessage:'',
+                showSuccess:false,
+                errors:[]
                     
             }
         },
@@ -60,9 +62,34 @@ function RateEdit(){
                         
                     });
             },
+            validiteForm(){
+
+                this.errors = []
+                let validate = true
+
+                if (this.rate.sourceCurrency.trim() == ''){
+                    this.errors.push("<b>Source Currency:</b> Please select one")
+                    validate = false
+                }
+
+                if (isNaN(this.rate.audValue)){
+                    this.errors.push("<b>AUD Value:</b> Please enter a decimal value")
+                    validate = false
+                }
+
+                if (isNaN(this.rate.nzdValue)){
+                    this.errors.push("<b>NZD Value:</b> Please enter a decimal value")
+                    validate = false
+                }
+
+                return validate
+            },
             saveExchangeRate(){
                 
-                
+                this.showSuccess = false
+                if (!this.validiteForm()){
+                    return
+                }
                 let self = this;
                 let data = {
                     id:self.rate.id,
@@ -74,7 +101,6 @@ function RateEdit(){
                    
                 }
 
-                console.log(data)
                 fetch(endpointSave, {
                     method: method,
                     headers:{
@@ -86,7 +112,7 @@ function RateEdit(){
                     .then(function (response) {
 
                         if (response.success){
-                            location = response.redirectUrl
+                            self.showSuccess = true
                         }else{
                             self.formErrorMessage = response.message
                         }

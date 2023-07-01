@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using C3Apparel.Areas.Identity.Data;
+using C3Apparel.Web.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace C3Apparel.Areas.Identity.Pages.Account
 {
+    [TypeFilter(typeof(AdminAuthorizationFilter))]
     public class ResetPasswordModel : PageModel
     {
         private readonly UserManager<C3ApparelUser> _userManager;
@@ -30,6 +32,7 @@ namespace C3Apparel.Areas.Identity.Pages.Account
         /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
+        public string Message { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -63,18 +66,14 @@ namespace C3Apparel.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [Required]
-            public string Code { get; set; }
 
         }
 
         public IActionResult OnGet(string code = null)
         {
-            if (code == null)
+            
+            return Page();
+            /*if (code == null)
             {
                 return BadRequest("A code must be supplied for password reset.");
             }
@@ -85,7 +84,7 @@ namespace C3Apparel.Areas.Identity.Pages.Account
                     Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
                 };
                 return Page();
-            }
+            }*/
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -95,17 +94,19 @@ namespace C3Apparel.Areas.Identity.Pages.Account
                 return Page();
             }
 
-            var user = await _userManager.FindByEmailAsync(Input.Email);
+            var user = await _userManager.FindByNameAsync(Input.Email);
             if (user == null)
             {
-                // Don't reveal that the user does not exist
-                return RedirectToPage("./ResetPasswordConfirmation");
+                Message = "User not found";
+                
+                return Page();
             }
 
-            var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
+            string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user, resetToken, Input.Password);
             if (result.Succeeded)
             {
-                return RedirectToPage("./ResetPasswordConfirmation");
+                Message = "Password has been reset";
             }
 
             foreach (var error in result.Errors)

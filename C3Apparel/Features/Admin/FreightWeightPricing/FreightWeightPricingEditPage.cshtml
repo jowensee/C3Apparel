@@ -14,9 +14,8 @@
    Freight-weight Prices
 </div>
 <div id="editMain" data-method="POST" data-endpoint-get="@Url.Action("GetFreightWeightSettings", "FreightWeightSettings")" data-endpoint-save="@Url.Action("SaveFreightWeightSettings", "FreightWeightSettings")">
-    <div v-if="formErrorMessage != ''" class="form-error">
-        {{formErrorMessage}}
-    </div>
+
+    <partial name="~/Features/Admin/_FormValidationError.cshtml"/>
     <div class="form-settings">
         <div class="action">
             <button id="btnSave" class="button is-link" v-on:click.prevent="saveSettings()">Save</button>

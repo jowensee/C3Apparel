@@ -13,11 +13,12 @@
     <script src="https://unpkg.com/@@vuepic/vue-datepicker@latest"></script>
    <script src="/client/dist/scripts/brand-edit.js" asp-append-version="true"></script>
 }
-
+<div class="main-caption">
+    Add/Edit Suppliers
+</div>
+<a href="/admin/brands" class="back-to-listings">&lt; Back to listings</a>
 <div id="editMain" data-method="POST" data-endpoint-get="@Url.Action("GetBrandForEdit", "Brand")" data-endpoint-save="@Url.Action("SaveBrand", "Brand")" data-brand-id="@Model.ID">
-    <div v-if="formErrorMessage != ''">
-            {{formErrorMessage}}
-    </div>
+    <partial name="~/Features/Admin/_FormValidationError.cshtml"/>
     <div class="form">
         <div class="action">
             <button id="btnSave" class="button is-link" v-on:click.prevent="saveBrand()">Save</button>
@@ -43,13 +44,15 @@
         <div class="field" data-validation="">
             <label class="label">Focus</label>
             <div class="control">
-                <select  v-model="brand.focus">
-                    <option value="">Please select</option>
-                    @foreach (var option in Model.OptionsFocus)
-                    {
-                        <option value="@option.Key">@option.Value</option>
-                    }
-                </select>
+                <div class="select">
+                    <select v-model="brand.focus">
+                        <option value="">Please select</option>
+                        @foreach (var option in Model.OptionsFocus)
+                        {
+                            <option value="@option.Key">@option.Value</option>
+                        }
+                    </select>
+                    </div>
             </div>
         </div>
         <div class="field" data-validation="">
@@ -61,13 +64,14 @@
         <div class="field" data-validation="">
             <label class="label">Currency</label>
             <div class="control">
-                <select  v-model="brand.currency">
-                    <option value="">Please select</option>
-                    @foreach (var option in Model.OptionsCurrency)
-                    {
-                        <option value="@option.Key">@option.Value</option>
-                    }
-                </select>
+                <div class="select">
+                    <select v-model="brand.currency">
+                        @foreach (var option in Model.OptionsCurrency)
+                        {
+                            <option value="@option.Key">@option.Value</option>
+                        }
+                    </select>
+                    </div>
             </div>
         </div>
         <div class="field" data-validation="">

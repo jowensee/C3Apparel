@@ -15,5 +15,5 @@ public static class C3Definitions
 
 public static class AdminSettings
 {
-    public const int DEFAULT_PAGE_SIZE = 50;
+    public const int DEFAULT_PAGE_SIZE = 100;
 }

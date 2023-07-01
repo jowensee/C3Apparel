@@ -14,12 +14,11 @@
    <script src="/client/dist/scripts/exchange-rates-edit.js" asp-append-version="true"></script>
 }
 <div class="main-caption">
-   Add/Edit Exchange Rates
+    Add/Edit Exchange Rates
 </div>
+<a href="/admin/exchange-rates" class="back-to-listings">&lt; Back to listings</a>
 <div id="editMain" data-method="POST" data-endpoint-get="@Url.Action("GetExchangeRateForEdit", "ExchangeRates")" data-endpoint-save="@Url.Action("SaveExchangeRate", "ExchangeRates")" data-id="@Model.ID">
-    <div v-if="formErrorMessage != ''">
-            {{formErrorMessage}}
-    </div>
+    <partial name="~/Features/Admin/_FormValidationError.cshtml"/>
     <div class="form">
         <div class="action">
             <button id="btnSave" class="button is-link" v-on:click.prevent="saveExchangeRate()">Save</button>
@@ -27,11 +26,13 @@
         <div class="field" data-validation="">
             <label class="label">Source currency</label>
             <div class="control">
-                <select  v-model="rate.sourceCurrency">
-                    <option value="">Please select</option>
-                    <option value="EURO">EURO</option>
-                    <option value="USD">USD</option>
-                </select>
+                <div class="select">
+                    <select v-model="rate.sourceCurrency">
+                        <option value="">Please select</option>
+                        <option value="EURO">EURO</option>
+                        <option value="USD">USD</option>
+                    </select>
+                    </div>
             </div>
         </div>
         <div class="field" data-validation="">
@@ -62,3 +63,9 @@
     
     </div>
 </div>
+    <script>
+        import AdminMain from "../../../wwwroot/client/dist/admin-main.html";
+        export default {
+            components: {AdminMain}
+        }
+    </script>

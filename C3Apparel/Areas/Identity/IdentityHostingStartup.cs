@@ -20,7 +20,7 @@ namespace C3Apparel.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("C3ApparelContextConnection")));
 
-                services.AddDefaultIdentity<C3ApparelUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<C3ApparelUser>(options => options.SignIn.RequireConfirmedAccount = false)
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<C3ApparelContext>();
             });

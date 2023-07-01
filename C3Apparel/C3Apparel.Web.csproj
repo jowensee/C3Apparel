@@ -34,22 +34,38 @@
     <Compile Remove="wwwroot\styles\**" />
     <Compile Remove="Features\Pricing\InternalPriceListingPageViewModel.cs" />
     <Compile Remove="Features\Pricing\InternalPricingController.cs" />
+    <Compile Remove="Areas\Identity\Pages\Account\Manage\**" />
+    <Compile Remove="Areas\Identity\Pages\Account\AccessDenied.cshtml.cs" />
+    <Compile Remove="Areas\Identity\Pages\Account\ForgotPassword.cshtml.cs" />
+    <Compile Remove="Areas\Identity\Pages\Account\RegisterConfirmation.cshtml.cs" />
+    <Compile Remove="Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="wwwroot\scripts\**" />
     <EmbeddedResource Remove="wwwroot\styles\**" />
+    <EmbeddedResource Remove="Areas\Identity\Pages\Account\Manage\**" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="wwwroot\scripts\**" />
     <None Remove="wwwroot\styles\**" />
+    <None Remove="Areas\Identity\Pages\Account\Manage\**" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\scripts\**" />
     <Content Remove="wwwroot\styles\**" />
     <Content Remove="Features\Pricing\InternalPriceListingPage.cshtml" />
+    <Content Remove="Areas\Identity\Pages\Account\Manage\**" />
+    <Content Remove="Areas\Identity\Pages\Account\AccessDenied.cshtml" />
+    <Content Remove="Areas\Identity\Pages\Account\ForgotPassword.cshtml" />
+    <Content Remove="Areas\Identity\Pages\Account\RegisterConfirmation.cshtml" />
+    <Content Remove="Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Features\Content\ContentPage.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\SetPassword.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="Features\Admin\ExchangeRates\ExchangeRatesEditPage.cshtml" />

@@ -441,7 +441,7 @@ form legend {
 .form .field .label {
   width: 200px;
 }
-.form input[type=text], .form select, .form textarea {
+.form input[type=text], .form input[type=password], .form select, .form textarea {
   width: 400px;
 }
 .form textarea {
@@ -455,10 +455,33 @@ form legend {
   margin-bottom: 20px;
 }
 
+.error-panel {
+  background-color: #fdd;
+  color: #262524;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.success-panel {
+  padding: 20px 0;
+  margin-bottom: 20px;
+  display: inline-block;
+  font-size: 16px;
+}
+
 .form-error {
   color: red;
   font-size: 14px;
   padding-top: 40px;
+}
+
+.back-to-listings {
+  margin-bottom: 40px;
+  display: block;
+  text-decoration: none;
+  font-size: 16px;
 }
 
 .btn {
@@ -613,6 +636,10 @@ header .wrapper img.logo {
   margin: 0 auto;
 }
 
+.admin header .wrapper {
+  max-width: 1800px;
+}
+
 nav {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -648,6 +675,11 @@ body .main-wrapper .main-content {
   margin-left: auto;
   margin-right: auto;
   max-width: 1400px;
+}
+body.admin .main-content {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1800px;
 }
 
 .wrapper {
@@ -718,7 +750,7 @@ body .main-wrapper .main-content {
   border-color: #000;
 }
 
-input[type=text] {
+input[type=text], input[type=password] {
   height: 2.5em;
 }
 

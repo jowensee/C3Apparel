@@ -16,7 +16,9 @@ function SetImportDuty(){
             return {
                 importDutyAU:0,
                 importDutyNZ:0,
-                formErrorMessage:''
+                formErrorMessage:'',
+                showSuccess:false,
+                errors:[]
                     
             }
         },
@@ -42,8 +44,28 @@ function SetImportDuty(){
                         self.importDutyNZ = response.importDutyNZ
                     });
             },
+            validiteForm(){
+
+                this.errors = []
+                let validate = true
+
+                if (isNaN(this.importDutyAU)){
+                    this.errors.push("<b>Australia:</b> Please enter a decimal value")
+                    validate = false
+                }
+
+                if (isNaN(this.importDutyNZ)){
+                    this.errors.push("<b>New Zealand:</b> Please enter a decimal value")
+                    validate = false
+                }
+                return validate
+            },
             saveImportDuty(){
                 
+                this.showSuccess = false
+                if (!this.validiteForm()){
+                    return
+                }
                 this.formErrorMessage = ''
                 let self = this;
                 let data = {
@@ -62,7 +84,7 @@ function SetImportDuty(){
                     .then(function (response) {
 
                         if (response.success){
-                            self.formErrorMessage = response.message
+                            self.showSuccess = true
                         }else{
                             self.formErrorMessage = response.message
                         }

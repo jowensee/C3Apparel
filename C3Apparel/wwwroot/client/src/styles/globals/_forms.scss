@@ -165,7 +165,7 @@ form legend {
 
   }
 
-  input[type=text], select, textarea{
+  input[type=text],input[type=password], select, textarea{
     width:400px
   }
   textarea{
@@ -183,8 +183,31 @@ form legend {
   margin-bottom:20px;
 }
 
+.error-panel{
+  background-color: #fdd;
+  color:#262524;
+  padding:20px;
+  margin-bottom:20px;
+  display:inline-block;
+  font-size:14px;
+}
+
+.success-panel{
+  padding:20px 0;
+  margin-bottom:20px;
+  display:inline-block;
+  font-size:16px;
+}
+
 .form-error{
   color:red;
   font-size:14px;
   padding-top:40px
 }
+
+.back-to-listings{
+  margin-bottom: 40px;
+  display: block;
+  text-decoration: none;
+  font-size: 16px;
+} 

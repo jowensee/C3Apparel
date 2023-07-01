@@ -13,9 +13,7 @@
 <partial name="~/Features/Admin/_ProductPricingNavigation.cshtml" model="1"/>
 <div id="editMain" data-method="POST" data-endpoint-get="@Url.Action("GetProductPricingsForEdit", "ProductPricing")" 
      data-endpoint-save="@Url.Action("SaveProductPricings", "ProductPricing")" data-id="@Model.ID">
-    <div v-if="formErrorMessage != ''">
-            {{formErrorMessage}}
-    </div>
+    <partial name="~/Features/Admin/_FormValidationError.cshtml"/>
     <div class="form">
         <div class="action">
             <button id="btnSave" class="button is-link" v-on:click.prevent="savePricing()">Save</button>
@@ -29,13 +27,15 @@
         <div class="field" data-validation="">
             <label class="label">Supplier</label>
             <div class="control">
-                <select  v-model="pricing.brandId">
-                    <option value="">Please select</option>
-                    @foreach (var option in Model.Brands)
-                    {
-                        <option value="@option.Key">@option.Value</option>
-                    }
-                </select>
+                <div class="select">
+                    <select v-model="pricing.brandId">
+                        <option value="">Please select</option>
+                        @foreach (var option in Model.Brands)
+                        {
+                            <option value="@option.Key">@option.Value</option>
+                        }
+                    </select>
+                    </div>
             </div>
         </div>
         <div class="field" data-validation="">

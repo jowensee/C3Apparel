@@ -13,22 +13,24 @@
      <partial name="_ValidationScriptsPartial" />
 }
 <div class="login-panel">
-   <form id="account" method="post">
-       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-       <div class="form-group">
-           <label asp-for="Input.Email" class="form-label">Username</label>
-           <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true"/>
+    <form id="account" method="post">
+        
+       <div asp-validation-summary="ModelOnly" class="form-error"></div>
+        <div class="form-group">
+            <label asp-for="Input.Email" class="form-label">Username</label>
+            <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true"/>
 
-           <span asp-validation-for="Input.Email" class="text-danger"></span>
-       </div>
-       <div class="form-group">
-           
-           <label asp-for="Input.Password" class="form-label"></label>
-           <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true"/>
-           <span asp-validation-for="Input.Password" class="text-danger"></span>
-       </div>
-       <div>
-           <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
-       </div>
-   </form>
+            <span asp-validation-for="Input.Email" class="form-error"></span>
+        </div>
+        <div class="form-group">
+
+            <label asp-for="Input.Password" class="form-label"></label>
+            <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true"/>
+            <span asp-validation-for="Input.Password" class="form-error"></span>
+        </div>
+
+        <div>
+            <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+        </div>
+    </form>
 </div>

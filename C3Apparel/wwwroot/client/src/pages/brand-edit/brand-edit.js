@@ -32,7 +32,9 @@ function BrandEdit(){
                     enabled:'',
                     publishDate:'',
                 },
-                formErrorMessage:''
+                formErrorMessage:'',
+                showSuccess:false,
+                errors:[]
                     
             }
         },
@@ -74,8 +76,23 @@ function BrandEdit(){
                         brand.publishDate = response.brand.publishDate
                     });
             },
+            validiteForm(){
+
+                this.errors = []
+                let validate = true
+
+                if (this.brand.name.trim() == ''){
+                    this.errors.push("<b>Display name:</b> Please enter a value")
+                    validate = false
+                }
+                return validate
+            },
             saveBrand(){
                 
+                this.showSuccess = false
+                if (!this.validiteForm()){
+                    return
+                }
                 
                 let self = this;
                 let data = {
@@ -104,7 +121,7 @@ function BrandEdit(){
                     .then(function (response) {
 
                         if (response.success){
-                            location = response.redirectUrl
+                            self.showSuccess = true
                         }else{
                             self.formErrorMessage = response.message
                         }

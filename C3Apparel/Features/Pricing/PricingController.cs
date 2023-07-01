@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace C3Apparel.Web.Features.Pricing
 {
-    [TypeFilter(typeof(C3AuthorizationFilter))]
+    
     public class PricingController : Controller
     {
         private readonly IProductRepository _productRepository;
@@ -39,7 +39,7 @@ namespace C3Apparel.Web.Features.Pricing
             _weightbasedSettings = _productSettingsRepository.GetAllWeightBasedPriceSettings();
         }
         
-       
+        [TypeFilter(typeof(C3AuthorizationFilter))]
         public async Task<ActionResult> PriceListingPage(int brandId = 0)
         {
 
@@ -92,7 +92,7 @@ namespace C3Apparel.Web.Features.Pricing
             return settings.ContainsKey(priceKeyName) && settings[priceKeyName]
                 .FreightSurcharge(targetCurrency) > 0;
         }
-
+        [TypeFilter(typeof(PDFAuthorizationFilter))]
         [Route("print")]
         public async Task<ActionResult> PricePrintVersionPage(int brandId, string currency)
         {
@@ -154,6 +154,7 @@ namespace C3Apparel.Web.Features.Pricing
             return View("~/Features/Pricing/PricePrintVersionPage.cshtml",vm);
         }
         
+        [TypeFilter(typeof(C3AuthorizationFilter))]
         [Route("print-pricing")]
         public async Task<ActionResult> CustomerPricePrintVersionPage(int brandId, string currency = "")
         {
@@ -186,6 +187,7 @@ namespace C3Apparel.Web.Features.Pricing
             };
         }
         
+        [TypeFilter(typeof(C3AuthorizationFilter))]
         [Route("getprices")]
         [HttpPost]
         public async Task<ActionResult> GetPrices([FromBody]GetPricesParameters requests)
@@ -246,9 +248,10 @@ namespace C3Apparel.Web.Features.Pricing
             return Ok(response);
         }
 
+        /*
         public async Task<ActionResult> PrintPDF(PrintPDFRequest request)
         {
             return File(new MemoryStream(), null);
-        }
+        }*/
     }
 }

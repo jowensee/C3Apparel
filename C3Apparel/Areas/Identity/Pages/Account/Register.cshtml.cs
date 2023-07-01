@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using C3Apparel.Areas.Identity.Data;
+using C3Apparel.Data.Modules.Classes;
+using C3Apparel.Web.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +24,7 @@ using Microsoft.Extensions.Logging;
 
 namespace C3Apparel.Areas.Identity.Pages.Account
 {
+    [TypeFilter(typeof(AdminAuthorizationFilter))]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<C3ApparelUser> _signInManager;
@@ -30,13 +33,14 @@ namespace C3Apparel.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<C3ApparelUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-
+        private readonly RoleManager<IdentityRole> _roleManager;
+        
         public RegisterModel(
             UserManager<C3ApparelUser> userManager,
             IUserStore<C3ApparelUser> userStore,
             SignInManager<C3ApparelUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +48,7 @@ namespace C3Apparel.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -64,6 +69,8 @@ namespace C3Apparel.Areas.Identity.Pages.Account
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
+        
+        public string Message { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -98,6 +105,10 @@ namespace C3Apparel.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            
+            [Required]
+            [Display(Name = "Role")]
+            public string Role { get; set; }
         }
 
 
@@ -116,12 +127,18 @@ namespace C3Apparel.Areas.Identity.Pages.Account
                 var user = CreateUser();
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+                user.Email = Input.Email;
+                user.EmailConfirmed = true;
+                //await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    Message = "New user created";
+                    await  _userManager.AddToRoleAsync(user, Input.Role);
+                    
+                    /*_logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -143,7 +160,7 @@ namespace C3Apparel.Areas.Identity.Pages.Account
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
-                    }
+                    }*/
                 }
                 foreach (var error in result.Errors)
                 {

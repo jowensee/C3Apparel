@@ -22,6 +22,14 @@ body{
             max-width:1400px;
         }
     }   
+
+    &.admin{
+        .main-content{
+            margin-left:auto;
+            margin-right:auto;
+            max-width:1800px;
+        }
+    }
 }
 
 .wrapper{
@@ -100,7 +108,7 @@ body{
     border-color:#000;
 }
 
-input[type=text]{
+input[type=text],input[type=password] {
     height:2.5em;
 }
 

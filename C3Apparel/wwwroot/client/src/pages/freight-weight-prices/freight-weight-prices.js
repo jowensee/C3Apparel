@@ -16,7 +16,9 @@ function SetSettings(){
             return {
                 euroFreightSettings:[],
                 usFreightSettings:[],
-                formErrorMessage: ''
+                formErrorMessage: '',
+                showSuccess:false,
+                errors:[]
             }
         },
         mounted(){
@@ -27,7 +29,6 @@ function SetSettings(){
         methods:{
             
             populateForm(){
-                console.log('endpointGet',endpointGet)
                 let self = this;
                 fetch(endpointGet, {
                     method: method,
@@ -41,8 +42,38 @@ function SetSettings(){
                         self.usFreightSettings = response.usFreightSettings;
                     });
             },
+            validiteForm(){
+
+                this.errors = []
+                let validate = true
+
+                const euroError = this.euroFreightSettings.some(p => isNaN(p.weightInKg)
+                  || isNaN(p.marginInDecimal) 
+                  || isNaN(p.auFreightPerKg)
+                  || isNaN(p.nzFreightPerKg)
+                  || isNaN(p.auFreightSurcharge)
+                  || isNaN(p.nzFreightSurcharge));
+
+                const usError = this.usFreightSettings.some(p => isNaN(p.weightInKg)
+                  || isNaN(p.marginInDecimal) 
+                  || isNaN(p.auFreightPerKg)
+                  || isNaN(p.nzFreightPerKg)
+                  || isNaN(p.auFreightSurcharge)
+                  || isNaN(p.nzFreightSurcharge));
+
+                if (euroError || usError){
+
+                    validate = false
+                    this.errors.push('All numeric fields needs to be a decimal number')
+                }
+                return validate
+            },
             saveSettings(){
-                
+
+                this.showSuccess = false
+                if (!this.validiteForm()){
+                    return
+                }
                 this.formErrorMessage = ''
                 let self = this;
                 let data = {
@@ -61,7 +92,7 @@ function SetSettings(){
                     .then(function (response) {
 
                         if (response.success){
-                            self.formErrorMessage = response.message
+                            self.showSuccess = true
                         }else{
                             self.formErrorMessage = response.message
                         }

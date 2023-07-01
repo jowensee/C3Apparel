@@ -7,6 +7,7 @@ using C3Apparel.Web.Membership;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -73,13 +74,7 @@ namespace BlankSiteCore
                 o.ViewLocationFormats.Add("/Features/Shared/{0}" + RazorViewEngine.ViewExtension);
                 o.ViewLocationFormats.Add("/Components/ViewComponents/{0}" + RazorViewEngine.ViewExtension);
             });
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: "FEPolicy", policy =>
-                {
-                    policy.WithOrigins("http://localhost:3030");
-                });
-            });
+
             services.AddControllersWithViews();
             
             services.AddScoped<IConfigurationService, ConfigurationService>();
@@ -108,6 +103,17 @@ namespace BlankSiteCore
                 app.UseDeveloperExceptionPage();
             }
 
+            var rewriteOptions = new RewriteOptions();
+            rewriteOptions.AddRedirect("$^", "login");
+            if (System.IO.File.Exists("rewrite.config"))
+            {
+                var iisUrlRewriteStreamReader =
+                    System.IO.File.OpenText("rewrite.config");
+
+                rewriteOptions.AddRedirect("$^", "login");
+                rewriteOptions.AddIISUrlRewrite(iisUrlRewriteStreamReader);
+            }
+            app.UseRewriter(rewriteOptions);
             app.Use(async (context, next) =>
             {
                 var url = context.Request.Path.Value;
@@ -151,7 +157,7 @@ namespace BlankSiteCore
                 
                 
                 //Admin
-                endpoints.MapControllerRoute("Dashboard", "admin/dashboard",
+                endpoints.MapControllerRoute("Dashboard", "admin",
                     defaults: new { controller = "Dashboard", action = "Index" });
                 
                 endpoints.MapControllerRoute("Brand Listing", "admin/brands",

@@ -32,7 +32,9 @@ function PricingEdit(){
                     skuWeight:0,
                     c3OverrideWeight:0,
                 },
-                formErrorMessage:''
+                formErrorMessage:'',
+                showSuccess:false,
+                errors:[]
                     
             }
         },
@@ -78,8 +80,58 @@ function PricingEdit(){
                         pricing.c3OverrideWeight = response.productPricing.c3OverrideWeight
                     });
             },
+            validiteForm(){
+
+                this.errors = []
+                let validate = true
+
+                if (this.pricing.brandId.trim() == ''){
+                    this.errors.push("<b>Supplier:</b> Please select one")
+                    validate = false
+                }
+
+                if (this.pricing.c3Style.trim() == ''){
+                    this.errors.push("<b>C3 Style:</b> Please enter a value")
+                    validate = false
+                }
+
+                if (this.pricing.description.trim() == ''){
+                    this.errors.push("<b>Description:</b> Please enter a value")
+                    validate = false
+                }
+
+                if (this.pricing.productGroup.trim() == ''){
+                    this.errors.push("<b>Product Group:</b> Please enter a value")
+                    validate = false
+                }
+
+                if (this.pricing.sizes.trim() == ''){
+                    this.errors.push("<b>Sizes:</b> Please enter a value")
+                    validate = false
+                }
+
+                if (isNaN(this.pricing.buyPrice)){
+                    this.errors.push("<b>Buy Price:</b> Please enter a decimal value")
+                    validate = false
+                }
+
+                if (isNaN(this.pricing.skuWeight)){
+                    this.errors.push("<b>SKU Weight:</b> Please enter a decimal value")
+                    validate = false
+                }
+
+                if (isNaN(this.pricing.c3OverrideWeight)){
+                    this.errors.push("<b>C3 Override Weight:</b> Please enter a decimal value")
+                    validate = false
+                }
+                return validate
+            },
             savePricing(){
-                
+
+                this.showSuccess = false
+                if (!this.validiteForm()){
+                    return
+                }
                 
                 let self = this;
                 let data = {
@@ -111,7 +163,7 @@ function PricingEdit(){
                     .then(function (response) {
 
                         if (response.success){
-                            location = response.redirectUrl
+                            self.showSuccess = true
                         }else{
                             self.formErrorMessage = response.message
                         }

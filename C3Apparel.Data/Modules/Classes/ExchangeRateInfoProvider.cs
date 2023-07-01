@@ -17,7 +17,7 @@ namespace C3Apparel.Data.Modules.Classes
         {
             var sSql =
                 $@"SELECT TOP 1 * FROM C3_ExchangeRate WHERE ({nameof(ExchangeRateInfo.ExchangeRateSourceCurrency)} = '{sourceCurrency}') AND ({nameof(ExchangeRateInfo.ExchangeRateValidFrom)} IS NULL OR {nameof(ExchangeRateInfo.ExchangeRateValidFrom)} <=GETDATE())
-                                    AND ({nameof(ExchangeRateInfo.ExchangeRateValidTo)} IS NULL OR {nameof(ExchangeRateInfo.ExchangeRateValidTo)} >=GETDATE())";
+                                    AND ({nameof(ExchangeRateInfo.ExchangeRateValidTo)} IS NULL OR {nameof(ExchangeRateInfo.ExchangeRateValidTo)} >=CONVERT(date, GETDATE()))";
 
             var ds = ExecuteQuery(sSql);
 
