@@ -63,7 +63,6 @@ function PricingEdit(){
                 }).then(res=>res.json())
                     .then(function (response) {
 
-                        console.log('color', response.productPricing.colour)
                         pricing.status = response.productPricing.status
                         pricing.brandId = response.productPricing.brandId
                         pricing.collection = response.productPricing.collection

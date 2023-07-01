@@ -47,6 +47,12 @@
       </div>
 
       <div id="main-app" data-endpoint-upload="/file" data-method="GET">
+        <div v-if="showSuccess" class="success-panel">
+          Form was saved.
+        </div>
+        <div v-if="formErrorMessage != ''" class="error-panel">
+          {{formErrorMessage}}
+        </div>
         <div class="filter-container">
           <form>
             <div class="field">

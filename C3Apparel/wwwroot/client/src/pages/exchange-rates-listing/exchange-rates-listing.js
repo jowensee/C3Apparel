@@ -93,7 +93,7 @@ function RatesListing(){
                 let data = {
                     id:this.deleteId
                 }
-                console.log('delete',data)
+                
                 fetch(deleteEndpoint, {
                     method: method,
                     headers:{

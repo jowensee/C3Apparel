@@ -109,7 +109,6 @@ function BrandEdit(){
                     publishDate:self.brand.publishDate,
                 }
 
-                console.log(data)
                 fetch(endpointSave, {
                     method: method,
                     headers:{

@@ -13,7 +13,7 @@ namespace C3Apparel.Data.Modules.Classes{
         public InquirySettingsInfo GetSettingsByGuid(Guid guid)
         {
             var sSql =
-                $"SELECT TOP 1 * FROM C3_InquirySettings WHERE {nameof(InquirySettingsInfo.InquirySettingsGuid)} = '{guid.ToSafeString()}'";
+                $"SELECT TOP 1 * FROM C3Apparel_InquirySettings WHERE {nameof(InquirySettingsInfo.InquirySettingsGuid)} = '{guid.ToSafeString()}'";
 
             var ds = ExecuteQuery(sSql);
 

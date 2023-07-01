@@ -22,7 +22,9 @@ function UploadPricingsPage(){
                     supplier:true,
                     file:true
                 },
-                formErrorMessage:''
+                formErrorMessage:'',
+                showSuccess: false,
+                errors:[]
                     
             }
         },
@@ -49,7 +51,7 @@ function UploadPricingsPage(){
                 return !hasError
             },
             upload(){
-                
+                this.showSuccess = false
                 if (!this.validate()){
                     return
                 }
@@ -72,14 +74,19 @@ function UploadPricingsPage(){
                     formData.append('file', null)
                 }
 
-                console.log(data)
                 fetch(endpointUpload, {
                     method: method,
                     body: formData,
                 }).then(res=>res.json())
                     .then(function (response) {
 
-                        self.formErrorMessage = response.message
+                        console.log('response', response)
+                        if (response.success){
+                            self.showSuccess = true
+                        }else{
+
+                            self.formErrorMessage = response.message
+                        }
 
                     });
             }

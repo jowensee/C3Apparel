@@ -17,6 +17,12 @@
 </div>
  
 <div id="main-app" data-endpoint-upload="@Url.Action("UploadPricingsFile", "ProductPricing")" data-method="POST">
+   <div v-if="showSuccess" class="success-panel">
+      Upload successful.
+   </div>
+   <div v-if="formErrorMessage != ''" class="error-panel">
+       {{formErrorMessage}}
+   </div>
    <div class="filter-container">
       <form>
          <div class="field">
@@ -46,7 +52,7 @@
             <label>File</label>
             <div class="control">
                <div>
-                   <input id="file" type="file" name="fileUpload" ref="file" >
+                  <input id="file" type="file" name="fileUpload" ref="file">
                </div>
                <div :class="{error: true, show: !validation.file}">Please select csv file</div>
             </div>
@@ -54,9 +60,9 @@
          <div class="buttons">
             <button id="buttonUpload" class="button is-link" v-on:click.prevent="upload()">Upload</button>
          </div>
- 
+
          <div class="error"></div>
       </form>
    </div>
- 
+
 </div>

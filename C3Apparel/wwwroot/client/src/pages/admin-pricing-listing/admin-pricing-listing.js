@@ -84,7 +84,6 @@ function PricingListing(){
 
             },
             filterResults(){
-                console.log('filterresults')
                 this.populateGrid(1);
             },
             gotoPage(event){
@@ -115,7 +114,6 @@ function PricingListing(){
                 let data = {
                     id:this.deleteId
                 }
-                console.log('delete',data)
                 fetch(deleteEndpoint, {
                     method: method,
                     headers:{
