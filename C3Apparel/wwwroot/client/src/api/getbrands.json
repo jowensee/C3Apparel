@@ -13,7 +13,7 @@
       "brand": "Pure Waste 1 ",
       "focus": "Promo",
       "currency": "EURO",
-      "enabled":true,
+      "enabled":false,
       "publishDate": "1/2/2023"
     },{
       "brandId": 3,

@@ -29,7 +29,7 @@ function BrandEdit(){
                     businessName:'',
                     disclaimerAU:'',
                     disclaimerNZ:'',
-                    enabled:'',
+                    enabled:false,
                     publishDate:'',
                 },
                 formErrorMessage:'',

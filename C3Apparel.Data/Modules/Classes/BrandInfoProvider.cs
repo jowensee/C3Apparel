@@ -251,14 +251,22 @@ namespace C3Apparel.Data.Modules.Classes
                 { "@businessName", brand.BrandBusinessName.DBNullIfNull() },
                 { "@disclaimerAU", brand.BrandPricingDisclaimerTextAU },
                 { "@disclaimerNZ", brand.BrandPricingDisclaimerTextNZ },
-                { "@publishedDate", brand.BrandPriceListPublishedDate },
                 
             };
+
+            var publishedDateUpdate = "BrandPriceListPublishedDate = NULL";
+            if (brand.BrandPriceListPublishedDate > DateTime.MinValue)
+            {
+                publishedDateUpdate = "BrandPriceListPublishedDate = @publishedDate";
+                parameters.Add("@publishedDate", brand.BrandPriceListPublishedDate);
+            }
             
             ExecuteCommand($@"UPDATE COM_Brand SET BrandDisplayName=@displayName, BrandDescription=@description, BrandCurrency=@currency,
                                 BrandEnabled=@enabled, BrandFocus= @focus, BrandHomepage=@website,BrandBusinessName=@businessName,
-                                    BrandPricingDisclaimerTextAU=@disclaimerAU, BrandPricingDisclaimerTextNZ=  @disclaimerNZ
+                                    BrandPricingDisclaimerTextAU=@disclaimerAU, BrandPricingDisclaimerTextNZ=@disclaimerNZ,
+                                   {publishedDateUpdate}
                                     WHERE BrandID=@Id", parameters);
+            
         }
     }
 }

@@ -72,6 +72,7 @@ namespace C3Apparel.Features.Admin.FreightWeighPricing
         {
             try
             {
+                //MarginInDecimal variable is not reflection of the value type, it is in percentage when saved from Admin
                 foreach (var setting in requests.EuroFreightSettings)
                 {
                     

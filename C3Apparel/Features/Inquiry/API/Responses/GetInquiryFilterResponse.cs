@@ -10,7 +10,6 @@ public class WeightBasedSettingsResponse
     public string CodeName { get; set; }
     public decimal WeightInKg { get; set; }
     public decimal MarginInDecimal { get; set; }
-        
     public decimal AUFreightPerKg { get; set; }
     public decimal NZFreightPerKg { get; set; }
 

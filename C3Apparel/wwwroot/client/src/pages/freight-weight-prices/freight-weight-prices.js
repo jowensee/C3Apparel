@@ -40,6 +40,18 @@ function SetSettings(){
 
                         self.euroFreightSettings = response.euroFreightSettings;
                         self.usFreightSettings = response.usFreightSettings;
+
+                        if (self.euroFreightSettings.length){
+                            self.euroFreightSettings.forEach(element => {
+                                element.marginInDecimal = element.marginInDecimal * 100 //display in admin is percentage
+                            });
+                        }
+
+                        if (self.usFreightSettings.length){
+                            self.usFreightSettings.forEach(element => {
+                                element.marginInDecimal = element.marginInDecimal * 100 //display in admin is percentage
+                            });
+                        }
                     });
             },
             validiteForm(){
@@ -80,6 +92,18 @@ function SetSettings(){
                     euroFreightSettings:self.euroFreightSettings,
                     usFreightSettings:self.usFreightSettings
                 }
+
+                /*if (data.euroFreightSettings.length){
+                    data.euroFreightSettings.forEach(element => {
+                        element.marginInDecimal = element.marginInDecimal / 100 //convert back to decimal
+                    });
+                }
+
+                if (data.usFreightSettings.length){
+                    data.usFreightSettings.forEach(element => {
+                        element.marginInDecimal = element.marginInDecimal / 100 //convert back to decimal
+                    });
+                }*/
 
                 fetch(endpointSave, {
                     method: method,

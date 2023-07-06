@@ -130,7 +130,7 @@
                   <td>{{row.focus}}</td>
                   <td class="center">{{row.currency}}</td>
                   <td class="center">{{row.publishDate}}</td>
-                  <td class="center">{{row.enabled}}</td>
+                  <td class="center" v-html="row.enabled ? 'Yes' : 'No'"></td>
                 </tr>
               </tbody>
             </table>

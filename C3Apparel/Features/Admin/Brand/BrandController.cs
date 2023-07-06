@@ -12,6 +12,7 @@ using C3Apparel.Web.Authentication;
 using C3Apparel.Web.Features.Brand.API.Requests;
 using C3Apparel.Web.Features.Brand.API.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace C3Apparel.Features.Admin.Brand
 {
@@ -79,7 +80,7 @@ namespace C3Apparel.Features.Admin.Brand
                 Focus = p.BrandFocus,
                 BrandId = p.BrandID,
                 Enabled = p.BrandEnabled,
-                PublishDate = p.BrandPriceListPublishedDate.ToString("d/M/yyyy")
+                PublishDate = p.BrandPriceListPublishedDate == DateTime.MinValue ? string.Empty : p.BrandPriceListPublishedDate.ToString("d/M/yyyy")
 
             }).ToList();
             
@@ -153,9 +154,14 @@ namespace C3Apparel.Features.Admin.Brand
         {
             try
             {
-                DateTime publishDate;
-                DateTime.TryParseExact(requests.PublishDate, "dd/MM/yyyy",
-                    System.Globalization.CultureInfo.InvariantCulture, DateTimeStyles.None, out publishDate);
+                DateTime publishDate = DateTime.MinValue;
+
+                if (!requests.PublishDate.IsNullOrEmpty())
+                {
+                 
+                    DateTime.TryParseExact(requests.PublishDate, "dd/MM/yyyy",
+                        System.Globalization.CultureInfo.InvariantCulture, DateTimeStyles.None, out publishDate);   
+                }
 
                 var brand = new BrandInfo
                 {
@@ -169,9 +175,12 @@ namespace C3Apparel.Features.Admin.Brand
                     BrandDescription = requests.Description,
                     BrandPricingDisclaimerTextAU = requests.DisclaimerTextAU,
                     BrandPricingDisclaimerTextNZ = requests.DisclaimerTextNZ,
-                    BrandPriceListPublishedDate = publishDate
                 };
 
+                if (publishDate > DateTime.MinValue)
+                {
+                    brand.BrandPriceListPublishedDate = publishDate;
+                }
                 if (brand.BrandID == 0)
                 {
                     _brandInfoProvider.InsertBrand(brand);
