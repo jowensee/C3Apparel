@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using C3Apparel.Data.Common;
+using C3Apparel.Data.Helpers;
 using C3Apparel.Data.Pricing;
 using C3Apparel.Data.Products;
 using C3Apparel.Frontend.Data.Common;
@@ -40,24 +41,18 @@ namespace C3Apparel.Web.Features.Pricing
         }
         
         [TypeFilter(typeof(C3AuthorizationFilter))]
-        public async Task<ActionResult> PriceListingPage(int brandId = 0)
+        public async Task<ActionResult> PriceListingPage(string countryCode, int brandId = 0)
         {
 
             var vm = new PriceListingPageViewModel();
 
             vm.Brands = _productRepository.GetBrandsWithPricing().Select(a=> new ListItem(a.BrandName, a.BrandID.ToString(), brandId == a.BrandID));
 
-            var targetCurrency = (await _currentUserProvider.GetCurrentUserInfo()).Currency;
+            var targetCurrency = CountryHelper.GetCountryCurrencyCode(countryCode);
 
-            if (targetCurrency == CurrencyConstants.AUD)
-            {
-                vm.CountryName = "Australia";
-            }  else if (targetCurrency == CurrencyConstants.NZD)
-            {
-                vm.CountryName = "New Zealand";
-            }
-            
-            
+            vm.Currency = targetCurrency;
+            vm.CountryName = CountryHelper.GetCountryName(countryCode);
+
             vm.PriceWeightBasedSettings = _weightbasedSettings?.AllPriceWeightbasedSettings;
 
             var brand = _brandRepository.GetBrand(brandId);
@@ -156,15 +151,9 @@ namespace C3Apparel.Web.Features.Pricing
         
         [TypeFilter(typeof(C3AuthorizationFilter))]
         [Route("print-pricing")]
-        public async Task<ActionResult> CustomerPricePrintVersionPage(int brandId, string currency = "")
+        public async Task<ActionResult> CustomerPricePrintVersionPage(int brandId, string currency)
         {
-            if (string.IsNullOrEmpty(currency))
-            {
 
-                currency = (await _currentUserProvider.GetCurrentUserInfo()).Currency;
-                
-            }
-            
             var brand = _brandRepository.GetBrand(brandId);
             if (brandId == 0 || currency == string.Empty || brand == null)
             {
@@ -205,7 +194,7 @@ namespace C3Apparel.Web.Features.Pricing
             IEnumerable<ProductItem> products;
             ResultItem result;
 
-            var currency = (await _currentUserProvider.GetCurrentUserInfo()).Currency;
+            var currency = requests.Currency;
             var brandPricing = _brandRepository.GetBrandPricingInfo(requests.BrandID, currency);
 
             if (!brandPricing.IsValid)

@@ -6,7 +6,8 @@ function PriceListing(){
     const { createApp } = Vue
     let thisObject = this;
     this.el = document.getElementById("listingMain");
-    this.selectedBrandID = 0;
+    this.selectedBrandID = 0;    
+    this.currency =  this.el.getAttribute("data-currency") ;
     this.itemsPerPage = Number(this.el.getAttribute("data-item-per-page"))
     if (document.getElementById("selectBrand").value != ''){
         this.selectedBrandID = Number(document.getElementById("selectBrand").value)
@@ -39,6 +40,7 @@ function PriceListing(){
             populateGrid(pageNumber){
                 let data = {
                     brandID:thisObject.selectedBrandID,
+                    currency:thisObject.currency,
                     pageNumber:pageNumber,
                     itemsPerPage:thisObject.itemsPerPage
 

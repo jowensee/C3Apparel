@@ -10,6 +10,10 @@
 @section Scripts {
    <script src="/client/dist/scripts/customer-listing.js" asp-append-version="true"></script>
 }
+<nav>
+    <a href="/pricing/au" class="@(Model.Currency == "AUD" ? "active" : "")">Australia</a>
+    <a href="/pricing/nz" class="@(Model.Currency == "NZD" ? "active" : "")">New Zealand</a>
+</nav>
 <div class="main-caption">
    @Model.CountryName Pricing
 </div>
@@ -35,10 +39,12 @@
             <button id="buttonPrint" class="button is-link" type="submit" value="print">Print</button>
          </div>
       </div>
+      <input type="hidden" name="currency" value="@Model.Currency" />
       <div class="error"></div>
    </form>
 </div>
-<div id="listingMain" data-endpoint="@Url.Action("GetPrices", "Pricing")" data-method="POST" data-item-per-page="@C3Constants.GRID_ITEMS_PER_PAGE">
+<div id="listingMain" data-endpoint="@Url.Action("GetPrices", "Pricing")" data-method="POST" data-item-per-page="@C3Constants.GRID_ITEMS_PER_PAGE"
+     data-currency="@Model.Currency">
    <div class="listing-container" v-if="grid.rows.length == 0">
       <div class="instruction">
          <p>Please select a brand and click on search</p>

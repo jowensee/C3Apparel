@@ -151,7 +151,7 @@ namespace BlankSiteCore
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("Pricing", "pricing",
+                endpoints.MapControllerRoute("Pricing", "pricing/{countrycode}",
                     defaults: new { controller = "Pricing", action = "PriceListingPage" });
                 //endpoints.MapControllerRoute("Login", "login",
                 //    defaults: new { controller = "Account", action = "LoginPage" });

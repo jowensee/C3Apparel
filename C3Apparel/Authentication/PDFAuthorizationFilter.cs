@@ -40,7 +40,7 @@ public class PDFAuthorizationFilter : Attribute, IAuthorizationFilter
             context.Result =
                 new RedirectResult("/Login");
         }
-        else if (string.IsNullOrEmpty(currentUser.CountryRole))
+        else if (!currentUser.IsCustomer)
         {
             context.Result = new RedirectResult("/page-not-found");
         }

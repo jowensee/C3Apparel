@@ -807,7 +807,7 @@ input.text-number {
   width: auto;
 }
 .listing-container .listing-table.listing-table-width-auto th:not(.col-action) {
-  min-width: 150px;
+  min-width: 200px;
 }
 .listing-container .listing-table .listing-header .col-header {
   font-weight: bold;

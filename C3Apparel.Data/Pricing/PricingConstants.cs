@@ -8,6 +8,11 @@ namespace C3Apparel.Data.Pricing
         public const string EURO = "EURO";
     }
     
+    public static class CountryConstants
+    {
+        public const string AU = "AU";
+        public const string NZ = "NZ";
+    }
     
     public static class WeightbasedSettings
     {
@@ -31,7 +36,6 @@ namespace C3Apparel.Data.Pricing
     public static class AccountConstants
     {
         public const string ROLE_ADMIN = "Admin";
-        public const string ROLE_AU = "AUClient";
-        public const string ROLE_NZ = "NZClient";
+        public const string ROLE_CUSTOMER = "Customer";
     }
 }

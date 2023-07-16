@@ -44,23 +44,8 @@ namespace C3Apparel.Web.Membership
 
             var roles = await _userManager.GetRolesAsync(user);
 
-            if (roles.Any(a => a == AccountConstants.ROLE_ADMIN))
-            {
-                role = AccountConstants.ROLE_ADMIN;
-            }
-            else
-            {
-                if (roles.Any(a=>a == AccountConstants.ROLE_AU))
-                {
-                    role = AccountConstants.ROLE_AU;
-                }else if (roles.Any(a=>a == AccountConstants.ROLE_NZ))
-                {
-                    role = AccountConstants.ROLE_NZ;
-                }
-                
-            }
 
-            return new AccountUser(user.UserName, string.Empty, string.Empty, user.Email, role, string.Empty, role == AccountConstants.ROLE_ADMIN);
+            return new AccountUser(user.UserName, string.Empty, string.Empty, user.Email, roles, string.Empty);
 
         }
     }

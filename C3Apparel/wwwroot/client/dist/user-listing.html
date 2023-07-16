@@ -50,7 +50,7 @@
             <div class="field">
               <label>User Name</label>
               <div class="control">
-                <input type="text" id="filterUserName" name="filterUserName" v-model="filter.name" />
+                <input type="text" id="filterUserName" name="filterUserName" v-model="filter.userName" />
               </div>
             </div>
             <div class="field">
@@ -59,10 +59,7 @@
                 <div class="select">
                   <select id="filterFocus" name="filterRole" v-model="filter.role">
                     <option value="">Select</option>
-                    @foreach (var focus in C3Definitions.BrandFocuses)
-                    {
                     <option value="@focus">@focus</option>
-                    }
                   </select>
                 </div>
               </div>

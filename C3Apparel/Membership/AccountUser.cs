@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using C3Apparel.Data.Pricing;
 
 namespace C3Apparel.Web.Membership;
@@ -8,36 +10,22 @@ public class AccountUser
     public string FirstName { get; }
     public string LastName { get; }
     public string Email { get; }
-    public string CountryRole { get; }
+    public IList<string> Roles { get; }
     public string FullName { get; }
-    public bool IsGlobalAdministrator { get; }
+    public bool IsAdministrator => Roles.Any(a => a == AccountConstants.ROLE_ADMIN);
+    
+    public bool IsCustomer => Roles.Any(a => a == AccountConstants.ROLE_CUSTOMER);
     public bool IsPublicUser => Username == "public";
 
-    public string Currency
-    {
-        get
-        {
-            switch (CountryRole)
-            {
-                case AccountConstants.ROLE_AU:
-                    return CurrencyConstants.AUD;
-                case AccountConstants.ROLE_NZ:
-                    return CurrencyConstants.NZD;
-            }
 
-            return string.Empty;
-        }
-    }
-
-    public AccountUser(string username, string firstName, string lastName, string email, string countryRole, string fullName, bool isGlobalAdministrator)
+    public AccountUser(string username, string firstName, string lastName, string email, IList<string> roles, string fullName)
     {
         Username = username;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        CountryRole = countryRole;
         FullName = fullName;
-        IsGlobalAdministrator = isGlobalAdministrator;
+        Roles = roles;
     }
 
     public AccountUser(string username)

@@ -25,6 +25,8 @@ public class PriceListingPageViewModel
     public string DisclaimerText { get; set; }
     public string CurrentBrandName { get; set; }
     public string CurrentBrandRegionCode { get; set; }
+    public string Currency { get; set; }
+
     public string GetColumnHeader(int headerIndex, string priceKey)
     {
         if (PriceWeightBasedSettings == null || !PriceWeightBasedSettings.ContainsKey(priceKey))

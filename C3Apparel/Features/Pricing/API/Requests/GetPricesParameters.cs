@@ -8,6 +8,10 @@ public class GetPricesParameters
 {
     [JsonProperty("brandID")]
     public int BrandID { get; set; }
+    
+    [JsonProperty("currency")]
+    public string Currency { get; set; }
+    
     [JsonProperty("pageNumber")]
     public int PageNumber { get; set; }
     [JsonProperty("itemsPerPage")]

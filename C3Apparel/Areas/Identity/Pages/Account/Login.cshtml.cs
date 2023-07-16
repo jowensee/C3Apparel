@@ -108,12 +108,12 @@ namespace C3Apparel.Areas.Identity.Pages.Account
 
             if (!currentUser.IsPublicUser)
             {
-                if (currentUser.IsGlobalAdministrator)
+                if (currentUser.IsAdministrator)
                 {
                     return  Redirect("/admin");
-                }else if (!currentUser.CountryRole.IsNullOrEmpty())
+                }else if (currentUser.IsCustomer)
                 {
-                    return  Redirect("/pricing");
+                    return  Redirect("/pricing/au");
                 }
             }
 

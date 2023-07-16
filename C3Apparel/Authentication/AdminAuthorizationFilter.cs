@@ -39,7 +39,7 @@ public class AdminAuthorizationFilter : Attribute, IAuthorizationFilter
             context.Result =
                 new RedirectResult("/Login");
         }
-        else if (!currentUser.IsGlobalAdministrator)
+        else if (!currentUser.IsAdministrator)
         {
             context.Result = new RedirectResult("/page-not-found");
         }
