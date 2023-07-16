@@ -8,6 +8,7 @@ using C3Apparel.Data.Extensions;
 using C3Apparel.Data.Modules.Filters;
 using C3Apparel.Data.Sql;
 using C3Apparel.Data.Utilities;
+using Microsoft.IdentityModel.Tokens;
 
 namespace C3Apparel.Data.Modules.Classes
 {
@@ -23,7 +24,15 @@ namespace C3Apparel.Data.Modules.Classes
             var sFilterSql = new StringBuilder();
             if (filter != null )
             {
-
+                if (!filter.UserName.IsNullOrEmpty())
+                {
+                    sFilterSql.Append($"AND UserName LIKE '%{filter.UserName.Replace("'", "''")}%'");
+                }
+                
+                if (!filter.Role.IsNullOrEmpty())
+                {
+                    sFilterSql.Append($"AND r.Name LIKE '{filter.Role.Replace("'", "''")}'");
+                }
             }
             
             var sSql = $@"SELECT u.Id as UserID, u.UserName, u.Email, r.Id as RoleId, r.Name as RoleName FROM AspNetUsers u
@@ -31,6 +40,7 @@ namespace C3Apparel.Data.Modules.Classes
                             ON u.Id = ur.UserId
                             JOIN AspNetRoles r
                             ON ur.RoleId = r.Id
+                            WHERE 1 = 1 {sFilterSql}
                             Order By UserName";
 
             if (itemsPerPage > 0)
@@ -70,7 +80,15 @@ namespace C3Apparel.Data.Modules.Classes
             var sFilterSql = new StringBuilder();
             if (filter != null )
             {
-
+                if (!filter.UserName.IsNullOrEmpty())
+                {
+                    sFilterSql.Append($"AND UserName LIKE '%{filter.UserName.Replace("'", "''")}%'");
+                }
+                
+                if (!filter.Role.IsNullOrEmpty())
+                {
+                    sFilterSql.Append($"AND r.Name LIKE '{filter.Role.Replace("'", "''")}'");
+                }
             }
             
             var sSql = $@"SELECT count(*) FROM AspNetUsers u

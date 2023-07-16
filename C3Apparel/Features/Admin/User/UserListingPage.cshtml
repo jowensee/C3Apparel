@@ -26,7 +26,7 @@
          <div class="field">
             <label>User Name</label>
             <div class="control">
-               <input type="text" id="filterUserName" name="filterUserName" v-model="filter.name"/>
+               <input type="text" id="filterUserName" name="filterUserName" v-model="filter.userName"/>
             </div>
          </div>
          <div class="field">
@@ -35,24 +35,8 @@
                <div class="select">
                   <select id="filterFocus" name="filterRole" v-model="filter.role">
                      <option value="">Select</option>
-                     @foreach (var focus in C3Definitions.BrandFocuses)
-                     {
-                        <option value="@focus">@focus</option>
-                     }
-                  </select>
-               </div>
-            </div>
-         </div>
-         <div class="field">
-            <label>Currency</label>
-            <div class="control">
-               <div class="select">
-                  <select id="filterCurrency" name="filterCurrency" v-model="filter.currency">
-                     <option value="">Select</option>
-                     @foreach (var currency in C3Definitions.Currencies)
-                     {
-                        <option value="@currency">@currency</option>
-                     }
+                     <option value="Admin">Admin</option>
+                     <option value="Customer">Customer</option>
                   </select>
                </div>
             </div>
