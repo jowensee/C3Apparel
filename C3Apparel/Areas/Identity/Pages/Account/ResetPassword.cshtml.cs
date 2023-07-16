@@ -33,7 +33,8 @@ namespace C3Apparel.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
         public string Message { get; set; }
-
+        public string UserId { get; set; }
+        public string UserName { get; set; }
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -44,10 +45,12 @@ namespace C3Apparel.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            /*[Required]
             [EmailAddress]
             public string Email { get; set; }
-
+            */
+            
+            public string Id { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -69,22 +72,26 @@ namespace C3Apparel.Areas.Identity.Pages.Account
 
         }
 
-        public IActionResult OnGet(string code = null)
+        public async Task<IActionResult> OnGet(string id = null)
         {
-            
-            return Page();
-            /*if (code == null)
+            if (id == null)
             {
-                return BadRequest("A code must be supplied for password reset.");
-            }
-            else
-            {
-                Input = new InputModel
-                {
-                    Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
-                };
+                Message = "Invalid parameter";
+                
                 return Page();
-            }*/
+            }
+            UserId = id;
+            
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                Message = "User not found";
+                
+                return Page();
+            }
+
+            UserName = user.UserName;
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -94,7 +101,7 @@ namespace C3Apparel.Areas.Identity.Pages.Account
                 return Page();
             }
 
-            var user = await _userManager.FindByNameAsync(Input.Email);
+            var user = await _userManager.FindByIdAsync(Input.Id);
             if (user == null)
             {
                 Message = "User not found";
@@ -113,6 +120,8 @@ namespace C3Apparel.Areas.Identity.Pages.Account
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
+
+            UserName = user.UserName;
             return Page();
         }
     }

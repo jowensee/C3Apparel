@@ -1,0 +1,139 @@
+<!-- @@master = /src/masterpages/default.html-->
+
+<!-- @@block = head-->
+<link rel="stylesheet" href="styles/user-listing.css">
+<!-- @@close-->
+
+<!-- @@block = body-->
+<div class="main-caption">
+    Users
+ </div>
+ 
+ <div id="main-app" data-endpoint="@Url.Action("GetUsers", "User")"
+      data-delete-endpoint="@Url.Action("DeleteUser", "User")"
+      data-method="POST" data-item-per-page="@AdminSettings.DEFAULT_PAGE_SIZE">
+    <div class="action">
+       <a class="button is-link" href="/admin/register">New User</a>       
+    </div>
+    <div class="filter-container">
+       <form action="">
+          <div class="field">
+             <label>User Name</label>
+             <div class="control">
+                <input type="text" id="filterUserName" name="filterUserName" v-model="filter.name"/>
+             </div>
+          </div>
+          <div class="field">
+             <label>Role</label>
+             <div class="control">
+                <div class="select">
+                   <select id="filterFocus" name="filterRole" v-model="filter.role">
+                      <option value="">Select</option>
+                      @foreach (var focus in C3Definitions.BrandFocuses)
+                      {
+                         <option value="@focus">@focus</option>
+                      }
+                   </select>
+                </div>
+             </div>
+          </div>
+          <div class="field">
+             <label>Currency</label>
+             <div class="control">
+                <div class="select">
+                   <select id="filterCurrency" name="filterCurrency" v-model="filter.currency">
+                      <option value="">Select</option>
+                      @foreach (var currency in C3Definitions.Currencies)
+                      {
+                         <option value="@currency">@currency</option>
+                      }
+                   </select>
+                </div>
+             </div>
+          </div>
+          <div class="buttons">
+             <button id="buttonSearch" class="button is-link" v-on:click.prevent="filterResults()">Search</button>
+          </div>
+ 
+          <div class="error"></div>
+       </form>
+    </div>
+    <div id="listingMain">
+       <div class="listing-container" v-if="grid.rows.length == 0">
+          <div class="instruction">
+             <p>No result for your search criteria</p>
+          </div>
+       </div>
+       <div class="listing-container" v-if="grid.rows.length>0">
+          <table class="listing-table listing-table-width-auto">
+             <thead class="listing-header">
+             <tr>
+                <th class="col-header col-action">
+ 
+                </th>
+                <th class="col-header">
+                   Username
+                </th>
+                <th class="col-header">
+                   Role
+                </th>
+             </tr>
+             </thead>
+             <tbody>
+             <tr class="row" v-for="(row, index) in grid.rows">
+                <td class="col-action center">
+                   <a :href="'/admin/users/' + row.userId">
+                      <i class="fa-solid fa-pen"></i>
+                   </a>
+                   <a href="#" v-on:click.prevent="loadDeleteConfirmation(row.userId)" class="remove has-confirmation">
+                      <i class="fa-solid fa-trash-can"></i>
+                   </a>
+                </td>
+                <td nowrap="nowrap">{{row.userName}}</td>
+                <td >{{row.roleName}}</td>
+             </tr>
+             </tbody>
+          </table>
+       </div>
+       <div class="pagination" v-if="grid.rows.length>0">
+          <div>
+             <a v-if="grid.pagination.currentPage > 1" v-on:click="(event) => gotoPreviousPage(event)">&lt; Previous</a>
+          </div>
+          <div class="page">
+             <div>Page </div>
+             <div class="select">
+                <select v-model="grid.pagination.currentPage" v-on:change="(event) => gotoPage(event)">
+                   <option v-for="(n, index) in grid.pagination.totalPage">{{n}}</option>
+                </select>
+             </div>
+ 
+             <div> of</div>
+             <div>{{grid.pagination.totalPage}} </div>
+          </div>
+          <div>
+             <a v-if="grid.pagination.currentPage < grid.pagination.totalPage" v-on:click="(event) => gotoNextPage(event)">Next &gt;</a>
+          </div>
+       </div>
+ 
+       <div id="confirmation-delete" :class="!showDeletePopup ? 'modal' : 'modal is-active'">
+          <div class="modal-background"></div>
+          <div class="modal-content">
+             <div class="modal-description">
+                <p>Are you sure you want to delete?</p>
+             </div>
+             <div>
+                <button id="btnDelete" class="button is-link" aria-label="delete" v-on:click.prevent="deleteUser()">Yes</button>
+             </div>
+          </div>
+          <button id="modal-close" class="modal-close is-large" aria-label="close"></button>
+       </div>
+    </div>
+ </div>
+ 
+<!-- @@close-->
+
+<!-- @@block = scripts-->
+
+<script src="scripts/global.js"></script>
+<script src="scripts/user-listing.js"></script>
+<!-- @@close-->

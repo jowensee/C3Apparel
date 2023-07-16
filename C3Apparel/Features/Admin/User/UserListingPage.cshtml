@@ -1,39 +1,39 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using C3Apparel.Frontend.Data.Settings
-@model C3Apparel.Features.Admin.Brand.BrandListingPageViewModel
+@model C3Apparel.Features.Admin.User.UserListingPageViewModel
 @{
    Layout = "_CMSLayout";
 }
 @section Styles {
-   <link rel="stylesheet" href="/client/dist/styles/brand-listing.css" asp-append-version="true">
+   <link rel="stylesheet" href="/client/dist/styles/user-listing.css" asp-append-version="true">
 }
 
 @section Scripts {
-   <script src="/client/dist/scripts/brand-listing.js" asp-append-version="true"></script>
+   <script src="/client/dist/scripts/user-listing.js" asp-append-version="true"></script>
 }
 <div class="main-caption">
-   Brands
+   Users
 </div>
 
-<div id="main-app" data-endpoint="@Url.Action("GetBrands", "Brand")"
-     data-delete-endpoint="@Url.Action("DeleteBrand", "Brand")"
+<div id="main-app" data-endpoint="@Url.Action("GetUsers", "User")"
+     data-delete-endpoint="@Url.Action("DeleteUser", "User")"
      data-method="POST" data-item-per-page="@AdminSettings.DEFAULT_PAGE_SIZE">
    <div class="action">
-      <a class="button is-link" href="/admin/brands/0">New Supplier</a>       
+      <a class="button is-link" href="/admin/new-user">New User</a>       
    </div>
    <div class="filter-container">
       <form action="">
          <div class="field">
-            <label>Name</label>
+            <label>User Name</label>
             <div class="control">
-               <input type="text" id="filterName" name="filterName" v-model="filter.name"/>
+               <input type="text" id="filterUserName" name="filterUserName" v-model="filter.name"/>
             </div>
          </div>
          <div class="field">
-            <label>Focus</label>
+            <label>Role</label>
             <div class="control">
                <div class="select">
-                  <select id="filterFocus" name="filterFocus" v-model="filter.focus">
+                  <select id="filterFocus" name="filterRole" v-model="filter.role">
                      <option value="">Select</option>
                      @foreach (var focus in C3Definitions.BrandFocuses)
                      {
@@ -71,44 +71,32 @@
          </div>
       </div>
       <div class="listing-container" v-if="grid.rows.length>0">
-         <table class="listing-table brand-table">
+         <table class="listing-table listing-table-width-auto">
             <thead class="listing-header">
             <tr>
                <th class="col-header col-action">
 
                </th>
-               <th class="col-header col-brand">
-                  Name
+               <th class="col-header">
+                  Username
                </th>
-               <th class="col-header col-focus">
-                  Focus
-               </th>
-               <th class="col-header col-currency">
-                  Currency
-               </th>
-               <th class="col-header col-publish-date">
-                  C3 Published Price List Date
-               </th>
-               <th class="col-header col-enabled">
-                  Enabled
+               <th class="col-header">
+                  Role
                </th>
             </tr>
             </thead>
             <tbody>
             <tr class="row" v-for="(row, index) in grid.rows">
                <td class="col-action center">
-                  <a :href="'/admin/brands/' + row.brandId">
+                  <a :href="'/admin/users/' + row.userId">
                      <i class="fa-solid fa-pen"></i>
                   </a>
-                  <a href="#" v-on:click.prevent="loadDeleteConfirmation(row.brandId)" class="remove has-confirmation">
+                  <a href="#" v-on:click.prevent="loadDeleteConfirmation(row.userId)" class="remove has-confirmation">
                      <i class="fa-solid fa-trash-can"></i>
                   </a>
                </td>
-               <td nowrap="nowrap">{{row.brand}}</td>
-               <td >{{row.focus}}</td>
-               <td class="center">{{row.currency}}</td>
-               <td class="center">{{row.publishDate}}</td>
-               <td class="center" v-html="row.enabled ? 'Yes' : 'No'"></td>
+               <td nowrap="nowrap">{{row.userName}}</td>
+               <td >{{row.roleName}}</td>
             </tr>
             </tbody>
          </table>
@@ -140,7 +128,7 @@
                <p>Are you sure you want to delete?</p>
             </div>
             <div>
-               <button id="btnDelete" class="button is-link" aria-label="delete" v-on:click.prevent="deleteBrand()">Yes</button>
+               <button id="btnDelete" class="button is-link" aria-label="delete" v-on:click.prevent="deleteUser()">Yes</button>
             </div>
          </div>
          <button id="modal-close" class="modal-close is-large" aria-label="close"></button>

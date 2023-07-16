@@ -139,6 +139,8 @@ input.text-number{
     overflow-x: auto;
     .listing-table{
         width:100%;
+
+       
         td,th{
             border:1px solid black;
             padding:5px;
@@ -170,6 +172,14 @@ input.text-number{
         tr.row:nth-child(even){
             background-color: #eeeeee;
         }
+
+        &.listing-table-width-auto{
+            width:auto;
+            th:not(.col-action){
+                min-width:200px
+            }
+        }
+
         .listing-header{
 
             .col-header{

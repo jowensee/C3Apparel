@@ -39,6 +39,7 @@
     <Compile Remove="Areas\Identity\Pages\Account\ForgotPassword.cshtml.cs" />
     <Compile Remove="Areas\Identity\Pages\Account\RegisterConfirmation.cshtml.cs" />
     <Compile Remove="Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml.cs" />
+    <Compile Remove="Areas\Identity\Pages\Account\UserList.cshtml.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="wwwroot\scripts\**" />
@@ -59,6 +60,7 @@
     <Content Remove="Areas\Identity\Pages\Account\ForgotPassword.cshtml" />
     <Content Remove="Areas\Identity\Pages\Account\RegisterConfirmation.cshtml" />
     <Content Remove="Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Remove="Areas\Identity\Pages\Account\UserList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Features\Content\ContentPage.cshtml" />

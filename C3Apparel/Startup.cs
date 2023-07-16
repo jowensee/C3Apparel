@@ -91,6 +91,7 @@ namespace BlankSiteCore
             services.AddScoped<IBrandInfoProvider, BrandInfoProvider>();
             services.AddScoped<IInquirySettingsInfoProvider, InquirySettingsInfoProvider>();
             services.AddScoped<IImportDutyInfoProvider, ImportDutyInfoProvider>();
+            services.AddScoped<IUserProvider, UserProvider>();
             ConfigureMembershipServices(services);
             
         }
@@ -199,6 +200,10 @@ namespace BlankSiteCore
                     defaults: new { controller = "InternalPricing", action = "InternalPriceListingPage" });
                 endpoints.MapControllerRoute("Inquiry Print version", "print",
                     defaults: new { controller = "Inquiry", action = "PricePrintVersionPage" });
+                
+                endpoints.MapControllerRoute("Users Listing", "admin/users",
+                    defaults: new { controller = "User", action = "UserListing" });
+
                 endpoints.MapRazorPages();
             });
 

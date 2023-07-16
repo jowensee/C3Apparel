@@ -803,6 +803,12 @@ input.text-number {
 .listing-container .listing-table tr.row:nth-child(even) {
   background-color: #eeeeee;
 }
+.listing-container .listing-table.listing-table-width-auto {
+  width: auto;
+}
+.listing-container .listing-table.listing-table-width-auto th:not(.col-action) {
+  min-width: 150px;
+}
 .listing-container .listing-table .listing-header .col-header {
   font-weight: bold;
   padding: 5px;
