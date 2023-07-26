@@ -6,7 +6,7 @@ using C3Apparel.Frontend.Data.Common;
 
 namespace C3Apparel.Web.Features.Pricing;
 
-public class PriceListingPageViewModel
+public class CustomerPricingInquiryPageViewModel
 {
     public IEnumerable<ListItem> Brands { get; set; } = Enumerable.Empty<ListItem>();
     public IEnumerable<ProductItem> Products { get; set; } = Enumerable.Empty<ProductItem>();
@@ -44,9 +44,4 @@ public class PriceListingPageViewModel
                 return string.Empty;
         }
     }
-    
-    
-    
-    public string BrandPDFPriceListUrl { get; set; }
-    public string BrandCSVDataUrl { get; set; }
 }

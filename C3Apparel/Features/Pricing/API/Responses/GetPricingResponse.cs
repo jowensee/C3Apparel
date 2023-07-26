@@ -13,6 +13,9 @@ public class PricingAPIItem
     [JsonProperty("productCode")]
     public string ProductCode { get; set; }
 
+    [JsonProperty("collection")]
+    public string Collection { get; set; }
+
     [JsonProperty("description")]
     public string Description { get; set; }
 

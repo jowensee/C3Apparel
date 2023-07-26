@@ -9,14 +9,16 @@ namespace C3Apparel.Data.Products
 {
     public class ProductRepository : IProductRepository
     {
+        private readonly IPriceListPriceInfoProvider _priceListPriceInfoProvider;
         private readonly IProductPricingInfoProvider _productPricingInfoProvider;
         private readonly IBrandInfoProvider _brandInfoProvider;
 
         public ProductRepository(IBrandInfoProvider brandInfoProvider, 
-            IProductPricingInfoProvider productPricingInfoProvider)
+            IProductPricingInfoProvider productPricingInfoProvider, IPriceListPriceInfoProvider priceListPriceInfoProvider)
         {
             _brandInfoProvider = brandInfoProvider;
             _productPricingInfoProvider = productPricingInfoProvider;
+            _priceListPriceInfoProvider = priceListPriceInfoProvider;
         }
 
         private ProductItem CreateProductItem(DataRow dr)
@@ -25,6 +27,7 @@ namespace C3Apparel.Data.Products
             {
                 BrandName = dr[nameof(BrandInfo.BrandDisplayName)].ToString(),
                 ProductCode = dr[nameof(ProductPricingInfo.ProductPricingC3Style)].ToString(),
+                Collection = dr[nameof(ProductPricingInfo.ProductPricingCollection)].ToString(),
                 ProductName = dr[nameof(ProductPricingInfo.ProductPricingDescription)].ToString(),
                 ProductSizes = dr[nameof(ProductPricingInfo.ProductPricingSizes)].ToString(),
                 ProductColours = dr[nameof(ProductPricingInfo.ProductPricingColours)].ToString(),
@@ -59,5 +62,6 @@ namespace C3Apparel.Data.Products
         {
             return _productPricingInfoProvider.GetProductPricingCount(brandID, filter);
         }
+        
     }
 }

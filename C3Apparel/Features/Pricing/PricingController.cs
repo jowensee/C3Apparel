@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using C3Apparel.Data.Common;
 using C3Apparel.Data.Helpers;
+using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Data.Pricing;
 using C3Apparel.Data.Products;
 using C3Apparel.Frontend.Data.Common;
@@ -22,6 +23,7 @@ namespace C3Apparel.Web.Features.Pricing
     public class PricingController : Controller
     {
         private readonly IProductRepository _productRepository;
+        private readonly IPriceListPriceInfoProvider _priceListPriceInfoProvider;
         private readonly IProductPricingService _productPricingService;
         private readonly ICurrentUserProvider _currentUserProvider;
         private readonly IProductSettingsRepository _productSettingsRepository;
@@ -29,7 +31,7 @@ namespace C3Apparel.Web.Features.Pricing
         private readonly IBrandRepository _brandRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         public PricingController(IProductRepository productRepository, IProductPricingService productPricingService, ICurrentUserProvider currentUserProvider, 
-            IProductSettingsRepository productSettingsRepository, IBrandRepository brandRepository, IHttpContextAccessor httpContextAccessor)
+            IProductSettingsRepository productSettingsRepository, IBrandRepository brandRepository, IHttpContextAccessor httpContextAccessor, IPriceListPriceInfoProvider priceListPriceInfoProvider)
         {
             _productRepository = productRepository;
             _productPricingService = productPricingService;
@@ -37,6 +39,7 @@ namespace C3Apparel.Web.Features.Pricing
             _productSettingsRepository = productSettingsRepository;
             _brandRepository = brandRepository;
             _httpContextAccessor = httpContextAccessor;
+            _priceListPriceInfoProvider = priceListPriceInfoProvider;
             _weightbasedSettings = _productSettingsRepository.GetAllWeightBasedPriceSettings();
         }
         
@@ -78,6 +81,46 @@ namespace C3Apparel.Web.Features.Pricing
                 }
             }
             return View("~/Features/Pricing/PriceListingPage.cshtml",vm);
+        }
+        
+        [TypeFilter(typeof(C3AuthorizationFilter))]
+        public async Task<ActionResult> CustomerPricingInquiryPage(string countryCode, int brandId = 0)
+        {
+
+            var vm = new CustomerPricingInquiryPageViewModel();
+
+            vm.Brands = _productRepository.GetBrandsWithPricing().Select(a=> new ListItem(a.BrandName, a.BrandID.ToString(), brandId == a.BrandID));
+
+            var targetCurrency = CountryHelper.GetCountryCurrencyCode(countryCode);
+
+            vm.Currency = targetCurrency;
+            vm.CountryName = CountryHelper.GetCountryName(countryCode);
+
+            vm.PriceWeightBasedSettings = _weightbasedSettings?.AllPriceWeightbasedSettings;
+
+            var brand = _brandRepository.GetBrand(brandId);
+
+            if (brand != null)
+            {
+                
+                vm.CurrentBrandRegionCode = brand.BrandRegionCode;
+                vm.PriceCol1HasFreightSurcharge = PriceColumnHasFreightSurcharge(brand.BrandRegionCode, WeightbasedSettings.Price1KeyName, targetCurrency);
+                vm.PriceCol2HasFreightSurcharge = PriceColumnHasFreightSurcharge(brand.BrandRegionCode, WeightbasedSettings.Price2KeyName, targetCurrency);
+                vm.PriceCol3HasFreightSurcharge = PriceColumnHasFreightSurcharge(brand.BrandRegionCode,
+                    WeightbasedSettings.Price3KeyName, targetCurrency);
+                vm.PriceCol4HasFreightSurcharge = PriceColumnHasFreightSurcharge(brand.BrandRegionCode,
+                    WeightbasedSettings.Price4KeyName, targetCurrency);
+
+                if (targetCurrency == CurrencyConstants.AUD)
+                {
+                    vm.DisclaimerText = brand.DisclaimerTextAU;
+                }
+                else
+                {
+                    vm.DisclaimerText = brand.DisclaimerTextNZ;
+                }
+            }
+            return View("~/Features/Pricing/CustomerPricingInquiryPage.cshtml",vm);
         }
       
         private bool PriceColumnHasFreightSurcharge(string regionCode, string priceKeyName, string targetCurrency)
@@ -216,6 +259,7 @@ namespace C3Apparel.Web.Features.Pricing
             {
                 Brand = p.BrandName,
                 ProductCode = p.ProductCode,
+                Collection = p.Collection,
                 Description = p.ProductName,
                 Sizes = p.ProductSizes,
                 Colours = p.ProductColours,
@@ -237,10 +281,60 @@ namespace C3Apparel.Web.Features.Pricing
             return Ok(response);
         }
 
-        /*
-        public async Task<ActionResult> PrintPDF(PrintPDFRequest request)
+        [TypeFilter(typeof(C3AuthorizationFilter))]
+        [Route("getpricesfrompricelist")]
+        [HttpPost]
+        public async Task<ActionResult> GetPricesFromPriceList([FromBody]GetPricesParameters requests)
         {
-            return File(new MemoryStream(), null);
-        }*/
+            int GetTotalPage(int totalItems, int itemsPerPage)
+            {
+                if (totalItems % itemsPerPage == 0)
+                {
+                    return totalItems / itemsPerPage;
+                }
+
+                return (int) Math.Floor((double) totalItems / itemsPerPage) + 1;
+            }
+            var response = new GetPricingsResponse();
+
+            var currency = requests.Currency;
+            var brandPricing = _brandRepository.GetBrandPricingInfo(requests.BrandID, currency);
+
+            if (!brandPricing.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var products = _priceListPriceInfoProvider.GetAllPrices(1, currency, requests.BrandID, requests.PageNumber,
+                requests.ItemsPerPage);
+            
+            var totalCount = _priceListPriceInfoProvider.GetAllPricesCount(1, currency, requests.BrandID);
+
+            response.TotalPage = GetTotalPage(totalCount, requests.ItemsPerPage);
+            response.Pricings = products.Select(p => new PricingAPIItem
+            {
+                Brand = p.PriceBrandName,
+                ProductCode = p.PriceC3Style,
+                Collection = p.PriceCollection,
+                Description = p.PriceDescription,
+                Sizes = p.PriceSizes,
+                Colours = p.PriceColours,
+                UnitPrice1 = p.FormatPrice(p.PriceCol1UnitPrice),
+                Moq1 = p.PriceCol1MOQUnit,
+                FreightSurcharge1 = p.FormatPrice(p.PriceCol1FreightSurcharge),
+                UnitPrice2 = p.FormatPrice(p.PriceCol2UnitPrice),
+                Moq2 = p.PriceCol2MOQUnit,
+                FreightSurcharge2 = p.FormatPrice(p.PriceCol2FreightSurcharge),
+                UnitPrice3 = p.FormatPrice(p.PriceCol3UnitPrice),
+                Moq3 = p.PriceCol3MOQUnit,
+                FreightSurcharge3 = p.FormatPrice(p.PriceCol3FreightSurcharge),
+                UnitPrice4 = p.FormatPrice(p.PriceCol4UnitPrice),
+                Moq4 = p.PriceCol4MOQUnit,
+                FreightSurcharge4 = p.FormatPrice(p.PriceCol4FreightSurcharge),
+
+            }).ToList();
+            
+            return Ok(response);
+        }
     }
 }

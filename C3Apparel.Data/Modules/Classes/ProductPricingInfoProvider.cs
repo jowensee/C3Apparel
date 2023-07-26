@@ -23,6 +23,7 @@ namespace C3Apparel.Data.Modules.Classes
                 nameof(BrandInfo.BrandDisplayName),
                 nameof(ProductPricingInfo.ProductPricingStatus),
                 nameof(ProductPricingInfo.ProductPricingC3Style),
+                nameof(ProductPricingInfo.ProductPricingCollection),
                 nameof(ProductPricingInfo.ProductPricingDescription),
                 nameof(ProductPricingInfo.ProductPricingGroup),
                 nameof(ProductPricingInfo.ProductPricingColours),

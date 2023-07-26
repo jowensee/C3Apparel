@@ -11,12 +11,14 @@ namespace C3Apparel.Data.Products
         public string BrandName { get; set; }
         [Name("Style")]
         public string ProductCode { get; set; }
+        
+        [Name("Collection")]
+        public string Collection { get; set; }
         [Name("Description")]
         public string ProductName { get; set; }
         [Name("Sizes")]
         public string ProductSizes { get; set; }
         public string ProductColours { get; set; }
-        [Name("Freight & Surcharge")]
         public decimal FreightSurcharge1 { get; set; }
         [Name("Unit Price 1")]
         public decimal Price1 { get; set; }

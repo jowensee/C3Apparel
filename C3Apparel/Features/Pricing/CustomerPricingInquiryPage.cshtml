@@ -1,7 +1,7 @@
 @using C3Apparel.Frontend.Data.Constants
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using C3Apparel.Data.Pricing
-@model C3Apparel.Web.Features.Pricing.PriceListingPageViewModel
+@model C3Apparel.Web.Features.Pricing.CustomerPricingInquiryPageViewModel
 
 @section Styles {
    <link rel="stylesheet" href="/client/dist/styles/customer-listing.css" asp-append-version="true">
@@ -15,34 +15,35 @@
     <a href="/pricing/nz" class="@(Model.Currency == "NZD" ? "active" : "")">New Zealand</a>
 </nav>
 <div class="main-caption">
-   @Model.CountryName Price List
+   @Model.CountryName Pricing Inquiry
 </div>
 <div class="filter-container">
-   <div class="field-with-button">
-      <div class="field">
-         <label>Brand</label>
-         <div class="control">
-            <div class="select">
-               <select id="selectBrand" name="brandId">
-                  <option value="">Select Brand</option>
-                  @foreach (var brand in Model.Brands)
-                  {
-                     <!option value="@brand.Value" @(brand.IsSelected ? "selected" : "")>@brand.Text</!option>
-                  }
-               </select>
+   <form action="@Url.Action("CustomerPricePrintVersionPage", "Pricing")" method="post">
+      <div class="field-with-button">
+         <div class="field">
+            <label>Brand</label>
+            <div class="control">
+               <div class="select">
+                  <select id="selectBrand" name="brandId">
+                     <option value="">Select Brand</option>
+                     @foreach (var brand in Model.Brands)
+                     {
+                        <!option value="@brand.Value" @(brand.IsSelected ? "selected" : "")>@brand.Text</!option>
+                     }
+                  </select>
+               </div>
             </div>
          </div>
+         <div class="buttons">
+            <button id="buttonSearch" class="button is-link">Search</button>
+            <button id="buttonPrint" class="button is-link" type="submit" value="print">Print</button>
+         </div>
       </div>
-      <div class="buttons">
-         <button id="buttonSearch" class="button is-link">Search</button>
-         <a href="@Model.BrandCSVDataUrl" class="button">CSV data</a>
-         <a href="@Model.BrandPDFPriceListUrl" class="button">Price List PDF</a>
-      </div>
-   </div>
-   <input type="hidden" name="currency" value="@Model.Currency" />
-   <div class="error"></div>
+      <input type="hidden" name="currency" value="@Model.Currency" />
+      <div class="error"></div>
+   </form>
 </div>
-<div id="listingMain" data-endpoint="@Url.Action("GetPricesFromPriceList", "Pricing")" data-method="POST" data-item-per-page="@C3Constants.GRID_ITEMS_PER_PAGE"
+<div id="listingMain" data-endpoint="@Url.Action("GetPrices", "Pricing")" data-method="POST" data-item-per-page="@C3Constants.GRID_ITEMS_PER_PAGE"
      data-currency="@Model.Currency">
    <div class="listing-container" v-if="grid.rows.length == 0">
       <div class="instruction">
@@ -118,7 +119,7 @@
          </tr>
          <tr>
             <th rowspan="2" class="col-header col-brand">Brand</th>
-            <th rowspan="2" class="col-header col-brand">Collection</th>
+            <th rowspan="2" class="col-header col-style">Collection</th>
             <th rowspan="2" class="col-header col-style">Style</th>
             <th rowspan="2" class="col-header col-name">Description</th>
             <th rowspan="2" class="col-header col-sizes">Sizes</th>
