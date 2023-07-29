@@ -23,13 +23,9 @@ namespace C3Apparel.Data.Modules.Classes
                 { "@brandName", price.PriceBrandName },
                 { "@collection", price.PriceCollection },
                 { "@c3Style", price.PriceC3Style },
-                { "@supplierStyle", price.PriceSupplierStyle },
                 { "@description", price.PriceDescription },
-                { "@coo", price.PriceCoo },
-                { "@group", price.PriceGroup },
                 { "@sizes", price.PriceSizes },
                 { "@colours", price.PriceColours },
-                { "@colourDesc", price.PriceColourDesc },
                 { "@col1FreightSurcharge", price.PriceCol1FreightSurcharge },
                 { "@col1UnitPrice", price.PriceCol1UnitPrice },
                 { "@col1MOQUnit", price.PriceCol1MOQUnit },
@@ -52,13 +48,9 @@ namespace C3Apparel.Data.Modules.Classes
            ,[PriceBrandName]
            ,[PriceCollection]
            ,[PriceC3Style]
-           ,[PriceSupplierStyle]
            ,[PriceDescription]
-           ,[PriceCoo]
-           ,[PriceGroup]
            ,[PriceSizes]
            ,[PriceColours]
-           ,[PriceColourDesc]
            ,[PriceCol1FreightSurcharge]
            ,[PriceCol1UnitPrice]
            ,[PriceCol1MOQUnit]
@@ -78,13 +70,9 @@ namespace C3Apparel.Data.Modules.Classes
            ,@brandName
            ,@collection
            ,@c3Style
-           ,@supplierStyle
            ,@description
-           ,@coo
-           ,@group
            ,@sizes
            ,@colours
-           ,@colourDesc
            ,@col1FreightSurcharge
            ,@col1UnitPrice
            ,@col1MOQUnit
@@ -101,6 +89,12 @@ namespace C3Apparel.Data.Modules.Classes
 
         public IEnumerable<PriceListPriceInfo> GetAllPrices(int versionId, string currency, int brandId, int pageNumber = 0, int itemsPerPage = 0)
         {
+            var parameters = new Dictionary<string, object>
+            {
+                { "@versionId", versionId},
+                { "@currency", currency },
+                { "@brandId", brandId },
+            };
             var sSql = $@"SELECT * FROM C3_PricingListPrices
                        WHERE PriceVersionId = @versionId AND PriceCurrency = @currency AND PriceBrandId = @brandId
                         ORDER BY PriceCollection, PriceC3Style";
@@ -109,7 +103,7 @@ namespace C3Apparel.Data.Modules.Classes
             {
                 sSql += $" OFFSET {(pageNumber - 1) * itemsPerPage} ROWS FETCH NEXT {itemsPerPage} ROWS ONLY";
             }
-            var ds = ExecuteQuery(sSql);
+            var ds = ExecuteQuery(sSql, parameters);
 
             if (DataHelper.IsEmpty(ds))
             {
@@ -141,13 +135,13 @@ namespace C3Apparel.Data.Modules.Classes
                 PriceBrandName = row[nameof(PriceListPriceInfo.PriceBrandName)].ToSafeString(),
                 PriceCollection = row[nameof(PriceListPriceInfo.PriceCollection)].ToSafeString(),
                 PriceC3Style = row[nameof(PriceListPriceInfo.PriceC3Style)].ToSafeString(),
-                PriceSupplierStyle = row[nameof(PriceListPriceInfo.PriceSupplierStyle)].ToSafeString(),
+               // PriceSupplierStyle = row[nameof(PriceListPriceInfo.PriceSupplierStyle)].ToSafeString(),
                 PriceDescription = row[nameof(PriceListPriceInfo.PriceDescription)].ToSafeString(),
-                PriceCoo = row[nameof(PriceListPriceInfo.PriceCoo)].ToSafeString(),
-                PriceGroup =  row[nameof(PriceListPriceInfo.PriceGroup)].ToSafeString(),
+                //PriceCoo = row[nameof(PriceListPriceInfo.PriceCoo)].ToSafeString(),
+                //PriceGroup =  row[nameof(PriceListPriceInfo.PriceGroup)].ToSafeString(),
                 PriceSizes = row[nameof(PriceListPriceInfo.PriceSizes)].ToSafeString(),
                 PriceColours = row[nameof(PriceListPriceInfo.PriceColours)].ToSafeString(),
-                PriceColourDesc = row[nameof(PriceListPriceInfo.PriceColourDesc)].ToSafeString(),
+               // PriceColourDesc = row[nameof(PriceListPriceInfo.PriceColourDesc)].ToSafeString(),
                 PriceCol1FreightSurcharge = row[nameof(PriceListPriceInfo.PriceCol1FreightSurcharge)].ToDecimal(),
                 PriceCol1UnitPrice = row[nameof(PriceListPriceInfo.PriceCol1UnitPrice)].ToDecimal(),
                 PriceCol1MOQUnit = row[nameof(PriceListPriceInfo.PriceCol1MOQUnit)].ToInt(),

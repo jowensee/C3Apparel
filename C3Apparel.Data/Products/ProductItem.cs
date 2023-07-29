@@ -4,6 +4,7 @@ namespace C3Apparel.Data.Products
 {
     public class ProductItem
     {
+        public int BrandID { get; set; }
         public decimal C3BuyPrice { get; set; }
         public decimal SKUWeight { get; set; }
         public decimal C3OverrideWeight { get; set; }

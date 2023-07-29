@@ -25,6 +25,7 @@ namespace C3Apparel.Data.Products
         {
             return new ProductItem
             {
+                BrandID = dr[nameof(BrandInfo.BrandID)].ToInt(),
                 BrandName = dr[nameof(BrandInfo.BrandDisplayName)].ToString(),
                 ProductCode = dr[nameof(ProductPricingInfo.ProductPricingC3Style)].ToString(),
                 Collection = dr[nameof(ProductPricingInfo.ProductPricingCollection)].ToString(),

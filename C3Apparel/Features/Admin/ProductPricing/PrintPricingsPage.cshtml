@@ -48,11 +48,48 @@
             </div>
          </div>
          <div class="buttons">
+            <button name="SaveToPriceTable" type="submit">Save to Price List Table</button>
             <button class="button is-link" v-on:click.prevent="print()">Print</button>
          </div>
  
          <div class="error"></div>
       </form>
    </div>
- 
+
 </div>
+<form method="post" action="@Url.Action("SaveToPriceListTable", "ProductPricing")">
+   <div class="field">
+      <label>Brand</label>
+      <div class="control">
+         <div class="select">
+            <select id="filterBrand" name="Brand">
+               <option value="0">Select</option>
+               @foreach (var brand in Model.Brands)
+               {
+                  <option value="@brand.Value">@brand.Text</option>
+               }
+            </select>
+         </div>
+         <div class="">Please select supplier</div>
+      </div>
+   </div>
+   <div class="field">
+      <label>Target currency</label>
+      <div class="control">
+         <div class="select">
+            <select name="Currency">
+               <option value="">Select</option>
+               <option value="AUD">Australian Dollar</option>
+               <option value="NZD">New Zealand Dollar</option>
+            </select>
+         </div>
+         <div class="">Please select currency</div>
+      </div>
+   </div>
+   <div class="buttons">
+      <button name="SaveToPriceTable" type="submit">Save to Price List Table</button>
+      <button class="button is-link" v-on:click.prevent="print()">Print</button>
+   </div>
+  
+   <div class="error"></div>
+</form>

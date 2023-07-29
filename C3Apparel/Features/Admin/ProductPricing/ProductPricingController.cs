@@ -6,9 +6,11 @@ using BlankSiteCore.Features.Base.API;
 using C3Apparel.Data.Extensions;
 using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Data.Modules.Filters;
+using C3Apparel.Data.Pricing;
 using C3Apparel.Data.Products;
 using C3Apparel.Features.Admin.Brand;
 using C3Apparel.Features.Admin.ProductPricing.API;
+using C3Apparel.Features.Admin.ProductPricing.Models;
 using C3Apparel.Frontend.Data.Common;
 using C3Apparel.Frontend.Data.Settings;
 using C3Apparel.Web.Authentication;
@@ -26,13 +28,14 @@ namespace C3Apparel.Features.Admin.ProductPricing
         private readonly IBrandInfoProvider _brandInfoProvider;
         private readonly IProductPricingInfoProvider _productPricingInfoProvider;
         private readonly IHttpContextAccessor _httpContextAccessor;
-
+        private readonly IPriceListService _priceListService;
         public ProductPricingController(IBrandInfoProvider brandInfoProvider,
-            IProductPricingInfoProvider productPricingInfoProvider, IHttpContextAccessor httpContextAccessor)
+            IProductPricingInfoProvider productPricingInfoProvider, IHttpContextAccessor httpContextAccessor, IPriceListService priceListService)
         {
             _brandInfoProvider = brandInfoProvider;
             _productPricingInfoProvider = productPricingInfoProvider;
             _httpContextAccessor = httpContextAccessor;
+            _priceListService = priceListService;
         }
 
 
@@ -293,5 +296,13 @@ namespace C3Apparel.Features.Admin.ProductPricing
             }
         }
 
+        [HttpPost]
+        [Route("save")]
+        public IActionResult SaveToPriceListTable(PricingForm form)
+        {
+            var message = _priceListService.SavePriceListToPriceListTable(1, form.Currency, form.Brand.ToInt());
+
+            return RedirectToAction("ProductPricingListing");
+        }
     }
 }

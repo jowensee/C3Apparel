@@ -40,13 +40,9 @@ GO
 	    public string PriceBrandName { get; set; }
 	    public string PriceCollection { get; set; }
 	    public string PriceC3Style { get; set; }
-	    public string PriceSupplierStyle { get; set; }
 	    public string PriceDescription { get; set; }
-	    public string PriceCoo { get; set; }
-	    public string PriceGroup { get; set; }
 	    public string PriceSizes { get; set; }
 	    public string PriceColours { get; set; }
-	    public string PriceColourDesc { get; set; }
 	    public decimal PriceCol1FreightSurcharge { get; set; }
 	    public decimal PriceCol1UnitPrice { get; set; }
 	    public int PriceCol1MOQUnit { get; set; }

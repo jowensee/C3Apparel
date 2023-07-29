@@ -93,6 +93,7 @@ namespace BlankSiteCore
             services.AddScoped<IInquirySettingsInfoProvider, InquirySettingsInfoProvider>();
             services.AddScoped<IImportDutyInfoProvider, ImportDutyInfoProvider>();
             services.AddScoped<IUserProvider, UserProvider>();
+            services.AddScoped<IPriceListService, PriceListService>();
             ConfigureMembershipServices(services);
             
         }

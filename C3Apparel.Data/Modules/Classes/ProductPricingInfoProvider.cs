@@ -20,6 +20,7 @@ namespace C3Apparel.Data.Modules.Classes
         {
             string[] columns =
             {
+                nameof(BrandInfo.BrandID),
                 nameof(BrandInfo.BrandDisplayName),
                 nameof(ProductPricingInfo.ProductPricingStatus),
                 nameof(ProductPricingInfo.ProductPricingC3Style),
