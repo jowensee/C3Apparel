@@ -1,0 +1,50 @@
+@import "../../styles/variables";
+//@import "../../widgets/xxx/xxx";
+
+.filter-container{
+    .field{
+        label{
+            width:150px;
+        }
+
+        input[type=text]{
+            width:300px
+        }
+    }
+}
+
+.listing-container{
+
+    .listing-table{
+
+
+
+        .col-brand{
+        }
+
+        .col-style{
+        }
+
+        .col-name{
+        }
+
+        .col-color{
+            width: 120px;
+        }
+        .col-sizes{
+            width: 120px;
+        }
+        .col-price{
+            width: 50px;
+            text-align:right;
+        }
+
+        .col-units{
+            width: 50px;
+            text-align:center
+
+        }
+    }
+
+}
+

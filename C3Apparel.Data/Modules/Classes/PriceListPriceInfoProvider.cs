@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using C3Apparel.Data.Extensions;
+using C3Apparel.Data.Modules.Filters;
 using C3Apparel.Data.Sql;
+using C3Apparel.Data.Utilities;
 
 namespace C3Apparel.Data.Modules.Classes
 {
@@ -204,6 +207,141 @@ namespace C3Apparel.Data.Modules.Classes
 
             ExecuteCommand(sSql, parameters);
 
+        }
+
+        public IEnumerable<PriceListPriceInfo> SearchPriceList(int versionId, string currency, SearchPriceListFilter filter, int pageNumber = 0,
+            int itemsPerPage = 0)
+        {
+            var parameters = new Dictionary<string, object>
+            {
+                { "@versionId", versionId},
+                { "@currency", currency }
+            };
+            
+            var sFilterSql = new StringBuilder();
+
+            if (filter != null)
+            {
+                if (filter.BrandId > 0)
+                {
+                    sFilterSql.Append($" AND PriceBrandID = {filter.BrandId}");
+                }
+                if (!string.IsNullOrWhiteSpace(filter.Collection))
+                {
+                    sFilterSql.Append($" AND PriceCollection LIKE '%{SQLHelper.SqlString(filter.Collection)}%'");
+                }
+                if (!string.IsNullOrWhiteSpace(filter.C3Style))
+                {
+                    sFilterSql.Append($" AND PriceC3Style LIKE '%{SQLHelper.SqlString(filter.C3Style)}%'");
+                }
+                if (!string.IsNullOrWhiteSpace(filter.Description))
+                {
+                    sFilterSql.Append($" AND PriceDescription LIKE '%{SQLHelper.SqlString(filter.Description)}%'");
+                }
+                if (!string.IsNullOrWhiteSpace(filter.ProductGroup))
+                {
+                    sFilterSql.Append($" AND PriceGroup LIKE '%{SQLHelper.SqlString(filter.ProductGroup)}%'");
+                }
+                if (!string.IsNullOrWhiteSpace(filter.Sizes))
+                {
+                    sFilterSql.Append($" AND PriceSizes LIKE '%{SQLHelper.SqlString(filter.Sizes)}%'");
+                }
+                if (!string.IsNullOrWhiteSpace(filter.Colour))
+                {
+                    sFilterSql.Append($" AND PriceColours LIKE '%{SQLHelper.SqlString(filter.Colour)}%'");
+                }
+                if (!string.IsNullOrWhiteSpace(filter.ColourDescription))
+                {
+                    sFilterSql.Append($" AND PriceColourDesc LIKE '%{SQLHelper.SqlString(filter.ColourDescription)}%'");
+                }
+                
+            }
+            
+            var sSql = $@"SELECT * FROM C3_PricingListPrices
+                       WHERE PriceVersionId = @versionId AND PriceCurrency = @currency {sFilterSql}
+                        ORDER BY PriceBrandName, PriceCollection, PriceC3Style";
+
+            if (itemsPerPage > 0)
+            {
+                sSql += $" OFFSET {(pageNumber - 1) * itemsPerPage} ROWS FETCH NEXT {itemsPerPage} ROWS ONLY";
+            }
+            var ds = ExecuteQuery(sSql, parameters);
+
+            if (DataHelper.IsEmpty(ds))
+            {
+                return Enumerable.Empty<PriceListPriceInfo>();
+            }
+
+            
+            var results = new List<PriceListPriceInfo>();
+
+            for (var i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                results.Add(CreatePriceListPriceInfo(ds.Tables[0].Rows[i]));
+            }
+
+            return results;
+        }
+
+        public int SearchPriceListCount(int versionId, string currency, SearchPriceListFilter filter)
+        {
+            var parameters = new Dictionary<string, object>
+            {
+                { "@versionId", versionId},
+                { "@currency", currency }
+            };
+            
+            var sFilterSql = new StringBuilder();
+
+            if (filter != null)
+            {
+                if (filter.BrandId > 0)
+                {
+                    sFilterSql.Append($" AND PriceBrandID = {filter.BrandId}");
+                }
+                if (!string.IsNullOrWhiteSpace(filter.Collection))
+                {
+                    sFilterSql.Append($" AND PriceCollection LIKE '%{SQLHelper.SqlString(filter.Collection)}%'");
+                }
+                if (!string.IsNullOrWhiteSpace(filter.C3Style))
+                {
+                    sFilterSql.Append($" AND PriceC3Style LIKE '%{SQLHelper.SqlString(filter.C3Style)}%'");
+                }
+                if (!string.IsNullOrWhiteSpace(filter.Description))
+                {
+                    sFilterSql.Append($" AND PriceDescription LIKE '%{SQLHelper.SqlString(filter.Description)}%'");
+                }
+                if (!string.IsNullOrWhiteSpace(filter.ProductGroup))
+                {
+                    sFilterSql.Append($" AND PriceGroup LIKE '%{SQLHelper.SqlString(filter.ProductGroup)}%'");
+                }
+                if (!string.IsNullOrWhiteSpace(filter.Sizes))
+                {
+                    sFilterSql.Append($" AND PriceSizes LIKE '%{SQLHelper.SqlString(filter.Sizes)}%'");
+                }
+                if (!string.IsNullOrWhiteSpace(filter.Colour))
+                {
+                    sFilterSql.Append($" AND PriceColours LIKE '%{SQLHelper.SqlString(filter.Colour)}%'");
+                }
+                if (!string.IsNullOrWhiteSpace(filter.ColourDescription))
+                {
+                    sFilterSql.Append($" AND PriceColourDesc LIKE '%{SQLHelper.SqlString(filter.ColourDescription)}%'");
+                }
+                
+            }
+            
+            var sSql = $@"SELECT COUNT(*) FROM C3_PricingListPrices
+                       WHERE PriceVersionId = @versionId AND PriceCurrency = @currency {sFilterSql}";
+
+           
+            var ds = ExecuteQuery(sSql, parameters);
+
+            if (DataHelper.IsEmpty(ds))
+            {
+                return 0;
+            }
+
+            return ds.Tables[0].Rows[0][0].ToInt();
         }
     }
 }
