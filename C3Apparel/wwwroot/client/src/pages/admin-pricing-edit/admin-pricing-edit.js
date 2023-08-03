@@ -90,7 +90,7 @@ function PricingEdit(){
                 }
 
                 if (this.pricing.c3Style.trim() == ''){
-                    this.errors.push("<b>C3 Style:</b> Please enter a value")
+                    this.errors.push("<b>C-3 Style:</b> Please enter a value")
                     validate = false
                 }
 
