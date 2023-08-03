@@ -6,6 +6,7 @@ namespace C3Apparel.Data.Products
     {
         public int BrandID { get; }
         public string BrandName { get; }
+        public string BrandCodeName { get; }
         public string BrandCurrency { get; }
         public string DisclaimerTextAU { get; }
         public string DisclaimerTextNZ { get; }
@@ -26,13 +27,14 @@ namespace C3Apparel.Data.Products
             }
         }
 
-        public BrandItem(int brandId, string brandName, string brandCurrency, string disclaimerTextAu, string disclaimerTextNz)
+        public BrandItem(int brandId, string brandName, string brandCodeName, string brandCurrency, string disclaimerTextAu, string disclaimerTextNz)
         {
             BrandID = brandId;
             BrandName = brandName;
             BrandCurrency = brandCurrency;
             DisclaimerTextAU = disclaimerTextAu;
             DisclaimerTextNZ = disclaimerTextNz;
+            BrandCodeName = brandCodeName;
         }
     }
 }

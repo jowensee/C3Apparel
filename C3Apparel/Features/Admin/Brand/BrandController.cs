@@ -126,6 +126,7 @@ namespace C3Apparel.Features.Admin.Brand
                 {
                     Brand = new BrandFullDetail{ 
                         Brand = brand.BrandDisplayName,
+                        CodeName = brand.BrandName,
                         BrandId = brand.BrandID,
                         Enabled = brand.BrandEnabled,
                         Currency = brand.BrandCurrency,
@@ -167,6 +168,7 @@ namespace C3Apparel.Features.Admin.Brand
                 {
                     BrandID = requests.BrandId,
                     BrandDisplayName = requests.Brand,
+                    BrandName = requests.CodeName,
                     BrandEnabled = requests.Enabled,
                     BrandFocus = requests.Focus,
                     BrandCurrency = requests.Currency,

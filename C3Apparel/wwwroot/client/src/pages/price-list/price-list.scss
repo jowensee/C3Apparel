@@ -1,0 +1,26 @@
+//@import "../../widgets/xxx/xxx";
+.listing-container 
+{
+    table{
+        width:auto!important;
+        a.button{
+            margin:0 20px;
+        }
+    }
+    .files {
+        width:150px;
+        a{
+            display: block;
+            margin-bottom:5px;
+        }
+    }
+
+    .col-brand{
+        width:300px
+    }
+
+    .col-publish-date{
+        width:200px;
+    }
+
+}

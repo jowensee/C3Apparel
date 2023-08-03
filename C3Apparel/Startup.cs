@@ -1,4 +1,5 @@
 using System;
+using BlankSiteCore.Features.PriceList;
 using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Data.Pricing;
 using C3Apparel.Data.Products;
@@ -94,6 +95,7 @@ namespace BlankSiteCore
             services.AddScoped<IImportDutyInfoProvider, ImportDutyInfoProvider>();
             services.AddScoped<IUserProvider, UserProvider>();
             services.AddScoped<IPriceListService, PriceListService>();
+            services.AddScoped<IPriceListFileService, PriceListFileService>();
             ConfigureMembershipServices(services);
             
         }
@@ -194,8 +196,8 @@ namespace BlankSiteCore
                 endpoints.MapControllerRoute("Upload pricings page", "admin/upload-pricings",
                     defaults: new { controller = "ProductPricing", action = "UploadPage" });
 
-                endpoints.MapControllerRoute("Print pricings page", "admin/print-pricings",
-                    defaults: new { controller = "ProductPricing", action = "PrintPage" });
+                endpoints.MapControllerRoute("Print pricings page", "admin/price-list",
+                    defaults: new { controller = "PriceList", action = "PriceList" });
                 
                 endpoints.MapControllerRoute("Customer Print pricings", "print-pricing",
                     defaults: new { controller = "Pricing", action = "CustomerPricePrintVersionPage" });

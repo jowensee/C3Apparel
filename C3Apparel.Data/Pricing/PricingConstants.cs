@@ -38,4 +38,10 @@ namespace C3Apparel.Data.Pricing
         public const string ROLE_ADMIN = "Admin";
         public const string ROLE_CUSTOMER = "Customer";
     }
+    
+    public static class PriceListConstants
+    {
+        public const string FILE_TYPE_PDF = ".pdf";
+        public const string FILE_TYPE_CSV = ".csv";
+    }
 }

@@ -1,0 +1,19 @@
+.listing-container table {
+  width: auto !important;
+}
+.listing-container table a.button {
+  margin: 0 20px;
+}
+.listing-container .files {
+  width: 150px;
+}
+.listing-container .files a {
+  display: block;
+  margin-bottom: 5px;
+}
+.listing-container .col-brand {
+  width: 300px;
+}
+.listing-container .col-publish-date {
+  width: 200px;
+}

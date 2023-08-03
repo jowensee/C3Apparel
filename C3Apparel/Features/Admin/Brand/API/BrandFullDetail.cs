@@ -9,6 +9,8 @@ public class BrandFullDetail
     
     [JsonProperty("brand")]
     public string Brand { get; set; }
+    [JsonProperty("codeName")]
+    public string CodeName { get; set; }
     
     [JsonProperty("description")]
     public string Description { get; set; }

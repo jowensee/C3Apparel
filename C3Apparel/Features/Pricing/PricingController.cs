@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BlankSiteCore.Features.PriceList;
 using C3Apparel.Data.Common;
 using C3Apparel.Data.Helpers;
 using C3Apparel.Data.Modules.Classes;
@@ -30,8 +31,9 @@ namespace C3Apparel.Web.Features.Pricing
         private readonly AllPriceWeightBasedSettings _weightbasedSettings;
         private readonly IBrandRepository _brandRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IPriceListFileService _priceListFileService;
         public PricingController(IProductRepository productRepository, IProductPricingService productPricingService, ICurrentUserProvider currentUserProvider, 
-            IProductSettingsRepository productSettingsRepository, IBrandRepository brandRepository, IHttpContextAccessor httpContextAccessor, IPriceListPriceInfoProvider priceListPriceInfoProvider)
+            IProductSettingsRepository productSettingsRepository, IBrandRepository brandRepository, IHttpContextAccessor httpContextAccessor, IPriceListPriceInfoProvider priceListPriceInfoProvider, IPriceListFileService priceListFileService)
         {
             _productRepository = productRepository;
             _productPricingService = productPricingService;
@@ -40,6 +42,7 @@ namespace C3Apparel.Web.Features.Pricing
             _brandRepository = brandRepository;
             _httpContextAccessor = httpContextAccessor;
             _priceListPriceInfoProvider = priceListPriceInfoProvider;
+            _priceListFileService = priceListFileService;
             _weightbasedSettings = _productSettingsRepository.GetAllWeightBasedPriceSettings();
         }
         
@@ -57,6 +60,7 @@ namespace C3Apparel.Web.Features.Pricing
             vm.CountryName = CountryHelper.GetCountryName(countryCode);
 
             vm.PriceWeightBasedSettings = _weightbasedSettings?.AllPriceWeightbasedSettings;
+
 
             var brand = _brandRepository.GetBrand(brandId);
 
@@ -79,6 +83,11 @@ namespace C3Apparel.Web.Features.Pricing
                 {
                     vm.DisclaimerText = brand.DisclaimerTextNZ;
                 }
+
+                vm.BrandPDFPriceListUrl = _priceListFileService.GetPriceListFile(brand.BrandCodeName, targetCurrency,
+                    PriceListConstants.FILE_TYPE_PDF);
+                vm.BrandCSVDataUrl = _priceListFileService.GetPriceListFile(brand.BrandCodeName, targetCurrency,
+                    PriceListConstants.FILE_TYPE_CSV);
             }
             return View("~/Features/Pricing/PriceListingPage.cshtml",vm);
         }

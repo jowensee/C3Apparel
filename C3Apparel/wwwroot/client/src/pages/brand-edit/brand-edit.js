@@ -22,6 +22,7 @@ function BrandEdit(){
                 brand:{
                     brandId:Number(thisObject.el.getAttribute("data-brand-id")),
                     name:'',
+                    codeName:'',
                     focus:'',
                     currency:'',
                     description:'',
@@ -65,6 +66,7 @@ function BrandEdit(){
 
                         brand.brandId = response.brand.brandId
                         brand.name = response.brand.brand
+                        brand.codeName = response.brand.codeName
                         brand.focus = response.brand.focus
                         brand.currency = response.brand.currency
                         brand.description = response.brand.description

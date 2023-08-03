@@ -19,7 +19,7 @@ namespace C3Apparel.Data.Products
         public IEnumerable<BrandItem> GetAllBrands()
         {
             return _brandInfoProvider.GetAllBrands()
-                .Select(b => new BrandItem(b.BrandID, b.BrandDisplayName, 
+                .Select(b => new BrandItem(b.BrandID, b.BrandDisplayName, b.BrandName,
                     b.BrandCurrency,
                     b.BrandPricingDisclaimerTextAU,
                     b.BrandPricingDisclaimerTextNZ));
@@ -35,7 +35,7 @@ namespace C3Apparel.Data.Products
                  return null;
              }
 
-             return new BrandItem(brand.BrandID, brand.BrandDisplayName,
+             return new BrandItem(brand.BrandID, brand.BrandDisplayName, brand.BrandName,
                  brand.BrandCurrency,
                  brand.BrandPricingDisclaimerTextAU,
                  brand.BrandPricingDisclaimerTextNZ);

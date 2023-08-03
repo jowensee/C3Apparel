@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using C3Apparel.Data.Common;
 using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Data.Products;
@@ -18,13 +19,13 @@ namespace C3Apparel.Data.Pricing
             _productPricingService = productPricingService;
         }
         
-        public string SavePriceListToPriceListTable(int versionId, string currency, int brandId)
+        public (string, int) SavePriceListToPriceListTable(int versionId, string currency, int brandId)
         {
             
             var brandPricing = _brandRepository.GetBrandPricingInfo(brandId, currency);
             if (!brandPricing.IsValid)
             {
-                return "Brand not found";
+                return ("Brand not found", 0);
             }
             
             IEnumerable<ProductItem> products;
@@ -34,8 +35,10 @@ namespace C3Apparel.Data.Pricing
 
             if (result.HasError)
             {
-                return result.Message;
+                return (result.Message, 0);
             }
+
+            _priceListPriceInfoProvider.DeleteAll(1,brandId, currency);
 
             foreach (var product in products)
             {
@@ -50,7 +53,10 @@ namespace C3Apparel.Data.Pricing
                     PriceColours = product.ProductColours,
                     PriceCurrency = currency,
                     PriceSizes = product.ProductSizes,
-                    
+                    PriceColourDesc = product.ProductColourDesc,
+                    PriceCoo = product.ProductCoo,
+                    PriceGroup = product.ProductGroup,
+                    PriceSupplierStyle = product.ProductSupplierStyle,
                     PriceCol1FreightSurcharge = product.FreightSurcharge1,
                     PriceCol2FreightSurcharge = product.FreightSurcharge2,
                     PriceCol3FreightSurcharge = product.FreightSurcharge3,
@@ -66,7 +72,7 @@ namespace C3Apparel.Data.Pricing
                 });
             }
 
-            return string.Empty;
+            return (string.Empty, products.Count());
         }
     }
 }

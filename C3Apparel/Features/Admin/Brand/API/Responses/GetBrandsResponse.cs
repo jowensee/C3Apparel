@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 
 namespace C3Apparel.Web.Features.Brand.API.Responses;
 
-// Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
 public class BrandAPIItem
 {
     [JsonProperty("brandId")]

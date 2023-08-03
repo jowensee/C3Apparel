@@ -32,6 +32,10 @@ namespace C3Apparel.Data.Products
                 ProductName = dr[nameof(ProductPricingInfo.ProductPricingDescription)].ToString(),
                 ProductSizes = dr[nameof(ProductPricingInfo.ProductPricingSizes)].ToString(),
                 ProductColours = dr[nameof(ProductPricingInfo.ProductPricingColours)].ToString(),
+                ProductColourDesc = dr[nameof(ProductPricingInfo.ProductPricingColourDesc)].ToString(),
+                ProductCoo = dr[nameof(ProductPricingInfo.ProductPricingCoo)].ToString(),
+                ProductGroup = dr[nameof(ProductPricingInfo.ProductPricingGroup)].ToString(),
+                ProductSupplierStyle = dr[nameof(ProductPricingInfo.ProductPricingSupplierStyle)].ToString(),
                 C3BuyPrice = dr[nameof(ProductPricingInfo.ProductPricingC3BuyPrice)].ToDecimal(),
                 SKUWeight = dr[nameof(ProductPricingInfo.ProductPricingSKUWeight)].ToDecimal(),
                 C3OverrideWeight =  dr[nameof(ProductPricingInfo.ProductPricingC3OverrideWeight)].ToDecimal()
@@ -41,7 +45,7 @@ namespace C3Apparel.Data.Products
         public IEnumerable<BrandItem> GetBrandsWithPricing()
         {
             return _brandInfoProvider.GetBrandsWithPricing()
-                .Select(b => new BrandItem(b.BrandID, b.BrandDisplayName, b.BrandCurrency,
+                .Select(b => new BrandItem(b.BrandID, b.BrandDisplayName, b.BrandName, b.BrandCurrency,
                     b.BrandPricingDisclaimerTextAU,
                     b.BrandPricingDisclaimerTextNZ));
         }

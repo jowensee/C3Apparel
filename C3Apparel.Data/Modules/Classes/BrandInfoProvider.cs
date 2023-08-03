@@ -15,6 +15,7 @@ namespace C3Apparel.Data.Modules.Classes
     {
         public const string BASE_SQL = @"SELECT [BrandID]
                           ,[BrandDisplayName]
+                          ,[BrandName]
                           ,[BrandDescription]
                           ,[BrandHomepage]
                           ,[BrandEnabled]
@@ -68,6 +69,7 @@ namespace C3Apparel.Data.Modules.Classes
             {
                 BrandCurrency = row[nameof(BrandInfo.BrandCurrency)].ToSafeString(),
                 BrandDisplayName = row[nameof(BrandInfo.BrandDisplayName)].ToSafeString(),
+                BrandName = row[nameof(BrandInfo.BrandName)].ToSafeString(),
                 BrandPricingDisclaimerTextAU = row[nameof(BrandInfo.BrandPricingDisclaimerTextAU)].ToSafeString(),
                 BrandPricingDisclaimerTextNZ = row[nameof(BrandInfo.BrandPricingDisclaimerTextNZ)].ToSafeString(),
                 BrandID = row[nameof(BrandInfo.BrandID)].ToInt(),
@@ -220,6 +222,7 @@ namespace C3Apparel.Data.Modules.Classes
             var parameters = new Dictionary<string, object>
             {
                 { "@displayName", brand.BrandDisplayName },
+                { "@codeName", brand.BrandName },
                 { "@currency", brand.BrandCurrency },
                 { "@enabled", brand.BrandEnabled },
                 { "@focus", brand.BrandFocus },
@@ -231,10 +234,10 @@ namespace C3Apparel.Data.Modules.Classes
                 
             };
             
-            ExecuteCommand($@"INSERT INTO COM_Brand (BrandDisplayName, BrandDescription, BrandCurrency,BrandEnabled,
+            ExecuteCommand($@"INSERT INTO COM_Brand (BrandDisplayName, BrandName, BrandDescription, BrandCurrency,BrandEnabled,
                              BrandFocus, BrandHomepage,BrandBusinessName,
                        BrandPricingDisclaimerTextAU, BrandPricingDisclaimerTextNZ) VALUES   
-                     (@displayName, @description, @currency, @enabled, @focus, @website, @buinessName, @disclaimerAU, @disclaimerNZ)", parameters);
+                     (@displayName, @codeName, @description, @currency, @enabled, @focus, @website, @buinessName, @disclaimerAU, @disclaimerNZ)", parameters);
         }
 
         public void UpdateBrand(BrandInfo brand)
@@ -243,6 +246,7 @@ namespace C3Apparel.Data.Modules.Classes
             {
                 { "@Id", brand.BrandID },
                 { "@displayName", brand.BrandDisplayName },
+                { "@codeName", brand.BrandName },
                 { "@currency", brand.BrandCurrency },
                 { "@enabled", brand.BrandEnabled },
                 { "@focus", brand.BrandFocus },
@@ -261,7 +265,7 @@ namespace C3Apparel.Data.Modules.Classes
                 parameters.Add("@publishedDate", brand.BrandPriceListPublishedDate);
             }
             
-            ExecuteCommand($@"UPDATE COM_Brand SET BrandDisplayName=@displayName, BrandDescription=@description, BrandCurrency=@currency,
+            ExecuteCommand($@"UPDATE COM_Brand SET BrandDisplayName=@displayName, BrandName = @codeName, BrandDescription=@description, BrandCurrency=@currency,
                                 BrandEnabled=@enabled, BrandFocus= @focus, BrandHomepage=@website,BrandBusinessName=@businessName,
                                     BrandPricingDisclaimerTextAU=@disclaimerAU, BrandPricingDisclaimerTextNZ=@disclaimerNZ,
                                    {publishedDateUpdate}

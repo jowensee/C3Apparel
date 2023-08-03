@@ -99,7 +99,7 @@ namespace C3Apparel.Features.Admin.ProductPricing
                 .Select(a => new ListItem(a.BrandDisplayName, a.BrandID.ToString(), false));
             return View("~/Features/Admin/ProductPricing/PrintPricingsPage.cshtml", vm);
         }
-
+        
         public async Task<ActionResult> ProductPricingEdit(int id = 0)
         {
 
@@ -296,6 +296,7 @@ namespace C3Apparel.Features.Admin.ProductPricing
             }
         }
 
+        /*
         [HttpPost]
         [Route("save")]
         public IActionResult SaveToPriceListTable(PricingForm form)
@@ -303,6 +304,6 @@ namespace C3Apparel.Features.Admin.ProductPricing
             var message = _priceListService.SavePriceListToPriceListTable(1, form.Currency, form.Brand.ToInt());
 
             return RedirectToAction("ProductPricingListing");
-        }
+        }*/
     }
 }

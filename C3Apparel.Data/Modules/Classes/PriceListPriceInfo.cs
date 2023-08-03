@@ -55,6 +55,10 @@ GO
 	    public decimal PriceCol4FreightSurcharge { get; set; }
 	    public decimal PriceCol4UnitPrice { get; set; }
 	    public int PriceCol4MOQUnit { get; set; }
+	    public string PriceSupplierStyle { get; set; }
+	    public string PriceCoo { get; set; }
+	    public string PriceGroup { get; set; }
+	    public string PriceColourDesc { get; set; }
 
 	    public string FormatPrice(decimal price)
 	    {

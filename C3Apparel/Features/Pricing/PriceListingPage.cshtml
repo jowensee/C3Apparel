@@ -1,6 +1,7 @@
 @using C3Apparel.Frontend.Data.Constants
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using C3Apparel.Data.Pricing
+@using Microsoft.IdentityModel.Tokens
 @model C3Apparel.Web.Features.Pricing.PriceListingPageViewModel
 
 @section Styles {
@@ -35,8 +36,16 @@
       </div>
       <div class="buttons">
          <button id="buttonSearch" class="button is-link">Search</button>
-         <a href="@Model.BrandCSVDataUrl" class="button">CSV data</a>
-         <a href="@Model.BrandPDFPriceListUrl" class="button">Price List PDF</a>
+         @if (!Model.BrandCSVDataUrl.IsNullOrEmpty())
+         {
+            <a href="@Model.BrandCSVDataUrl" class="button is-link" target="_blank">CSV data</a>
+         }
+         
+         @if (!Model.BrandPDFPriceListUrl.IsNullOrEmpty())
+         {
+            <a href="@Model.BrandPDFPriceListUrl" class="button is-link" target="_blank">Price List PDF</a>
+         }
+         
       </div>
    </div>
    <input type="hidden" name="currency" value="@Model.Currency" />

@@ -7,8 +7,11 @@ namespace C3Apparel.Data.Products
     {
         public ProductItemCSVMap()
         {
-            //return $"${price:#,##0.00}";
             AutoMap(CultureInfo.InvariantCulture);
+            Map(m => m.ProductColourDesc).Ignore();
+            Map(m => m.ProductCoo).Ignore();
+            Map(m => m.ProductSupplierStyle).Ignore();
+            Map(m => m.ProductGroup).Ignore();
             Map(m => m.C3BuyPrice).Ignore();
             Map(m => m.C3OverrideWeight).Ignore();
             Map(m => m.SKUWeight).Ignore();

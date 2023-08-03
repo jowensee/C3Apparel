@@ -20,6 +20,10 @@ namespace C3Apparel.Data.Products
         [Name("Sizes")]
         public string ProductSizes { get; set; }
         public string ProductColours { get; set; }
+        public string ProductColourDesc { get; set; }
+        public string ProductCoo { get; set; }
+        public string ProductGroup { get; set; }
+        public string ProductSupplierStyle { get; set; }
         public decimal FreightSurcharge1 { get; set; }
         [Name("Unit Price 1")]
         public decimal Price1 { get; set; }
