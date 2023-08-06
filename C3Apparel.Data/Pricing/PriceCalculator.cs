@@ -30,9 +30,9 @@ namespace C3Apparel.Data.Pricing
             }
 
             var moq = 1;
-            var computedBasicBuyPrice = (productItem.C3BuyPrice / exchangeRate).RoundUp(2);
-            var freightCost = (productItem.C3OverrideWeight * weightBasedSettings.FreightCost(targetCurrency)).RoundUp(2);
-            var importDutyCost = (importDuty * computedBasicBuyPrice).RoundUp(2);
+            var computedBasicBuyPrice = (productItem.C3BuyPrice / exchangeRate);
+            var freightCost = (productItem.C3OverrideWeight * weightBasedSettings.FreightCost(targetCurrency));
+            var importDutyCost = (importDuty * computedBasicBuyPrice);
             decimal landedCost = computedBasicBuyPrice + importDutyCost + freightCost;
             
             if (!priceCodeName.Contains(WeightbasedSettings.Price1KeyName))
@@ -55,10 +55,10 @@ namespace C3Apparel.Data.Pricing
             }
 
             var moq = 1;
-            var computedBasicBuyPrice = (productItem.C3BuyPrice / exchangeRate).RoundUp(2);
-            var freightCost = (productItem.C3OverrideWeight * weightBasedSettings.FreightCost(targetCurrency)).RoundUp(2);
+            var computedBasicBuyPrice = (productItem.C3BuyPrice / exchangeRate);
+            var freightCost = (productItem.C3OverrideWeight * weightBasedSettings.FreightCost(targetCurrency));
             
-            var importDutyCost = (importDuty * computedBasicBuyPrice).RoundUp(2);
+            var importDutyCost = (importDuty * computedBasicBuyPrice);
             decimal landedCost = computedBasicBuyPrice + importDutyCost + freightCost;
             
             if (!weightBasedSettings.KeyName.Contains(WeightbasedSettings.Price1KeyName))
