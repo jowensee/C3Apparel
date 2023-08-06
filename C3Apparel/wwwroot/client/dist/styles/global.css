@@ -866,3 +866,16 @@ input.text-number {
 .show {
   display: block;
 }
+
+.customer-nav {
+  display: flex;
+  justify-content: space-between;
+}
+.customer-nav .select {
+  height: 3em;
+}
+.customer-nav .select select {
+  height: 3em;
+  width: 200px;
+  font-size: 14px;
+}

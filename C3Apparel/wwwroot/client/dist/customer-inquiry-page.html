@@ -37,6 +37,23 @@
   <div class="main-wrapper">
     <div class="main-content">
       <!-- start body -->
+      <div class="customer-nav">
+        <nav>
+          <a href="/price-list/nz" class="active">Price List</a>
+          <a href="/product-inquiry/nz" class="">Product Inquiry</a>
+        </nav>
+        <div class="select is-normal">
+          <select onchange="javascript:changeCountry(this, '/price-list')">
+            <option value="au">Australia</option>
+            <option value="nz" selected>New Zealand</option>
+          </select>
+        </div>
+      </div>
+      <script>
+        function changeCountry(selectObject, url) {
+          location = `${url}/${selectObject.value}`
+        }
+      </script>
       <div class="main-caption">
         New Zealand Pricing
       </div>

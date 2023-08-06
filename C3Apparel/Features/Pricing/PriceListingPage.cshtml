@@ -11,10 +11,7 @@
 @section Scripts {
    <script src="/client/dist/scripts/customer-listing.js" asp-append-version="true"></script>
 }
-<nav>
-    <a href="/pricing/au" class="@(Model.Currency == "AUD" ? "active" : "")">Australia</a>
-    <a href="/pricing/nz" class="@(Model.Currency == "NZD" ? "active" : "")">New Zealand</a>
-</nav>
+<partial name="~/Features/Pricing/_CustomerNavigation.cshtml" model="@(Model.CountryCode, "price-list")"/>
 <div class="main-caption">
    @Model.CountryName Price List
 </div>

@@ -58,6 +58,7 @@ namespace C3Apparel.Web.Features.Pricing
             var targetCurrency = CountryHelper.GetCountryCurrencyCode(countryCode);
 
             vm.Currency = targetCurrency;
+            vm.CountryCode = countryCode;
             vm.CountryName = CountryHelper.GetCountryName(countryCode);
 
             vm.PriceWeightBasedSettings = _weightbasedSettings?.AllPriceWeightbasedSettings;
@@ -92,27 +93,7 @@ namespace C3Apparel.Web.Features.Pricing
             }
             return View("~/Features/Pricing/PriceListingPage.cshtml",vm);
         }
-        
-        [TypeFilter(typeof(C3AuthorizationFilter))]
-        public async Task<ActionResult> CustomerPricingInquiryPage(string countryCode)
-        {
 
-            var vm = new CustomerPricingInquiryPageViewModel();
-
-            vm.Brands = _productRepository.GetBrandsWithPricing().Select(a=> new ListItem(a.BrandName, a.BrandID.ToString(), false));
-
-            var targetCurrency = CountryHelper.GetCountryCurrencyCode(countryCode);
-
-            vm.Currency = targetCurrency;
-            vm.CountryName = CountryHelper.GetCountryName(countryCode);
-
-            vm.PriceWeightBasedSettings = _weightbasedSettings?.AllPriceWeightbasedSettings;
-  
-            vm.PriceCol1HasFreightSurcharge = true;
-
-            return View("~/Features/Pricing/CustomerPricingInquiryPage.cshtml",vm);
-        }
-      
         private bool PriceColumnHasFreightSurcharge(string regionCode, string priceKeyName, string targetCurrency)
         {
             priceKeyName =  WeightbasedSettings.GetRegionPriceKeyName(regionCode, priceKeyName);
@@ -120,6 +101,7 @@ namespace C3Apparel.Web.Features.Pricing
             return settings.ContainsKey(priceKeyName) && settings[priceKeyName]
                 .FreightSurcharge(targetCurrency) > 0;
         }
+        
         [TypeFilter(typeof(PDFAuthorizationFilter))]
         [Route("print")]
         public async Task<ActionResult> PricePrintVersionPage(int brandId, string currency)
@@ -207,81 +189,6 @@ namespace C3Apparel.Web.Features.Pricing
             {
                 FileDownloadName = $"PriceList{brand.BrandName}_{currency}.pdf"
             };
-        }
-        
-        [TypeFilter(typeof(C3AuthorizationFilter))]
-        [Route("search-price-list")]
-        [HttpPost]
-        public async Task<ActionResult> SearchPriceList([FromBody]SearchPriceListParameters requests)
-        {
-            SearchPriceListFilter MapFilter()
-            {
-                if (requests?.Filters == null)
-                {
-                    return null;
-                }
-
-                return new SearchPriceListFilter
-                {
-                    BrandId = requests.Filters.BrandId,
-                    Collection = requests.Filters.Collection,
-                    C3Style = requests.Filters.C3Style,
-                    Description = requests.Filters.Description,
-                    ProductGroup = requests.Filters.ProductGroup,
-                    Sizes = requests.Filters.Sizes,
-                    Colour = requests.Filters.Colours,
-                    ColourDescription = requests.Filters.ColourDescriptions
-                    
-                };
-            }
-            
-            int GetTotalPage(int totalItems, int itemsPerPage)
-            {
-                if (totalItems % itemsPerPage == 0)
-                {
-                    return totalItems / itemsPerPage;
-                }
-
-                return (int) Math.Floor((double) totalItems / itemsPerPage) + 1;
-            }
-            var response = new GetPricingsResponse();
-            ResultItem result;
-
-            var currency = requests.Currency;
-
-            var filter = MapFilter();
-
-
-            var products = _priceListPriceInfoProvider.SearchPriceList(1, currency, filter, requests.PageNumber,
-                requests.ItemsPerPage);
-            
-            var totalCount = _priceListPriceInfoProvider.SearchPriceListCount(1, currency, filter);
-
-            response.TotalPage = GetTotalPage(totalCount, requests.ItemsPerPage);
-            response.Pricings = products.Select(p => new PricingAPIItem
-            {
-                Brand = p.PriceBrandName,
-                ProductCode = p.PriceC3Style,
-                Collection = p.PriceCollection,
-                Description = p.PriceDescription,
-                Sizes = p.PriceSizes,
-                Colours = p.PriceColours,
-                UnitPrice1 = p.FormatPrice(p.PriceCol1UnitPrice),
-                Moq1 = p.PriceCol1MOQUnit,
-                FreightSurcharge1 = p.FormatPrice(p.PriceCol1FreightSurcharge),
-                UnitPrice2 = p.FormatPrice(p.PriceCol2UnitPrice),
-                Moq2 = p.PriceCol2MOQUnit,
-                FreightSurcharge2 = p.FormatPrice(p.PriceCol2FreightSurcharge),
-                UnitPrice3 = p.FormatPrice(p.PriceCol3UnitPrice),
-                Moq3 = p.PriceCol3MOQUnit,
-                FreightSurcharge3 = p.FormatPrice(p.PriceCol3FreightSurcharge),
-                UnitPrice4 = p.FormatPrice(p.PriceCol4UnitPrice),
-                Moq4 = p.PriceCol4MOQUnit,
-                FreightSurcharge4 = p.FormatPrice(p.PriceCol4FreightSurcharge),
-
-            }).ToList();
-            
-            return Ok(response);
         }
 
         [TypeFilter(typeof(C3AuthorizationFilter))]

@@ -113,7 +113,7 @@ namespace C3Apparel.Areas.Identity.Pages.Account
                     return  Redirect("/admin");
                 }else if (currentUser.IsCustomer)
                 {
-                    return  Redirect("/pricing/au");
+                    return  Redirect("/price-list/au");
                 }
             }
 

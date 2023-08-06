@@ -257,3 +257,17 @@ input.text-number{
 .show{
     display:block;
   }
+
+ .customer-nav{
+    display: flex;
+    justify-content: space-between;
+
+    .select{
+        height:3.0em;
+        select{
+            height:3.0em;
+            width:200px;
+            font-size:14px;
+        }
+    }
+}

@@ -1,0 +1,19 @@
+@model (string Country, string ActivePage)
+
+<div class="customer-nav">
+    <nav>
+        <a href="/price-list/@Model.Country" class="@(Model.ActivePage != "price-list" ? "" : "active")">Price List</a>
+        <a href="/product-inquiry/@Model.Country" class="@(Model.ActivePage == "product-inquiry" ? "active" : "")">Product Inquiry</a>
+    </nav>
+    <div class="select is-normal">
+        <select onchange="javascript:changeCountry(this, '@($"/{Model.ActivePage}")')">
+            <!option value="au" @(Model.Country == "au" ? "selected" : "")>Australia</!option>
+            <!option value="nz" @(Model.Country == "nz" ? "selected" : "")>New Zealand</!option>
+        </select>
+    </div>
+</div>
+<script>
+    function changeCountry(selectObject, url){
+        location = `${url}/${selectObject.value}` 
+        }
+</script>

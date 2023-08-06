@@ -1,6 +1,5 @@
 @using C3Apparel.Frontend.Data.Constants
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@using C3Apparel.Data.Pricing
 @model C3Apparel.Web.Features.Pricing.CustomerPricingInquiryPageViewModel
 
 @section Styles {
@@ -10,14 +9,13 @@
 @section Scripts {
    <script src="/client/dist/scripts/customer-inquiry-page.js" asp-append-version="true"></script>
 }
-<nav>
-    <a href="/pricing-inquiry/au" class="@(Model.Currency == "AUD" ? "active" : "")">Australia</a>
-    <a href="/pricing-inquiry/nz" class="@(Model.Currency == "NZD" ? "active" : "")">New Zealand</a>
-</nav>
+<partial name="~/Features/Pricing/_CustomerNavigation.cshtml" model="@(Model.CountryCode, "product-inquiry")"/>
 <div class="main-caption">
    @Model.CountryName Pricing Inquiry
 </div>
-<div id="main-app" data-endpoint="@Url.Action("SearchPriceList", "Pricing")" data-method="POST" data-item-per-page="@C3Constants.GRID_ITEMS_PER_PAGE"
+<div id="main-app" data-endpoint="@Url.Action("SearchPriceList", "CustomerPricingInquiry")" 
+     data-endpoint-download="@Url.Action("DownloadCSV", "CustomerPricingInquiry")" 
+     data-method="POST" data-item-per-page="@C3Constants.GRID_ITEMS_PER_PAGE"
                           data-currency="@Model.Currency">
    <div class="filter-container">
       <div class="field">
@@ -93,7 +91,7 @@
       </div>
       <div class="buttons">
           <button id="buttonSearch" class="button is-link" v-on:click.prevent="filterResults()">Search</button>       
-          <button id="buttonCSVDownload" class="button is-link" >CSV Download</button>
+          <button id="buttonCSVDownload" class="button is-link" v-on:click.prevent="download()">CSV Download</button>
       </div>
       <input type="hidden" name="currency" value="@Model.Currency" />
       <div class="error"></div>

@@ -49,4 +49,5 @@ public class PriceListingPageViewModel
     
     public string BrandPDFPriceListUrl { get; set; }
     public string BrandCSVDataUrl { get; set; }
+    public string CountryCode { get; set; }
 }

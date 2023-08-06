@@ -17,11 +17,6 @@ namespace C3Apparel.Data.Pricing
             _priceGlobalSettings = _productSettingsRepository.GetPriceGlobalSettings();
             _weightbasedSettings = _productSettingsRepository.GetAllWeightBasedPriceSettings();
         }
-        
-        private decimal RoundPrice(decimal d)
-        {
-            return Math.Round(d, 2);
-        }
 
         public (decimal price, int moq, decimal freightSurcharge) CalculatePrice( string priceCodeName, ProductItem productItem, decimal exchangeRate, 
             string targetCurrency, decimal importDuty)
