@@ -30,19 +30,19 @@ namespace C3Apparel.Web.Features.Content
         private readonly IProductRepository _productRepository;
         private readonly IProductSettingsRepository _productSettingsRepository;
         private readonly IExchangeRateRetriever _exchangeRateRetriever;
-        private readonly IProductPricingService _productPricingService;
+        private readonly IProductPriceConversionService _productPriceConversionService;
         private readonly IBrandRepository _brandRepository;
         private readonly AllPriceWeightBasedSettings _weightbasedSettings;
         private readonly IInquirySettingsInfoProvider _inquirySettingsInfoProvider;
         private readonly IHttpContextAccessor _httpContextAccessor;
         
         public InquiryController(IProductSettingsRepository productSettingsRepository, IExchangeRateRetriever exchangeRateRetriever, 
-            IProductPricingService productPricingService, IProductRepository productRepository, IBrandRepository brandRepository, 
+            IProductPriceConversionService productPriceConversionService, IProductRepository productRepository, IBrandRepository brandRepository, 
             IInquirySettingsInfoProvider inquirySettingsInfoProvider, IHttpContextAccessor httpContextAccessor)
         {
             _productSettingsRepository = productSettingsRepository;
             _exchangeRateRetriever = exchangeRateRetriever;
-            _productPricingService = productPricingService;
+            _productPriceConversionService = productPriceConversionService;
             _productRepository = productRepository;
             _brandRepository = brandRepository;
             _inquirySettingsInfoProvider = inquirySettingsInfoProvider;
@@ -130,7 +130,7 @@ namespace C3Apparel.Web.Features.Content
             {
                 Collection = requests.Collection
             };
-            (products, result) = _productPricingService.GetProductsWithConvertedPrice(freightSettings, brandPricing, searchFilter, requests.TargetCurrency);
+            (products, result) = _productPriceConversionService.GetProductsWithConvertedPrice(freightSettings, brandPricing, searchFilter, requests.TargetCurrency);
 
             if (result.HasError)
             {
@@ -214,7 +214,7 @@ namespace C3Apparel.Web.Features.Content
             {
                 Collection = requests.Collection
             };
-            (products, result) = _productPricingService.GetProductsWithConvertedPrice(freightSettings, brandPricing, searchFilter, requests.TargetCurrency);
+            (products, result) = _productPriceConversionService.GetProductsWithConvertedPrice(freightSettings, brandPricing, searchFilter, requests.TargetCurrency);
 
             if (result.HasError)
             {
@@ -233,7 +233,7 @@ namespace C3Apparel.Web.Features.Content
             return View("~/Features/Pricing/PricePrintVersionPage.cshtml",vm);
         }
         
-        [Route("print-pricing")]
+        [Route("admin-inquiry-print-pricing")]
         public async Task<ActionResult> InquiryPricePrintVersionPage(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
@@ -304,7 +304,7 @@ namespace C3Apparel.Web.Features.Content
             {
                 Collection = requests.Collection
             };
-            (products, result) = _productPricingService.GetProductsWithConvertedPrice(freightSettings, brandPricing, searchFilter, requests.TargetCurrency, requests.PageNumber, requests.ItemsPerPage);
+            (products, result) = _productPriceConversionService.GetProductsWithConvertedPrice(freightSettings, brandPricing, searchFilter, requests.TargetCurrency, requests.PageNumber, requests.ItemsPerPage);
 
             if (result.HasError)
             {

@@ -10,13 +10,13 @@ namespace C3Apparel.Data.Pricing
     {
         private readonly IPriceListPriceInfoProvider _priceListPriceInfoProvider;
         private readonly IBrandRepository _brandRepository;
-        private readonly IProductPricingService _productPricingService;
+        private readonly IProductPriceConversionService _productPriceConversionService;
         
-        public PriceListService(IPriceListPriceInfoProvider priceListPriceInfoProvider, IBrandRepository brandRepository, IProductPricingService productPricingService)
+        public PriceListService(IPriceListPriceInfoProvider priceListPriceInfoProvider, IBrandRepository brandRepository, IProductPriceConversionService productPriceConversionService)
         {
             _priceListPriceInfoProvider = priceListPriceInfoProvider;
             _brandRepository = brandRepository;
-            _productPricingService = productPricingService;
+            _productPriceConversionService = productPriceConversionService;
         }
         
         public (string, int) SavePriceListToPriceListTable(int versionId, string currency, int brandId)
@@ -31,7 +31,7 @@ namespace C3Apparel.Data.Pricing
             IEnumerable<ProductItem> products;
             ResultItem result;
             
-            (products, result) = _productPricingService.GetProductsWithConvertedPrice(brandPricing, currency);
+            (products, result) = _productPriceConversionService.GetProductsWithConvertedPrice(brandPricing, currency);
 
             if (result.HasError)
             {

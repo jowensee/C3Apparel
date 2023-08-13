@@ -30,18 +30,18 @@ namespace C3Apparel.Web.Features.Pricing
     {
         private readonly IProductRepository _productRepository;
         private readonly IPriceListPriceInfoProvider _priceListPriceInfoProvider;
-        private readonly IProductPricingService _productPricingService;
+        private readonly IProductPriceConversionService _productPriceConversionService;
         private readonly ICurrentUserProvider _currentUserProvider;
         private readonly IProductSettingsRepository _productSettingsRepository;
         private readonly AllPriceWeightBasedSettings _weightbasedSettings;
         private readonly IBrandRepository _brandRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IPriceListFileService _priceListFileService;
-        public CustomerPricingInquiryController(IProductRepository productRepository, IProductPricingService productPricingService, ICurrentUserProvider currentUserProvider, 
+        public CustomerPricingInquiryController(IProductRepository productRepository, IProductPriceConversionService productPriceConversionService, ICurrentUserProvider currentUserProvider, 
             IProductSettingsRepository productSettingsRepository, IBrandRepository brandRepository, IHttpContextAccessor httpContextAccessor, IPriceListPriceInfoProvider priceListPriceInfoProvider, IPriceListFileService priceListFileService)
         {
             _productRepository = productRepository;
-            _productPricingService = productPricingService;
+            _productPriceConversionService = productPriceConversionService;
             _currentUserProvider = currentUserProvider;
             _productSettingsRepository = productSettingsRepository;
             _brandRepository = brandRepository;

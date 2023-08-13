@@ -124,8 +124,8 @@
             </tr>
             <tr>
                <th rowspan="2" class="col-header col-brand">Brand</th>
-               <th rowspan="2" class="col-header col-style">C-3 Style</th>
                <th rowspan="2" class="col-header col-style">Collection</th>
+               <th rowspan="2" class="col-header col-style">C-3 Style</th>
                <th rowspan="2" class="col-header">Description</th>
                <th rowspan="2" class="col-header col-sizes">Product Group</th>
                <th rowspan="2" class="col-header col-sizes">Sizes</th>
@@ -186,8 +186,8 @@
             <tbody>
             <tr class="row" v-for="(row, index) in grid.rows">
                <td class=" col-brand" nowrap="nowrap">{{row.brand}}</td>
-               <td class=" col-style">{{row.productCode}}</td>
                <td class=" col-style">{{row.collection}}</td>
+               <td class=" col-style center">{{row.productCode}}</td>
                <td class="">{{row.description}}</td>
                <td class=" col-color center">{{row.productGroup}}</td>
                <td class=" col-sizes center">{{row.sizes}}</td>
@@ -207,7 +207,7 @@
                <td class=" col-units thick center">{{row.moq2}}</td>
                @if (Model.PriceCol3HasFreightSurcharge)
                {
-                  <td class=" col-price">{{row.freightSurcharge3}}</td>  
+                  <td class=" col-price center">{{row.freightSurcharge3}}</td>  
                }
                <td class=" col-price center">{{row.unitPrice3}}</td>
                <td class=" col-units thick center">{{row.moq3}}</td>

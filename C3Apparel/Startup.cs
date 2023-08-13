@@ -85,7 +85,7 @@ namespace BlankSiteCore
             services.AddScoped<IProductSettingsRepository, ProductSettingsRepository>();
             services.AddScoped<IPriceCalculator, PriceCalculator>();
             services.AddScoped<IExchangeRateRetriever, ExchangeRateRetriever>();
-            services.AddScoped<IProductPricingService, ProductPricingService>();
+            services.AddScoped<IProductPriceConversionService, ProductPriceConversionService>();
             services.AddScoped<IProductPricingInfoProvider, ProductPricingInfoProvider>();
             services.AddScoped<IPriceSettingsInfoProvider, PriceSettingsInfoProvider>();
             services.AddScoped<IPriceListPriceInfoProvider, PriceListPriceInfoProvider>();
@@ -199,11 +199,11 @@ namespace BlankSiteCore
                 endpoints.MapControllerRoute("Print pricings page", "admin/price-list",
                     defaults: new { controller = "PriceList", action = "PriceList" });
                 
-                endpoints.MapControllerRoute("Customer Print pricings", "print-pricing",
+                endpoints.MapControllerRoute("Customer Print pricings", "customer-generate-price-list",
                     defaults: new { controller = "Pricing", action = "CustomerPricePrintVersionPage" });
                 
-                endpoints.MapControllerRoute("Print version", "print",
-                    defaults: new { controller = "Pricing", action = "PricePrintVersionPage" });
+                endpoints.MapControllerRoute("Print version", "print-version-with-conversion",
+                    defaults: new { controller = "Pricing", action = "PricePrintVersionPageWithConversion" });
                 
                 endpoints.MapControllerRoute("Inquiry Page", "admin/inquiry",
                     defaults: new { controller = "InternalPricing", action = "InternalPriceListingPage" });

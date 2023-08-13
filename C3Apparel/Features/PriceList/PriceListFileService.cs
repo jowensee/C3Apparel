@@ -91,7 +91,7 @@ public class PriceListFileService : IPriceListFileService
         var baseUrl = $"{(_httpContextAccessor.HttpContext.Request.IsHttps ? "https://" : "http://")}{_httpContextAccessor.HttpContext.Request.Host.Value}"; ;
 
         var fileName = GetPriceListFileName(brandCodeName, currency, PriceListConstants.FILE_TYPE_PDF);    
-        var bytes = pdfGenerator.GeneratePDF($"{baseUrl}/print?brandid={brandId}&currency={currency}");
+        var bytes = pdfGenerator.GeneratePDF($"{baseUrl}/print-version?brandid={brandId}&currency={currency}");
 
         File.WriteAllBytes($"{_priceListMainPath}\\{fileName}", bytes);
 

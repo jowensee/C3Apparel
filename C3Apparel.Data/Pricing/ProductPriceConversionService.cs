@@ -4,14 +4,14 @@ using C3Apparel.Data.Common;
 using C3Apparel.Data.Products;
 namespace C3Apparel.Data.Pricing
 {
-    public class ProductPricingService : IProductPricingService
+    public class ProductPriceConversionService : IProductPriceConversionService
     {
         private readonly IProductRepository _productRepository;
         private readonly IExchangeRateRetriever _exchangeRateRetriever;
         private readonly IBrandRepository _brandRepository;
         private readonly IPriceCalculator _priceCalculator;
         
-        public ProductPricingService(IProductRepository productRepository, IExchangeRateRetriever exchangeRateRetriever, IBrandRepository brandRepository, IProductSettingsRepository productSettingsRepository, IPriceCalculator priceCalculator)
+        public ProductPriceConversionService(IProductRepository productRepository, IExchangeRateRetriever exchangeRateRetriever, IBrandRepository brandRepository, IProductSettingsRepository productSettingsRepository, IPriceCalculator priceCalculator)
         {
             _productRepository = productRepository;
             _exchangeRateRetriever = exchangeRateRetriever;

@@ -4,7 +4,7 @@ using C3Apparel.Data.Products;
 
 namespace C3Apparel.Data.Pricing
 {
-    public interface IProductPricingService
+    public interface IProductPriceConversionService
     {
         (IEnumerable<ProductItem>, ResultItem) GetProductsWithConvertedPrice(BrandPricing brandPricing, string targetCurrency);
         (IEnumerable<ProductItem>, ResultItem) GetProductsWithConvertedPrice(BrandPricing brandPricing, string targetCurrency, int pageNumber, int itemPerPage);

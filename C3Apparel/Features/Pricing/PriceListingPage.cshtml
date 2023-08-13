@@ -185,34 +185,34 @@
             <tr class="row" v-for="(row, index) in grid.rows">
                 <td class=" col-brand" nowrap="nowrap">{{row.brand}}</td>
                 <td class=" col-style">{{row.collection}}</td>
-                <td class=" col-style">{{row.productCode}}</td>
+                <td class=" col-style center">{{row.productCode}}</td>
                 <td class=" col-name">{{row.description}}</td>
-                <td class=" col-sizes">{{row.sizes}}</td>
-               <td class=" col-color">{{row.colours}}</td>
+                <td class=" col-sizes center">{{row.sizes}}</td>
+               <td class=" col-color center">{{row.colours}}</td>
                @if (Model.PriceCol1HasFreightSurcharge)
                {
-                  <td class=" col-price thick-left">{{row.freightSurcharge1}}</td>  
+                  <td class=" col-price thick-left center">{{row.freightSurcharge1}}</td>  
                }
-                <td class=" col-price">{{row.unitPrice1}}</td>
-               <td class=" col-units thick">{{row.moq1}}</td>
+                <td class=" col-price center">{{row.unitPrice1}}</td>
+               <td class=" col-units thick center">{{row.moq1}}</td>
                @if (Model.PriceCol2HasFreightSurcharge)
                {
-                  <td class=" col-price">{{row.freightSurcharge2}}</td>  
+                  <td class=" col-price center">{{row.freightSurcharge2}}</td>  
                }
-                <td class=" col-price">{{row.unitPrice2}}</td>
-               <td class=" col-units thick">{{row.moq2}}</td>
+                <td class=" col-price center">{{row.unitPrice2}}</td>
+               <td class=" col-units thick center">{{row.moq2}}</td>
                @if (Model.PriceCol3HasFreightSurcharge)
                {
-                  <td class=" col-price">{{row.freightSurcharge3}}</td>  
+                  <td class=" col-price center">{{row.freightSurcharge3}}</td>  
                }
-                <td class=" col-price">{{row.unitPrice3}}</td>
-               <td class=" col-units thick">{{row.moq3}}</td>
+                <td class=" col-price center">{{row.unitPrice3}}</td>
+               <td class=" col-units thick center">{{row.moq3}}</td>
                @if (Model.PriceCol4HasFreightSurcharge)
                {
-                  <td class=" col-price">{{row.freightSurcharge4}}</td>  
+                  <td class=" col-price center">{{row.freightSurcharge4}}</td>  
                }
-                <td class=" col-price">{{row.unitPrice4}}</td>
-                <td class=" col-units thick">{{row.moq4}}</td>
+                <td class=" col-price center">{{row.unitPrice4}}</td>
+                <td class=" col-units thick center">{{row.moq4}}</td>
             </tr>
          </tbody>
       </table>

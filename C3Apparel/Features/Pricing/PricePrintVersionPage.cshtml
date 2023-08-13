@@ -188,34 +188,34 @@
                      <tr class="row">
                         <td class=" col-brand" nowrap="nowrap">@product.BrandName</td>
                         <td class=" col-style">@product.Collection</td>
-                        <td class=" col-style">@product.ProductCode</td>
+                        <td class=" col-style center">@product.ProductCode</td>
                         <td class=" col-name">@product.ProductName</td>
-                        <td class=" col-color">@product.ProductSizes</td>
-                        <td class=" col-color">@product.ProductColours</td>
+                        <td class=" col-color center">@product.ProductSizes</td>
+                        <td class=" col-color center">@product.ProductColours</td>
                         @if (Model.PriceCol1HasFreightSurcharge)
                         {
-                           <td class=" col-price thick-left">@product.FormatPrice(product.FreightSurcharge1)</td>
+                           <td class=" col-price thick-left center">@product.FormatPrice(product.FreightSurcharge1)</td>
                         }
-                        <td class=" col-price">@product.FormatPrice(product.Price1)</td>
-                        <td class=" col-units thick">@product.MinimumOrderQty1</td>
+                        <td class=" col-price center">@product.FormatPrice(product.Price1)</td>
+                        <td class=" col-units thick center">@product.MinimumOrderQty1</td>
                         @if (Model.PriceCol2HasFreightSurcharge)
                         {
-                           <td class=" col-price thick-left">@product.FormatPrice(product.FreightSurcharge2)</td>
+                           <td class=" col-price thick-left center">@product.FormatPrice(product.FreightSurcharge2)</td>
                         }
-                        <td class=" col-price">@product.FormatPrice(product.Price2)</td>
-                        <td class=" col-units thick">@product.MinimumOrderQty2</td>
+                        <td class=" col-price center">@product.FormatPrice(product.Price2)</td>
+                        <td class=" col-units thick center">@product.MinimumOrderQty2</td>
                         @if (Model.PriceCol3HasFreightSurcharge)
                         {
-                           <td class=" col-price thick-left">@product.FormatPrice(product.FreightSurcharge3)</td>
+                           <td class=" col-price thick-left center">@product.FormatPrice(product.FreightSurcharge3)</td>
                         }
-                        <td class=" col-price">@product.FormatPrice(product.Price3)</td>
-                        <td class=" col-units thick">@product.MinimumOrderQty3</td>
+                        <td class=" col-price center">@product.FormatPrice(product.Price3)</td>
+                        <td class=" col-units thick center">@product.MinimumOrderQty3</td>
                         @if (Model.PriceCol4HasFreightSurcharge)
                         {
-                           <td class=" col-price thick-left">@product.FormatPrice(product.FreightSurcharge4)</td>
+                           <td class=" col-price thick-left center">@product.FormatPrice(product.FreightSurcharge4)</td>
                         }
-                        <td class=" col-price">@product.FormatPrice(product.Price4)</td>
-                        <td class=" col-units thick">@product.MinimumOrderQty4</td>
+                        <td class=" col-price center">@product.FormatPrice(product.Price4)</td>
+                        <td class=" col-units thick center">@product.MinimumOrderQty4</td>
 
                      </tr>
 

@@ -18,6 +18,7 @@ using C3Apparel.Web.Features.Pricing.API.Responses;
 using C3Apparel.Web.Membership;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace C3Apparel.Web.Features.Pricing
 {
@@ -26,18 +27,18 @@ namespace C3Apparel.Web.Features.Pricing
     {
         private readonly IProductRepository _productRepository;
         private readonly IPriceListPriceInfoProvider _priceListPriceInfoProvider;
-        private readonly IProductPricingService _productPricingService;
+        private readonly IProductPriceConversionService _productPriceConversionService;
         private readonly ICurrentUserProvider _currentUserProvider;
         private readonly IProductSettingsRepository _productSettingsRepository;
         private readonly AllPriceWeightBasedSettings _weightbasedSettings;
         private readonly IBrandRepository _brandRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IPriceListFileService _priceListFileService;
-        public PricingController(IProductRepository productRepository, IProductPricingService productPricingService, ICurrentUserProvider currentUserProvider, 
+        public PricingController(IProductRepository productRepository, IProductPriceConversionService productPriceConversionService, ICurrentUserProvider currentUserProvider, 
             IProductSettingsRepository productSettingsRepository, IBrandRepository brandRepository, IHttpContextAccessor httpContextAccessor, IPriceListPriceInfoProvider priceListPriceInfoProvider, IPriceListFileService priceListFileService)
         {
             _productRepository = productRepository;
-            _productPricingService = productPricingService;
+            _productPriceConversionService = productPriceConversionService;
             _currentUserProvider = currentUserProvider;
             _productSettingsRepository = productSettingsRepository;
             _brandRepository = brandRepository;
@@ -103,8 +104,8 @@ namespace C3Apparel.Web.Features.Pricing
         }
         
         [TypeFilter(typeof(PDFAuthorizationFilter))]
-        [Route("print")]
-        public async Task<ActionResult> PricePrintVersionPage(int brandId, string currency)
+        [Route("print-version-with-conversion")]
+        public async Task<ActionResult> PricePrintVersionPageWithConversion(int brandId, string currency)
         {
 
             if (brandId == 0 || currency == string.Empty)
@@ -130,7 +131,7 @@ namespace C3Apparel.Web.Features.Pricing
                 {
                     return BadRequest();
                 }
-                (products, result) = _productPricingService.GetProductsWithConvertedPrice(brandPricing, currency);
+                (products, result) = _productPriceConversionService.GetProductsWithConvertedPrice(brandPricing, currency);
 
                 if (result.HasError)
                 {
@@ -164,8 +165,99 @@ namespace C3Apparel.Web.Features.Pricing
             return View("~/Features/Pricing/PricePrintVersionPage.cshtml",vm);
         }
         
-        [TypeFilter(typeof(C3AuthorizationFilter))]
-        [Route("print-pricing")]
+        //[TypeFilter(typeof(PDFAuthorizationFilter))]
+        [Route("print-version")]
+        public async Task<ActionResult> PriceListPrintVersionPage(int brandId, string currency)
+        {
+
+            if (brandId == 0 || currency == string.Empty)
+            {
+                return View("~/Features/Pricing/PricePrintVersionPage.cshtml",new PriceListingPageViewModel
+                {
+                    ErrorMessage = "Invalid parameters"
+                });
+            }
+            var vm = new PriceListingPageViewModel();
+
+            vm.Brands = _productRepository.GetBrandsWithPricing().Select(a=> new ListItem(a.BrandName, a.BrandID.ToString(), brandId == a.BrandID));
+           
+            if (brandId > 0)
+            {
+                vm.CurrentBrandName = vm.Brands.FirstOrDefault(a => a.Value == brandId.ToString())?.Text;
+               
+                IEnumerable<ProductItem> products = null;
+                ResultItem result;
+
+                var brandPricing = _brandRepository.GetBrandPricingInfo(brandId, currency);
+                if (!brandPricing.IsValid)
+                {
+                    return BadRequest();
+                }
+                
+                var priceListItems = _priceListPriceInfoProvider.GetAllPrices(1, currency, brandId);
+
+                if (!priceListItems.IsNullOrEmpty())
+                {
+                    products = priceListItems.Select(a => new ProductItem
+                    {
+                        BrandName = a.PriceBrandName,
+                        BrandID = a.PriceBrandID,
+                        ProductName = a.PriceDescription,
+                        Collection = a.PriceCollection,
+                        ProductColours = a.PriceColours,
+                        ProductColourDesc = a.PriceDescription,
+                        ProductSizes = a.PriceSizes,
+                        ProductSupplierStyle = a.PriceSupplierStyle,
+                        ProductCode = a.PriceC3Style,
+                        ProductCoo = a.PriceCoo,
+                        FreightSurcharge1 = a.PriceCol1FreightSurcharge,
+                        MinimumOrderQty1 = a.PriceCol1MOQUnit,
+                        Price1 = a.PriceCol1UnitPrice,
+                        FreightSurcharge2 = a.PriceCol2FreightSurcharge,
+                        MinimumOrderQty2 = a.PriceCol2MOQUnit,
+                        Price2 = a.PriceCol2UnitPrice,
+                        FreightSurcharge3 = a.PriceCol3FreightSurcharge,
+                        MinimumOrderQty3 = a.PriceCol3MOQUnit,
+                        Price3 = a.PriceCol3UnitPrice,
+                        FreightSurcharge4 = a.PriceCol4FreightSurcharge,
+                        MinimumOrderQty4 = a.PriceCol4MOQUnit,
+                        Price4 = a.PriceCol4UnitPrice
+                        
+                    });
+                }else
+                {
+                    vm.ErrorMessage = "No products available for this brand.";
+                    return View("~/Features/Pricing/PricePrintVersionPage.cshtml",vm);
+                }
+                
+                vm.Products = products;
+                vm.PriceCol1HasFreightSurcharge = products.Any(p => p.FreightSurcharge1 > 0);
+                vm.PriceCol2HasFreightSurcharge = products.Any(p => p.FreightSurcharge2 > 0);
+                vm.PriceCol3HasFreightSurcharge = products.Any(p => p.FreightSurcharge3 > 0);
+                vm.PriceCol4HasFreightSurcharge = products.Any(p => p.FreightSurcharge4 > 0);
+
+                vm.PriceWeightBasedSettings = _weightbasedSettings?.AllPriceWeightbasedSettings;
+                
+                var brand = _brandRepository.GetBrand(brandId);
+                if (brand != null)
+                {
+                    vm.CurrentBrandRegionCode = brand.BrandRegionCode;
+                    if (currency == CurrencyConstants.AUD)
+                    {
+                        vm.DisclaimerText = brand.DisclaimerTextAU;
+                    }
+                    else
+                    {
+                        vm.DisclaimerText = brand.DisclaimerTextNZ;
+                    }
+                }
+            }
+
+            return View("~/Features/Pricing/PricePrintVersionPage.cshtml",vm);
+        }
+        
+        [TypeFilter(typeof(AuthentictedAuthorizationFilter))]
+        [Route("customer-generate-price-list")]
         public async Task<ActionResult> CustomerPricePrintVersionPage(int brandId, string currency)
         {
 
@@ -183,7 +275,7 @@ namespace C3Apparel.Web.Features.Pricing
             var baseUrl = $"{(_httpContextAccessor.HttpContext.Request.IsHttps ? "https://" : "http://")}{_httpContextAccessor.HttpContext.Request.Host.Value}"; ;
 
             
-            var bytes = pdfGenerator.GeneratePDF($"{baseUrl}/print?brandid={brandId}&currency={currency}");
+            var bytes = pdfGenerator.GeneratePDF($"{baseUrl}/print-pricing?brandid={brandId}&currency={currency}");
 
             return new FileContentResult(bytes, "application/octet-stream")
             {
