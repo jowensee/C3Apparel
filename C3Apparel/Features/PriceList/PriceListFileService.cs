@@ -107,6 +107,8 @@ public class PriceListFileService : IPriceListFileService
             Brand = a.PriceBrandName,
             Collection = a.PriceCollection,
             Colours = a.PriceColours,
+            Sizes = a.PriceSizes,
+            Style = a.PriceC3Style,
             Description = a.PriceDescription,
             FreightSurcharge1 = a.PriceCol1FreightSurcharge,
             MinimumOrderQty1 = a.PriceCol1MOQUnit,

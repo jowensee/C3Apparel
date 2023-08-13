@@ -87,6 +87,11 @@ function BrandEdit(){
                     this.errors.push("<b>Display name:</b> Please enter a value")
                     validate = false
                 }
+
+                if (this.brand.codeName.trim() == '' || this.brand.codeName.indexOf(' ') > -1){
+                    this.errors.push("<b>Code name:</b> Please enter a value with no space")
+                    validate = false
+                }
                 return validate
             },
             saveBrand(){
@@ -100,6 +105,7 @@ function BrandEdit(){
                 let data = {
                     brandId:self.brand.brandId,
                     brand:self.brand.name,
+                    codeName:self.brand.codeName,
                     focus:self.brand.focus,
                     currency:self.brand.currency,
                     description:self.brand.description,

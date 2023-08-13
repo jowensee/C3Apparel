@@ -111,7 +111,7 @@ namespace C3Apparel.Web.Features.Pricing
 
                 return (int) Math.Floor((double) totalItems / itemsPerPage) + 1;
             }
-            var response = new GetPricingsResponse();
+            var response = new GetProductInquiryResponse();
             ResultItem result;
 
             var currency = requests.Currency;
@@ -125,12 +125,14 @@ namespace C3Apparel.Web.Features.Pricing
             var totalCount = _priceListPriceInfoProvider.SearchPriceListCount(1, currency, filter);
 
             response.TotalPage = GetTotalPage(totalCount, requests.ItemsPerPage);
-            response.Pricings = products.Select(p => new PricingAPIItem
+            response.Pricings = products.Select(p => new ProductInquiryAPIItem
             {
                 Brand = p.PriceBrandName,
                 ProductCode = p.PriceC3Style,
                 Collection = p.PriceCollection,
                 Description = p.PriceDescription,
+                ProductGroup = p.PriceGroup,
+                ColorDescription = p.PriceColourDesc,
                 Sizes = p.PriceSizes,
                 Colours = p.PriceColours,
                 UnitPrice1 = p.FormatPrice(p.PriceCol1UnitPrice),
@@ -166,11 +168,15 @@ namespace C3Apparel.Web.Features.Pricing
             var products = _priceListPriceInfoProvider.SearchPriceList(1, currency, filter);
             
             //TODO create csvmodel for pricelist item
-            var csvItems = products.Select(a => new CSVPriceListItem
+            var csvItems = products.Select(a => new CSVPProductInquiryItem
             {
                 Brand = a.PriceBrandName,
                 Collection = a.PriceCollection,
                 Colours = a.PriceColours,
+                Style = a.PriceC3Style,
+                Sizes = a.PriceSizes,
+                ColorDescription = a.PriceColourDesc,
+                ProductGroup = a.PriceGroup,
                 Description = a.PriceDescription,
                 FreightSurcharge1 = a.PriceCol1FreightSurcharge,
                 MinimumOrderQty1 = a.PriceCol1MOQUnit,
@@ -189,7 +195,7 @@ namespace C3Apparel.Web.Features.Pricing
                 {
                     using (var csvWriter = new CsvWriter(streamWriter, new CsvConfiguration(CultureInfo.InvariantCulture)))
                     {
-                        csvWriter.Context.RegisterClassMap<ProductItemCSVMap>();
+                        //csvWriter.Context.RegisterClassMap<ProductItemCSVMap>();
                         csvWriter.WriteRecords(csvItems);
                         streamWriter.Flush();
                         
