@@ -123,12 +123,12 @@
                      </th>
                   </tr>
                   <tr class="row-header">
-                     <th rowspan="2" class="col-header col-brand">Brand</th>
-                     <th rowspan="2" class="col-header col-style">Collection</th>
-                     <th rowspan="2" class="col-header col-style">Style</th>
-                     <th rowspan="2" class="col-header col-name">Description</th>
-                     <th rowspan="2" class="col-header col-sizes">Sizes</th>
-                     <th rowspan="2" class="col-header col-color">Colours</th>
+                     <th rowspan="2" class="col-header">Brand</th>
+                     <th rowspan="2" class="col-header">Collection</th>
+                     <th rowspan="2" class="col-header">Style</th>
+                     <th rowspan="2" class="col-header">Description</th>
+                     <th rowspan="2" class="col-header">Sizes</th>
+                     <th rowspan="2" class="col-headerr">Colours</th>
                   </tr>
                   <tr>
                      @if (Model.PriceCol1HasFreightSurcharge)
@@ -186,12 +186,12 @@
                   {
                      var product = products[i];
                      <tr class="row">
-                        <td class=" col-brand" nowrap="nowrap">@product.BrandName</td>
-                        <td class=" col-style">@product.Collection</td>
-                        <td class=" col-style center">@product.ProductCode</td>
-                        <td class=" col-name">@product.ProductName</td>
-                        <td class=" col-color center">@product.ProductSizes</td>
-                        <td class=" col-color center">@product.ProductColours</td>
+                        <td class="" nowrap="nowrap">@product.BrandName</td>
+                        <td class="">@product.Collection</td>
+                        <td class="center">@product.ProductCode</td>
+                        <td style="width:300px">@product.ProductName</td>
+                        <td class="center">@product.ProductSizes</td>
+                        <td class="center">@product.ProductColours</td>
                         @if (Model.PriceCol1HasFreightSurcharge)
                         {
                            <td class=" col-price thick-left center">@product.FormatPrice(product.FreightSurcharge1)</td>

@@ -142,6 +142,7 @@ namespace C3Apparel.Data.Modules.Classes
             var row = ds.Tables[0].Rows[0];
             return new ProductPricingInfo
             {
+                ProductPricingID = row[nameof(ProductPricingInfo.ProductPricingID)].ToInt(),
                 ProductPricingDescription = row[nameof(ProductPricingInfo.ProductPricingDescription)].ToSafeString(),
                 ProductPricingCollection = row[nameof(ProductPricingInfo.ProductPricingCollection)].ToSafeString(),
                 ProductPricingColours = row[nameof(ProductPricingInfo.ProductPricingColours)].ToSafeString(),

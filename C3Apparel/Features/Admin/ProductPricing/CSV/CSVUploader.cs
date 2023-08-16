@@ -131,7 +131,7 @@ public class CSVUploader
                         product.ProductPricingC3BuyPrice = pricing.C3BuyPrice;
                         product.ProductPricingSKUWeight = pricing.SKUWeight;
                         product.ProductPricingC3OverrideWeight = pricing.C3OverrideWeight;
-                        
+
                         _productPricingInfoProvider.UpdateProductPricing(product);
                         
                     }
@@ -167,7 +167,7 @@ public class CSVUploader
         return 
                !string.IsNullOrWhiteSpace(pricing.Action) && 
                !string.IsNullOrWhiteSpace(pricing.Description) && 
-               !string.IsNullOrWhiteSpace(pricing.Collection) && 
+               //!string.IsNullOrWhiteSpace(pricing.Collection) && 
                !string.IsNullOrWhiteSpace(pricing.Colours) && 
                !string.IsNullOrWhiteSpace(pricing.Sizes) && 
                !string.IsNullOrWhiteSpace(pricing.C3Style) && 
