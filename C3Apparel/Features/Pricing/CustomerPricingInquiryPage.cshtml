@@ -9,7 +9,7 @@
 @section Scripts {
    <script src="/client/dist/scripts/customer-inquiry-page.js" asp-append-version="true"></script>
 }
-<partial name="~/Features/Pricing/_CustomerNavigation.cshtml" model="@(Model.CountryCode, "product-inquiry")"/>
+<partial name="~/Features/Pricing/_CustomerNavigation.cshtml" model="@(Model.CountryCode, "product-inquiry", Model.UserIsAdministrator)"/>
 <div class="main-caption">
    @Model.CountryName Product Inquiry
 </div>
@@ -73,15 +73,6 @@
          </div>
       </div>
       <div class="field">
-         <label>Product Colours</label>
-         <div class="control">
-            <div>
-               <input type="text" v-model="filter.colour">
-            </div>
-         </div>
-      </div>             
-      
-      <div class="field">
          <label>Colour Descriptions</label>
          <div class="control">
             <div>
@@ -97,9 +88,9 @@
       <div class="error"></div>
    </div>
    <div id="listingMain">
-      <div class="listing-container" v-if="grid.rows.length == 0">
+      <div class="listing-container" v-if="showError">
          <div class="instruction">
-            <p>Please enter criterias to search</p>
+            <p>No results for your search criteria</p>
          </div>
       </div>
       <div class="listing-container" v-if="grid.rows.length>0">

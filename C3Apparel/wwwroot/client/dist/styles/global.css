@@ -721,6 +721,12 @@ body.admin .main-content {
   display: none;
 }
 
+.error-validation {
+  color: #ff0000;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
 .show-error .error {
   display: block;
 }

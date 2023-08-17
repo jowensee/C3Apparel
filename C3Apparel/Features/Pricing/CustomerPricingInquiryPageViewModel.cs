@@ -27,6 +27,7 @@ public class CustomerPricingInquiryPageViewModel
     public string CurrentBrandRegionCode { get; set; }
     public string Currency { get; set; }
     public string CountryCode { get; set; }
+    public bool UserIsAdministrator { get; set; }
 
     public string GetColumnHeader(int headerIndex, string priceKey)
     {

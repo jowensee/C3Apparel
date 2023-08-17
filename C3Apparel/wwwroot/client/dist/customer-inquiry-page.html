@@ -57,7 +57,7 @@
       <div class="main-caption">
         New Zealand Pricing
       </div>
-      <div id="main-app" data-endpoint="api/getpricing.json" data-method="POST" data-item-per-page="5" data-currency="aud">
+      <div id="main-app" data-endpoint="api/getpricingnoresult.json" data-method="GET" data-item-per-page="5" data-currency="aud">
         <div class="filter-container">
           <div class="field">
             <label>Brand</label>
@@ -135,9 +135,9 @@
           <div class="error"></div>
         </div>
         <div id="listingMain">
-          <div class="listing-container" v-if="grid.rows.length == 0">
+          <div class="listing-container" v-if="showError">
             <div class="instruction">
-              <p>Please select a brand and click on search</p>
+              <p>No result for your search criteria</p>
             </div>
           </div>
           <div class="listing-container" v-if="grid.rows.length>0">

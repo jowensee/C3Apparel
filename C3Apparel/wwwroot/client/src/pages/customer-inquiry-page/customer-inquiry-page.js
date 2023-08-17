@@ -33,11 +33,18 @@ function PriceListing(){
                     productGroup:'',
                     sizes:'',
                     colour:''
-                }
+                },
+                searchClicked:false
             }
         },
         mounted(){
             
+        },
+        computed:{
+            showError: function(){
+                return this.grid.rows.length == 0 && this.searchClicked
+            }
+
         },
         methods:{
             populateGrid(pageNumber){
@@ -99,6 +106,7 @@ function PriceListing(){
                 }
             },
             filterResults(){
+                this.searchClicked = true
                 this.populateGrid(1);
             },
             download(){
@@ -131,7 +139,7 @@ function PriceListing(){
                         var url = window.URL.createObjectURL(blob);
                         var a = document.createElement('a');
                         a.href = url;
-                        a.download = `pricelistinquiry.csv`;
+                        a.download = `C-3pricelistinquiry.csv`;
                         document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
                         a.click();
                         a.remove();  

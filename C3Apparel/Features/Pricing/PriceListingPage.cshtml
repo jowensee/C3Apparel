@@ -11,7 +11,9 @@
 @section Scripts {
    <script src="/client/dist/scripts/customer-listing.js" asp-append-version="true"></script>
 }
-<partial name="~/Features/Pricing/_CustomerNavigation.cshtml" model="@(Model.CountryCode, "price-list")"/>
+
+
+<partial name="~/Features/Pricing/_CustomerNavigation.cshtml" model="@(Model.CountryCode, "price-list", Model.UserIsAdministrator)"/>
 <div class="main-caption">
    @Model.CountryName Price List
 </div>

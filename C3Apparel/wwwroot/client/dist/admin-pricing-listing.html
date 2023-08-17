@@ -106,15 +106,14 @@
                 <input v-model="filter.colour">
               </div>
             </div>
+            <div class="error-validation" v-show="filterValidationError">{{filterValidationError}}</div>
             <div class="buttons">
               <button id="buttonSearch" class="button is-link" v-on:click.prevent="filterResults()">Search</button>
             </div>
-
-            <div class="error"></div>
           </form>
         </div>
         <div id="listingMain">
-          <div class="listing-container" v-if="grid.rows.length == 0">
+          <div class="listing-container" v-if="showError">
             <div class="instruction">
               <p>No result for your search criteria</p>
             </div>

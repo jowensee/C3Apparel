@@ -34,6 +34,7 @@ namespace C3Apparel.Web.Features.Pricing
         private readonly IBrandRepository _brandRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IPriceListFileService _priceListFileService;
+        
         public PricingController(IProductRepository productRepository, IProductPriceConversionService productPriceConversionService, ICurrentUserProvider currentUserProvider, 
             IProductSettingsRepository productSettingsRepository, IBrandRepository brandRepository, IHttpContextAccessor httpContextAccessor, IPriceListPriceInfoProvider priceListPriceInfoProvider, IPriceListFileService priceListFileService)
         {
@@ -48,11 +49,16 @@ namespace C3Apparel.Web.Features.Pricing
             _weightbasedSettings = _productSettingsRepository.GetAllWeightBasedPriceSettings();
         }
         
-        [TypeFilter(typeof(C3AuthorizationFilter))]
+        [TypeFilter(typeof(AuthentictedAuthorizationFilter))]
         public async Task<ActionResult> PriceListingPage(string countryCode, int brandId = 0)
         {
 
             var vm = new PriceListingPageViewModel();
+
+            var user = await _currentUserProvider.GetCurrentUserInfo();
+            
+            vm.UserIsAdministrator = user.IsAdministrator;
+            
 
             vm.Brands = _productRepository.GetBrandsWithPricing().Select(a=> new ListItem(a.BrandName, a.BrandID.ToString(), brandId == a.BrandID));
 
@@ -283,7 +289,7 @@ namespace C3Apparel.Web.Features.Pricing
             };
         }
 
-        [TypeFilter(typeof(C3AuthorizationFilter))]
+        [TypeFilter(typeof(AuthentictedAuthorizationFilter))]
         [Route("getpricesfrompricelist")]
         [HttpPost]
         public async Task<ActionResult> GetPricesFromPriceList([FromBody]GetPricesParameters requests)

@@ -26,7 +26,7 @@ function PricingListing(){
                     rows:[]
                 },
                 filter:{
-                    brandId:0,
+                    brandId:'',
                     c3Style:'',
                     collection:'',
                     supplierStyle:'',
@@ -35,12 +35,20 @@ function PricingListing(){
                     productGroup:'',
                     sizes:'',
                     colour:''
-                }
+                },
+                searchClicked:false,
+                filterValidationError: ''
             }
+        },
+        computed:{
+            showError: function(){
+                return this.grid.rows.length == 0 && this.searchClicked
+            }
+
         },
         mounted(){
             
-            this.populateGrid(1);
+            //this.populateGrid(1);
             
             
         },
@@ -84,7 +92,14 @@ function PricingListing(){
 
             },
             filterResults(){
-                this.populateGrid(1);
+
+                if (this.filter.brandId != ''){
+                    this.searchClicked = true
+                    this.filterValidationError = ''
+                    this.populateGrid(1);
+                }else{
+                    this.filterValidationError = 'Please select a brand.'
+                }
             },
             gotoPage(event){
                 this.grid.pagination.currentPage = Number(event.srcElement.value);

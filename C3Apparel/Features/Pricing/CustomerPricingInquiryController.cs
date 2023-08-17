@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BlankSiteCore.Features.PriceList;
 using C3Apparel.Data.Common;
+using C3Apparel.Data.Extensions;
 using C3Apparel.Data.Helpers;
 using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Data.Modules.Filters;
@@ -52,12 +53,15 @@ namespace C3Apparel.Web.Features.Pricing
         }
         
         
-        [TypeFilter(typeof(C3AuthorizationFilter))]
+        [TypeFilter(typeof(AuthentictedAuthorizationFilter))]
         public async Task<ActionResult> CustomerPricingInquiryPage(string countryCode)
         {
 
             var vm = new CustomerPricingInquiryPageViewModel();
 
+            var user = await _currentUserProvider.GetCurrentUserInfo();
+
+            vm.UserIsAdministrator = user.IsAdministrator;
             vm.Brands = _productRepository.GetBrandsWithPricing().Select(a=> new ListItem(a.BrandName, a.BrandID.ToString(), false));
 
             var targetCurrency = CountryHelper.GetCountryCurrencyCode(countryCode);
@@ -83,7 +87,7 @@ namespace C3Apparel.Web.Features.Pricing
 
             return new SearchPriceListFilter
             {
-                BrandId = requests.Filters.BrandId,
+                BrandId = requests.Filters.BrandId.ToInt(),
                 Collection = requests.Filters.Collection,
                 C3Style = requests.Filters.C3Style,
                 Description = requests.Filters.Description,
@@ -95,7 +99,7 @@ namespace C3Apparel.Web.Features.Pricing
             };
         }
         
-        [TypeFilter(typeof(C3AuthorizationFilter))]
+        [TypeFilter(typeof(AuthentictedAuthorizationFilter))]
         [Route("search-price-list")]
         [HttpPost]
         public async Task<ActionResult> SearchPriceList([FromBody]SearchPriceListParameters requests)
