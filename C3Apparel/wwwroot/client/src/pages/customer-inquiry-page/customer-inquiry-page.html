@@ -32,7 +32,7 @@
             <div class="control">
                 <div class="select">
                     <select id="selectBrand" v-model="filter.brandId">
-                        <option value="">Select Brand</option>
+                        <option value="0">Select Brand</option>
                         <option value="3" >Decky</option>
                         <option value="1" selected>PureWaste</option>
                     </select>
@@ -40,62 +40,55 @@
             </div>
             </div>
             <div class="field">
-            <label>Collection</label>
-            <div class="control">
-                <div>
-                    <input type="text" v-model="filter.collection">
+                <label>Collection</label>
+                <div class="control">
+                    <div>
+                        <input type="text" v-model="filter.collection">
+                    </div>
                 </div>
-            </div>
             </div>
             <div class="field">
-            <label>C-3 Style</label>
-            <div class="control">
-                <div>
-                    <input type="text" v-model="filter.c3Style">
+                <label>C-3 Style</label>
+                <div class="control">
+                    <div>
+                        <input type="text" v-model="filter.c3Style">
+                    </div>
                 </div>
-            </div>
             </div>
             <div class="field">
-            <label>Description</label>
-            <div class="control">
-                <div>
-                    <input type="text" v-model="filter.description">
+                <label>Description</label>
+                <div class="control">
+                    <div>
+                        <input type="text" v-model="filter.description">
+                    </div>
                 </div>
-            </div>
             </div>
             <div class="field">
-            <label>Product Group</label>
-            <div class="control">
-                <div>
-                    <input type="text" v-model="filter.productGroup">
+                <label>Product Group</label>
+                <div class="control">
+                    <div>
+                        <input type="text" v-model="filter.productGroup">
+                    </div>
                 </div>
-            </div>
             </div>
             <div class="field">
-            <label>Sizes</label>
-            <div class="control">
-                <div>
-                    <input type="text" v-model="filter.sizes">
+                <label>Sizes</label>
+                <div class="control">
+                    <div>
+                        <input type="text" v-model="filter.sizes">
+                    </div>
                 </div>
-            </div>
             </div>
             <div class="field">
-            <label>Product Colours</label>
-            <div class="control">
-                <div>
-                    <input type="text" v-model="filter.colour">
+                <label>Colour Descriptions</label>
+                <div class="control">
+                    <div>
+                        <input type="text" v-model="filter.colourDesc">
+                    </div>
                 </div>
             </div>
-            </div>             
-            
-            <div class="field">
-            <label>Colour Descriptions</label>
-            <div class="control">
-                <div>
-                    <input type="text" v-model="filter.colourDesc">
-                </div>
-            </div>
-            </div>
+                  
+            <div class="error-validation" v-show="filterValidationError">{{filterValidationError}}</div>
             <div class="buttons">
                 <button id="buttonSearch" class="button is-link" v-on:click.prevent="filterResults()">Search</button>       
                 <button id="buttonPrint" class="button is-link" type="submit" value="print">CSV Download</button>

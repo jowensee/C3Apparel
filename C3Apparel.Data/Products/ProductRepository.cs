@@ -42,9 +42,9 @@ namespace C3Apparel.Data.Products
             };
         }
 
-        public IEnumerable<BrandItem> GetBrandsWithPricing()
+        public IEnumerable<BrandItem> GetBrandsWithPricing(bool enabledOnly)
         {
-            return _brandInfoProvider.GetBrandsWithPricing()
+            return _brandInfoProvider.GetBrandsWithPricing(enabledOnly)
                 .Select(b => new BrandItem(b.BrandID, b.BrandDisplayName, b.BrandName, b.BrandCurrency,
                     b.BrandPricingDisclaimerTextAU,
                     b.BrandPricingDisclaimerTextNZ));

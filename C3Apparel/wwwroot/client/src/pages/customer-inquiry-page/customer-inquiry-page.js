@@ -34,7 +34,8 @@ function PriceListing(){
                     sizes:'',
                     colour:''
                 },
-                searchClicked:false
+                searchClicked:false,
+                filterValidationError: ''
             }
         },
         mounted(){
@@ -106,8 +107,13 @@ function PriceListing(){
                 }
             },
             filterResults(){
-                this.searchClicked = true
-                this.populateGrid(1);
+                if (this.filter.brandId != ''){                    
+                    this.searchClicked = true
+                    this.filterValidationError = ''
+                    this.populateGrid(1);
+                }else{
+                    this.filterValidationError = 'Please select a brand.'
+                }
             },
             download(){
                 this.errorMessage = ''

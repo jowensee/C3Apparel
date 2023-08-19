@@ -96,9 +96,9 @@ namespace C3Apparel.Data.Modules.Classes
             return CreateBrandInfo(ds.Tables[0].Rows[0]);
         }
 
-        public IEnumerable<BrandInfo> GetBrandsWithPricing()
+        public IEnumerable<BrandInfo> GetBrandsWithPricing(bool enabledOnly)
         {
-            var whereClause = $@"WHERE BrandID IN (
+            var whereClause = $@"WHERE {(enabledOnly ? "BrandEnabled=1 AND" : "")} BrandID IN (
                 SELECT DISTINCT ProductPricingSupplierID FROM C3_ProductPricing 
             )";
             var sSql = $@"{BASE_SQL} {whereClause} ORDER BY BrandDisplayName" ;

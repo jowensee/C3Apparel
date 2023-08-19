@@ -64,7 +64,7 @@
             <div class="control">
               <div class="select">
                 <select id="selectBrand" v-model="filter.brandId">
-                  <option value="">Select Brand</option>
+                  <option value="0">Select Brand</option>
                   <option value="3">Decky</option>
                   <option value="1" selected>PureWaste</option>
                 </select>
@@ -112,15 +112,6 @@
             </div>
           </div>
           <div class="field">
-            <label>Product Colours</label>
-            <div class="control">
-              <div>
-                <input type="text" v-model="filter.colour">
-              </div>
-            </div>
-          </div>
-
-          <div class="field">
             <label>Colour Descriptions</label>
             <div class="control">
               <div>
@@ -128,6 +119,8 @@
               </div>
             </div>
           </div>
+
+          <div class="error-validation" v-show="filterValidationError">{{filterValidationError}}</div>
           <div class="buttons">
             <button id="buttonSearch" class="button is-link" v-on:click.prevent="filterResults()">Search</button>
             <button id="buttonPrint" class="button is-link" type="submit" value="print">CSV Download</button>

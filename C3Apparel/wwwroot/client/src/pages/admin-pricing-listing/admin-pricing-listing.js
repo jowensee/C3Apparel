@@ -26,7 +26,7 @@ function PricingListing(){
                     rows:[]
                 },
                 filter:{
-                    brandId:'',
+                    brandId:0,
                     c3Style:'',
                     collection:'',
                     supplierStyle:'',

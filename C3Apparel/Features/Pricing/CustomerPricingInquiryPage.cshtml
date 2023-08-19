@@ -23,7 +23,7 @@
          <div class="control">
             <div class="select">
                <select id="selectBrand"  v-model="filter.brandId">
-                  <option value="">Select Brand</option>
+                  <option value="0">Select Brand</option>
                   @foreach (var brand in Model.Brands)
                   {
                      <!option value="@brand.Value" @(brand.IsSelected ? "selected" : "")>@brand.Text</!option>
@@ -80,6 +80,7 @@
             </div>
          </div>
       </div>
+      <div class="error-validation" v-show="filterValidationError">{{filterValidationError}}</div>
       <div class="buttons">
           <button id="buttonSearch" class="button is-link" v-on:click.prevent="filterResults()">Search</button>       
           <button id="buttonCSVDownload" class="button is-link" v-on:click.prevent="download()">CSV Download</button>

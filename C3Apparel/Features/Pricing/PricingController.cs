@@ -60,7 +60,7 @@ namespace C3Apparel.Web.Features.Pricing
             vm.UserIsAdministrator = user.IsAdministrator;
             
 
-            vm.Brands = _productRepository.GetBrandsWithPricing().Select(a=> new ListItem(a.BrandName, a.BrandID.ToString(), brandId == a.BrandID));
+            vm.Brands = _productRepository.GetBrandsWithPricing(true).Select(a=> new ListItem(a.BrandName, a.BrandID.ToString(), brandId == a.BrandID));
 
             var targetCurrency = CountryHelper.GetCountryCurrencyCode(countryCode);
 
@@ -123,7 +123,7 @@ namespace C3Apparel.Web.Features.Pricing
             }
             var vm = new PriceListingPageViewModel();
 
-            vm.Brands = _productRepository.GetBrandsWithPricing().Select(a=> new ListItem(a.BrandName, a.BrandID.ToString(), brandId == a.BrandID));
+            vm.Brands = _productRepository.GetBrandsWithPricing(true).Select(a=> new ListItem(a.BrandName, a.BrandID.ToString(), brandId == a.BrandID));
            
             if (brandId > 0)
             {
@@ -185,7 +185,7 @@ namespace C3Apparel.Web.Features.Pricing
             }
             var vm = new PriceListingPageViewModel();
 
-            vm.Brands = _productRepository.GetBrandsWithPricing().Select(a=> new ListItem(a.BrandName, a.BrandID.ToString(), brandId == a.BrandID));
+            vm.Brands = _productRepository.GetBrandsWithPricing(true).Select(a=> new ListItem(a.BrandName, a.BrandID.ToString(), brandId == a.BrandID));
            
             if (brandId > 0)
             {

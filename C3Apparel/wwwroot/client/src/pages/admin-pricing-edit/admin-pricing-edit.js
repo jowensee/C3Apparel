@@ -18,7 +18,7 @@ function PricingEdit(){
                 pricing:{
                     id:Number(thisObject.el.getAttribute("data-id")),
                     status:'',
-                    brandId:'',
+                    brandId:0,
                     collection:'',
                     c3Style:'',
                     supplierStyle:'',
@@ -84,8 +84,8 @@ function PricingEdit(){
                 this.errors = []
                 let validate = true
 
-                if (this.pricing.brandId.trim() == ''){
-                    this.errors.push("<b>Supplier:</b> Please select one")
+                if (this.pricing.brandId == 0){
+                    this.errors.push("<b>Brand:</b> Please select one")
                     validate = false
                 }
 

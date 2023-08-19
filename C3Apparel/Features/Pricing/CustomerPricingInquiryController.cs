@@ -62,7 +62,7 @@ namespace C3Apparel.Web.Features.Pricing
             var user = await _currentUserProvider.GetCurrentUserInfo();
 
             vm.UserIsAdministrator = user.IsAdministrator;
-            vm.Brands = _productRepository.GetBrandsWithPricing().Select(a=> new ListItem(a.BrandName, a.BrandID.ToString(), false));
+            vm.Brands = _productRepository.GetBrandsWithPricing(true).Select(a=> new ListItem(a.BrandName, a.BrandID.ToString(), false));
 
             var targetCurrency = CountryHelper.GetCountryCurrencyCode(countryCode);
 

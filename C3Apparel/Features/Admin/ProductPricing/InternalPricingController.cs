@@ -27,7 +27,7 @@ namespace C3Apparel.Web.Features.Admin.ProductPricing
 
             var vm = new InternalPriceListingPageViewModel();
 
-            vm.Brands = _productRepository.GetBrandsWithPricing().Select(a=> new ListItem(a.BrandName, a.BrandID.ToString(), brandId == a.BrandID));
+            vm.Brands = _productRepository.GetBrandsWithPricing(false).Select(a=> new ListItem(a.BrandName, a.BrandID.ToString(), brandId == a.BrandID));
             return View("~/Features/Admin/ProductPricing/InternalPriceListingPage.cshtml",vm);
         }
 
