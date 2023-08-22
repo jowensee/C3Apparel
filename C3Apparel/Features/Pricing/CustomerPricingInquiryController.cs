@@ -87,7 +87,7 @@ namespace C3Apparel.Web.Features.Pricing
 
             return new SearchPriceListFilter
             {
-                BrandId = requests.Filters.BrandId.ToInt(),
+                BrandId = requests.Filters.BrandId,
                 Collection = requests.Filters.Collection,
                 C3Style = requests.Filters.C3Style,
                 Description = requests.Filters.Description,
@@ -158,7 +158,7 @@ namespace C3Apparel.Web.Features.Pricing
         }
 
         
-        [TypeFilter(typeof(C3AuthorizationFilter))]
+        [TypeFilter(typeof(AuthentictedAuthorizationFilter))]
         [HttpPost]
         [Route("inquirydownloadcsv")]
         public async Task<ActionResult> DownloadCSV([FromBody] SearchPriceListParameters requests)

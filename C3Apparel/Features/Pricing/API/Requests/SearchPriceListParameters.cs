@@ -7,7 +7,7 @@ namespace C3Apparel.Web.Features.Pricing.API.Requests;
 public class SearchPriceListFilterParameter
 {
     [JsonProperty("brandId")]
-    public string BrandId { get; set; }
+    public int BrandId { get; set; }
     
     [JsonProperty("collection")]
     public string Collection { get; set; }

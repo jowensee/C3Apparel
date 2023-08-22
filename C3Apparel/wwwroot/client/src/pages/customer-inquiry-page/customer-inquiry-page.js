@@ -107,13 +107,11 @@ function PriceListing(){
                 }
             },
             filterResults(){
-                if (this.filter.brandId != ''){                    
-                    this.searchClicked = true
-                    this.filterValidationError = ''
-                    this.populateGrid(1);
-                }else{
-                    this.filterValidationError = 'Please select a brand.'
-                }
+                
+                this.searchClicked = true
+                this.filterValidationError = ''
+                this.populateGrid(1);
+            
             },
             download(){
                 this.errorMessage = ''
