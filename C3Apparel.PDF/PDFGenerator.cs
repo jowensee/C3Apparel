@@ -17,9 +17,9 @@ namespace C3Apparel.PDF
         public byte[] GeneratePDF(string url)
         {
             _converter.Orientation = PageOrientation.Landscape;
-            //r style=\"text-align:center;font-family:'Segoe UI'\"
-            _converter.PageHeaderHtml = "<header>C-3 Apparel</header>";
-            //_converter.PageHeaderHtml = "test";
+            
+            //removed header as requested
+            //_converter.PageHeaderHtml = "<header style=\"text-align:center;font-family:'Segoe UI'\">C-3 Apparel</header>";
             return _converter.GeneratePdfFromFile(url,null);
             
         }
