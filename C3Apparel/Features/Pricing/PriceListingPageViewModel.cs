@@ -3,6 +3,7 @@ using System.Linq;
 using C3Apparel.Data.Pricing;
 using C3Apparel.Data.Products;
 using C3Apparel.Frontend.Data.Common;
+using Microsoft.IdentityModel.Tokens;
 
 namespace C3Apparel.Web.Features.Pricing;
 
@@ -27,6 +28,7 @@ public class PriceListingPageViewModel
     public string CurrentBrandRegionCode { get; set; }
     public string Currency { get; set; }
 
+    public bool HasColleciton => !Products.IsNullOrEmpty() && Products.Any(a => !a.Collection.IsNullOrEmpty());
     public string GetColumnHeader(int headerIndex, string priceKey)
     {
         if (PriceWeightBasedSettings == null || !PriceWeightBasedSettings.ContainsKey(priceKey))
