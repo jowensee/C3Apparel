@@ -2,23 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BlankSiteCore.Features.Base.API;
-using C3Apparel.Data.Extensions;
+using C3Apparel.Features.Base.API;
 using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Data.Modules.Filters;
 using C3Apparel.Data.Pricing;
-using C3Apparel.Data.Products;
-using C3Apparel.Features.Admin.Brand;
 using C3Apparel.Features.Admin.ProductPricing.API;
-using C3Apparel.Features.Admin.ProductPricing.Models;
 using C3Apparel.Frontend.Data.Common;
 using C3Apparel.Frontend.Data.Settings;
+using C3Apparel.Infrastructure;
 using C3Apparel.Web.Authentication;
 using C3Apparel.Web.Features.ProductPricing.API.Requests;
 using C3Apparel.Web.Features.ProductPricing.API.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace C3Apparel.Features.Admin.ProductPricing
 {
@@ -29,24 +27,37 @@ namespace C3Apparel.Features.Admin.ProductPricing
         private readonly IProductPricingInfoProvider _productPricingInfoProvider;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IPriceListService _priceListService;
+        private readonly ISessionService _sessionService;
         public ProductPricingController(IBrandInfoProvider brandInfoProvider,
-            IProductPricingInfoProvider productPricingInfoProvider, IHttpContextAccessor httpContextAccessor, IPriceListService priceListService)
+            IProductPricingInfoProvider productPricingInfoProvider, IHttpContextAccessor httpContextAccessor, IPriceListService priceListService, ISessionService sessionService)
         {
             _brandInfoProvider = brandInfoProvider;
             _productPricingInfoProvider = productPricingInfoProvider;
             _httpContextAccessor = httpContextAccessor;
             _priceListService = priceListService;
+            _sessionService = sessionService;
         }
 
 
         public async Task<ActionResult> ProductPricingListing()
         {
 
+            var parameter = _sessionService.GetString(SessionService.KeyProductPricingParameter);
+
+            var request = JsonConvert.DeserializeObject<GetProductPricingsParameters>(parameter);
             var vm = new ProductPricingListingPageViewModel();
+            vm.PageFilters = request;
 
             vm.Brands = _brandInfoProvider.GetAllBrands(null, 1, 1000)
-                .Select(a => new ListItem(a.BrandDisplayName, a.BrandID.ToString(), false));
+                .Select(a => new ListItem(a.BrandDisplayName, a.BrandID.ToString(), false)).ToList();
+
+            if (request is { Filters.FilterSupplier: > 0 })
+            {
+                vm.Brands.Where(a=>a.Value == request.Filters.FilterSupplier.ToString()).ToList().ForEach(a=>a.IsSelected = true);
+            }
             return View("~/Features/Admin/ProductPricing/ProductPricingListingPage.cshtml", vm);
+
+            
         }
 
         public async Task<ActionResult> UploadPage()
@@ -74,7 +85,7 @@ namespace C3Apparel.Features.Admin.ProductPricing
             }
 
             var uploader =
-                new C3Apparel.Features.Admin.ProductPricing.CSV.CSVUploader(files[0], _brandInfoProvider,
+                new CSV.CSVUploader(files[0], _brandInfoProvider,
                     _productPricingInfoProvider);
 
             var pricings = uploader.RetrievePricingsFromCSV();
@@ -131,6 +142,7 @@ namespace C3Apparel.Features.Admin.ProductPricing
                 return (int)Math.Floor((double)totalItems / itemsPerPage) + 1;
             }
 
+            _sessionService.SetValue(SessionService.KeyProductPricingParameter, JsonConvert.SerializeObject(requests));            
             var response = new GetProductPricingsResponse();
             var filter = new ProductPricingFilter
             {

@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BlankSiteCore.Features.PriceList;
+namespace C3Apparel.Features.PriceList;
 
 public class PriceListFileService : IPriceListFileService
 {

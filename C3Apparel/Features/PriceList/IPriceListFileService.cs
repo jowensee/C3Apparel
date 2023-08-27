@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace BlankSiteCore.Features.PriceList;
+namespace C3Apparel.Features.PriceList;
 
 public interface IPriceListFileService
 {

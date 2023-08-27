@@ -65,6 +65,9 @@
                   C3 Published Price List Date
                </th>
                <th>Price Lists</th>
+               <th class="col-header col-publish-date">
+                  Last Published Date Time
+               </th>
                <th class="single-button"></th>
             </tr>
             </thead>
@@ -72,13 +75,14 @@
             <tr class="row" v-for="(row, index) in grid.rows">
                <td nowrap="nowrap">{{row.brand}}</td>
                <td class="center" v-html="row.enabled ? 'Yes' : 'No'"></td>
-               <td class="center">{{row.publishDate}}</td>
+               <td class="center">{{row.c3PublishDate}}</td>
                <td class="files">
                   <a :href="row.pdfauPriceUrl" target="_blank" v-if="row.pdfauPriceUrl">AUD PDF Price List</a>
                   <a :href="row.pdfnzPriceUrl" target="_blank" v-if="row.pdfnzPriceUrl">NZD PDF Price List</a>
                   <a :href="row.csvauPriceUrl" target="_blank" v-if="row.csvauPriceUrl">AUD CSV Price List</a>
                   <a :href="row.csvnzPriceUrl" target="_blank" v-if="row.csvnzPriceUrl">NZD CSV Price List</a>
                </td>
+               <td class="center">{{row.lastPublishDateTime}}</td>
                <td><a href="#" class="button is-link" v-on:click.prevent="generatePriceList(row.brandId)">Publish Price List</a></td>
             </tr>
             </tbody>

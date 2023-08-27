@@ -1,9 +1,10 @@
 using System;
-using BlankSiteCore.Features.PriceList;
+using C3Apparel.Features.PriceList;
 using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Data.Pricing;
 using C3Apparel.Data.Products;
 using C3Apparel.Data.Sql;
+using C3Apparel.Infrastructure;
 using C3Apparel.Web.Membership;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -47,7 +48,9 @@ namespace BlankSiteCore
             */
             services.AddAuthorization();
             services.AddAuthentication();
-
+            services.AddMvc()
+                .AddSessionStateTempDataProvider();
+            services.AddSession();
             /*services.ConfigureApplicationCookie(c =>
             {
                 c.LoginPath = new PathString("/login");
@@ -96,6 +99,7 @@ namespace BlankSiteCore
             services.AddScoped<IUserProvider, UserProvider>();
             services.AddScoped<IPriceListService, PriceListService>();
             services.AddScoped<IPriceListFileService, PriceListFileService>();
+            services.AddScoped<ISessionService, SessionService>();
             ConfigureMembershipServices(services);
             
         }
@@ -142,17 +146,13 @@ namespace BlankSiteCore
                 }
             });
             app.UseStaticFiles();
-
             app.UseCookiePolicy();
-
             app.UseCors();
-
             app.UseAuthentication();
-
-            
             app.UseRouting();
-            
             app.UseAuthorization();
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("Pricing", "price-list/{countrycode}",

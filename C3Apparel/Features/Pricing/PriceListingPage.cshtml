@@ -62,7 +62,7 @@
       <table class="listing-table">
          <thead class="listing-header">
          <tr>
-            <th colspan="@(Model.HasColleciton ? "6" : "5")" rowspan="2">
+            <th colspan="6" rowspan="2">
             </th>
             <th class="col-header col-group thick thick-left" colspan="@(Model.PriceCol1HasFreightSurcharge ? "3" : "2")">
                Column 1
@@ -126,10 +126,7 @@
          </tr>
          <tr>
             <th rowspan="2" class="col-header col-brand">Brand</th>
-            @if (Model.HasColleciton)
-            {
-               <th rowspan="2" class="col-header col-brand">Collection</th>
-            }
+            <th rowspan="2" class="col-header col-brand">Collection</th>
             <th rowspan="2" class="col-header col-style">Style</th>
             <th rowspan="2" class="col-header col-name">Description</th>
             <th rowspan="2" class="col-header col-sizes">Sizes</th>
@@ -189,10 +186,7 @@
          <tbody>
             <tr class="row" v-for="(row, index) in grid.rows">
                <td class=" col-brand" nowrap="nowrap">{{row.brand}}</td>
-               @if (Model.HasColleciton)
-               {
-                  <td class=" col-style">{{row.collection}}</td>
-               }
+               <td class=" col-style">{{row.collection}}</td>
                 <td class=" col-style center">{{row.productCode}}</td>
                 <td class=" col-name">{{row.description}}</td>
                 <td class=" col-sizes center">{{row.sizes}}</td>

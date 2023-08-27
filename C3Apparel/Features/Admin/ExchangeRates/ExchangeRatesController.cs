@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BlankSiteCore.Features.Base.API;
+using C3Apparel.Features.Base.API;
 using C3Apparel.Data.Extensions;
 using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Frontend.Data.Settings;

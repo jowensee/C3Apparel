@@ -16,5 +16,6 @@ namespace C3Apparel.Data.Modules.Classes
         public string BrandFocus { get; set; }
         public string BrandBusinessName { get; set; }
         public DateTime BrandPriceListPublishedDate { get; set; }
+        public DateTime BrandPriceListLastPublishedDate { get; set; }
     }
 }

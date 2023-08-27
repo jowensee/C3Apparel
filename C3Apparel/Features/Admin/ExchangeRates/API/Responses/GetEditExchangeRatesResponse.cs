@@ -1,4 +1,4 @@
-using BlankSiteCore.Features.Base.API;
+using C3Apparel.Features.Base.API;
 
 namespace C3Apparel.Web.Features.ExchangeRates.API.Responses;
 

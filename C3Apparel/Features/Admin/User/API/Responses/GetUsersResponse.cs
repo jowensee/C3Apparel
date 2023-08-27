@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using BlankSiteCore.Features.Base.API;
+using C3Apparel.Features.Base.API;
 using Newtonsoft.Json;
 
 namespace C3Apparel.Web.Features.User.API.Responses;

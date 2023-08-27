@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BlankSiteCore.Features.Base.API;
-using BlankSiteCore.Features.PriceList;
+using C3Apparel.Features.Base.API;
+using C3Apparel.Features.PriceList;
 using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Data.Modules.Filters;
 using C3Apparel.Data.Pricing;
@@ -50,39 +50,58 @@ namespace C3Apparel.Features.Admin.PriceList
         [Route("save-price-list")]
         public IActionResult SaveToPriceListTable([FromBody] SavePriceToDBTableParameters request)
         {
-            var message = string.Empty;
-            var priceCount = 0;
+            
             var response = new CommandAPIResult();
-            (message, priceCount) = _priceListService.SavePriceListToPriceListTable(1, CurrencyConstants.AUD, request.BrandId);
+            try
+            {
+                var message = string.Empty;
+                var priceCount = 0;
+                (message, priceCount) =
+                    _priceListService.SavePriceListToPriceListTable(1, CurrencyConstants.AUD, request.BrandId);
 
-            if (!message.IsNullOrEmpty())
-            {
-                response.Message = message;
-            }
-            else
-            {
-                (message, priceCount) = _priceListService.SavePriceListToPriceListTable(1, CurrencyConstants.NZD, request.BrandId);
                 if (!message.IsNullOrEmpty())
                 {
                     response.Message = message;
                 }
-            }
+                else
+                {
+                    (message, priceCount) =
+                        _priceListService.SavePriceListToPriceListTable(1, CurrencyConstants.NZD, request.BrandId);
+                    if (!message.IsNullOrEmpty())
+                    {
+                        response.Message = message;
+                    }
+                }
 
-            if (priceCount == 0)
-            {
-                response.Message = "Price List is empty";
+                if (priceCount == 0)
+                {
+                    response.Message = "Price List is empty";
+                }
+                else
+                {
+                    response.Success = true;
+                    var brand = _brandInfoProvider.GetBrand(request.BrandId);
+
+                    if (brand != null)
+                    {
+                        _priceListFileService.GeneratePDFFile(request.BrandId, brand.BrandName, CurrencyConstants.AUD);
+                        _priceListFileService.GeneratePDFFile(request.BrandId, brand.BrandName, CurrencyConstants.NZD);
+                        _priceListFileService.GenerateCSVFile(request.BrandId, brand.BrandName, CurrencyConstants.AUD);
+                        _priceListFileService.GenerateCSVFile(request.BrandId, brand.BrandName, CurrencyConstants.NZD);
+
+                        _brandInfoProvider.SaveLastPublishedDate(request.BrandId, DateTime.Now);
+                    }
+
+
+                }
+
+                return Ok(response);
             }
-            else
+            catch (Exception ex)
             {
-                response.Success = true;
-                var brand = _brandInfoProvider.GetBrand(request.BrandId);
-            
-                _priceListFileService.GeneratePDFFile(request.BrandId, brand.BrandName, CurrencyConstants.AUD);
-                _priceListFileService.GeneratePDFFile(request.BrandId, brand.BrandName, CurrencyConstants.NZD);  
-                _priceListFileService.GenerateCSVFile(request.BrandId, brand.BrandName, CurrencyConstants.AUD);   
-                _priceListFileService.GenerateCSVFile(request.BrandId, brand.BrandName, CurrencyConstants.NZD);   
+                response.Message = ex.Message;
+                return Ok(response);
             }
-            return Ok(response);
         }
         
         [Route("get-brands-pricelist")]
@@ -103,14 +122,16 @@ namespace C3Apparel.Features.Admin.PriceList
             IEnumerable<BrandInfo> brands = _brandInfoProvider.GetAllBrands(null, request.PageNumber, request.ItemsPerPage);
 
             var totalCount = _brandInfoProvider.GetAllBrandsCount(null);
-            
+            var tz = TimeZoneInfo.FindSystemTimeZoneById("AUS Eastern Standard Time");
             response.TotalPage = GetTotalPage(totalCount, request.ItemsPerPage);
             response.Brands = brands.Select(p => new BrandPriceListAPIItem()
             {
                 Brand = p.BrandDisplayName,
                 BrandId = p.BrandID,
                 Enabled = p.BrandEnabled,
-                PublishDate = p.BrandPriceListPublishedDate == DateTime.MinValue ? string.Empty : p.BrandPriceListPublishedDate.ToString("d/M/yyyy"),
+                C3PublishDate = p.BrandPriceListPublishedDate == DateTime.MinValue ? string.Empty : p.BrandPriceListPublishedDate.ToString("d/M/yyyy"),
+                LastPublishDateTime = p.BrandPriceListLastPublishedDate == DateTime.MinValue ? string.Empty : 
+                    TimeZoneInfo.ConvertTimeBySystemTimeZoneId(p.BrandPriceListLastPublishedDate, TimeZoneInfo.Local.Id, "AUS Eastern Standard Time").ToString("d/M/yyyy h:mm:ss tt"),
                 PDFAUPriceUrl = _priceListFileService.GetPriceListFile(p.BrandName, CurrencyConstants.AUD, PriceListConstants.FILE_TYPE_PDF),
                 PDFNZPriceUrl = _priceListFileService.GetPriceListFile(p.BrandName, CurrencyConstants.NZD, PriceListConstants.FILE_TYPE_PDF),
                 CSVAUPriceUrl = _priceListFileService.GetPriceListFile(p.BrandName, CurrencyConstants.AUD, PriceListConstants.FILE_TYPE_CSV),

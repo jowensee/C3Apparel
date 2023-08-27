@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using BlankSiteCore.Features.PriceList;
+using C3Apparel.Features.PriceList;
 using C3Apparel.Data.Common;
 using C3Apparel.Data.Helpers;
 using C3Apparel.Data.Modules.Classes;

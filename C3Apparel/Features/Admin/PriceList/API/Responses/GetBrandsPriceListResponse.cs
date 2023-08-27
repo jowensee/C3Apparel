@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using BlankSiteCore.Features.Base.API;
+using C3Apparel.Features.Base.API;
 using Newtonsoft.Json;
 
 namespace C3Apparel.Features.Admin.PriceList.API.Responses;
@@ -15,8 +15,11 @@ public class BrandPriceListAPIItem
    [JsonProperty("enabled")]
     public bool Enabled { get; set; }
 
-    [JsonProperty("publishDate")]
-    public string PublishDate { get; set; }
+    [JsonProperty("c3PublishDate")]
+    public string C3PublishDate { get; set; }
+    
+    [JsonProperty("lastPublishDateTime")]
+    public string LastPublishDateTime { get; set; }
     
     public string PDFAUPriceUrl { get; set; }
     public string PDFNZPriceUrl { get; set; }

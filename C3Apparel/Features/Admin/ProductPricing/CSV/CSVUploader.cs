@@ -70,7 +70,7 @@ public class CSVUploader
                 ProductPricingInfo product = null;
                 
                 var isNew = true;
-                if (pricing.Action == "Add")
+                if (pricing.Action.Trim() == "Add")
                 {
                     if (!deleteAll)
                     {
@@ -111,7 +111,7 @@ public class CSVUploader
                         _productPricingInfoProvider.InsertProductPricing(product);   
                     }
                     
-                }else if (pricing.Action == "Update")
+                }else if (pricing.Action.Trim() == "Update")
                 {
                     product =  _productPricingInfoProvider.GetProductPricingByC3Style(brandID, pricing.C3Style);
 

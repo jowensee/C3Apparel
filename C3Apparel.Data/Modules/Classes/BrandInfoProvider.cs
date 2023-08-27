@@ -26,7 +26,8 @@ namespace C3Apparel.Data.Modules.Classes
                           ,[BrandPricingDisclaimerTextNZ]
                           ,[BrandBusinessName]
                           ,[BrandFocus]
-                          ,[BrandPriceListPublishedDate] 
+                          ,[BrandPriceListPublishedDate]
+                          ,[BrandPriceListLastPublishedDate]
                             FROM COM_BRAND";
         public BrandInfoProvider(IConfigurationService configurationService) : base(configurationService)
         {
@@ -79,6 +80,7 @@ namespace C3Apparel.Data.Modules.Classes
                 BrandEnabled = row[nameof(BrandInfo.BrandEnabled)].ToBool(),
                 BrandHomepage =  row[nameof(BrandInfo.BrandHomepage)].ToSafeString(),
                 BrandDescription = row[nameof(BrandInfo.BrandDescription)].ToSafeString(),
+                BrandPriceListLastPublishedDate = row[nameof(BrandInfo.BrandPriceListLastPublishedDate)].ToDateTime(),
             };
         }
         public BrandInfo GetBrand(int brandId)
@@ -271,6 +273,17 @@ namespace C3Apparel.Data.Modules.Classes
                                    {publishedDateUpdate}
                                     WHERE BrandID=@Id", parameters);
             
+        }
+
+        public void SaveLastPublishedDate(int brandId, DateTime dt)
+        {
+            var parameters = new Dictionary<string, object>
+            {
+                { "@Id", brandId },
+                {"@publishedDate", dt}
+            };
+            ExecuteCommand($@"UPDATE COM_Brand SET BrandPriceListLastPublishedDate = @publishedDate
+                                    WHERE BrandID=@Id", parameters);
         }
     }
 }

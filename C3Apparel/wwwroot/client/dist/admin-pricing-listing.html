@@ -41,7 +41,7 @@
         Product Pricing
       </div>
 
-      <div id="main-app" data-endpoint="api/getbrands.json" data-delete-endpoint="api/deleteResponse.json" data-method="POST" data-item-per-page="5">
+      <div id="main-app" data-endpoint="api/getbrands.json" data-delete-endpoint="api/deleteResponse.json" data-method="POST" data-item-per-page="5" data-initial-filter="{&quot;pageNumber&quot;:1,&quot;itemsPerPage&quot;:100,&quot;filters&quot;:{&quot;filterSupplier&quot;:13,&quot;filterC3Style&quot;:&quot;&quot;,&quot;filterCollection&quot;:&quot;&quot;,&quot;filterSupplierStyle&quot;:&quot;&quot;,&quot;filterDescription&quot;:&quot;&quot;,&quot;filterCOO&quot;:&quot;&quot;,&quot;filterProductGroup&quot;:&quot;&quot;,&quot;filterSizes&quot;:&quot;&quot;,&quot;filterColour&quot;:&quot;all&quot;}}">
         <div class="action">
           <a class="button is-link" href="/admin/product-price/0">New Product Pricing</a>
         </div>
@@ -53,7 +53,7 @@
                 <div class="select">
                   <select id="filterBrand" name="filterBrand" v-model="filter.brandId">
                     <option value="">Select</option>
-                    <option value="1">Brand 1</option>
+                    <option value="13">Brand 1</option>
                   </select>
                 </div>
               </div>
@@ -103,7 +103,7 @@
             <div class="field">
               <label>Colour</label>
               <div class="control">
-                <input v-model="filter.colour">
+                <input id="filterColour" v-model="filter.colour" data-value="colourdefault">
               </div>
             </div>
             <div class="error-validation" v-show="filterValidationError">{{filterValidationError}}</div>

@@ -11,6 +11,7 @@ function PricingListing(){
     const endpoint = thisObject.el.getAttribute("data-endpoint")
     const deleteEndpoint = thisObject.el.getAttribute("data-delete-endpoint")
     const method = thisObject.el.getAttribute("data-method")
+    const initialFilter = thisObject.el.getAttribute("data-initial-filter")
 
     createApp({
         data() {
@@ -48,6 +49,25 @@ function PricingListing(){
         },
         mounted(){
             
+            console.log('initialFilterObject', initialFilter)
+            var initialFilterObject = JSON.parse(initialFilter)
+
+            if (initialFilterObject != null){
+                this.filter.brandId = initialFilterObject.filters.filterSupplier
+                this.filter.c3Style = initialFilterObject.filters.filterC3Style
+                this.filter.collection = initialFilterObject.filters.filterCollection
+                this.filter.supplierStyle = initialFilterObject.filters.filterSupplierStyle
+                this.filter.description = initialFilterObject.filters.filterDescription
+                this.filter.coo = initialFilterObject.filters.filterCOO
+                this.filter.productGroup = initialFilterObject.filters.filterProductGroup
+                this.filter.sizes = initialFilterObject.filters.filterSizes
+                this.filter.colour = initialFilterObject.filters.filterColour
+            }
+
+            if (this.filter.brandId > 0)
+            {
+                this.populateGrid(initialFilterObject == null || initialFilterObject.pageNumber == 0 ? 1 :initialFilterObject.pageNumber)
+            }
             //this.populateGrid(1);
             
             

@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace BlankSiteCore.Features.Base.API;
+namespace C3Apparel.Features.Base.API;
 
 public abstract class BaseListingResponse
 {

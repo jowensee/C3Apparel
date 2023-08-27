@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using C3Apparel.Data.Modules.Filters;
@@ -15,5 +16,6 @@ namespace C3Apparel.Data.Modules.Classes
         void Delete(int id);
         void InsertBrand(BrandInfo brand);
         void UpdateBrand(BrandInfo brand);
+        void SaveLastPublishedDate(int brandId, DateTime dt);
     }
 }
