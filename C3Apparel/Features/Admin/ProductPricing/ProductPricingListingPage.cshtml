@@ -20,6 +20,7 @@
 <div id="main-app" data-endpoint="@Url.Action("GetProductPricings", "ProductPricing")"
      data-delete-endpoint="@Url.Action("DeleteProductPricing", "ProductPricing")"
      data-method="POST" data-item-per-page="@AdminSettings.DEFAULT_PAGE_SIZE"
+     data-endpoint-download="@Url.Action("DownloadCSV", "ProductPricing")"
      data-initial-filter="@Html.Raw(Model.PageFiltersJson)">
    <div class="action">
       <a class="button is-link" href="/admin/product-pricings/0">New Product Pricing</a>       
@@ -107,6 +108,7 @@
          <div class="error-validation" v-show="filterValidationError">{{filterValidationError}}</div>
          <div class="buttons">
             <button id="buttonSearch" class="button is-link" v-on:click.prevent="filterResults()">Search</button>
+            <button id="buttonCSVDownload" class="button is-link" v-on:click.prevent="download()" v-if="searchClicked">CSV Download</button>
          </div>
       </form>
    </div>

@@ -12,6 +12,7 @@ function PricingListing(){
     const deleteEndpoint = thisObject.el.getAttribute("data-delete-endpoint")
     const method = thisObject.el.getAttribute("data-method")
     const initialFilter = thisObject.el.getAttribute("data-initial-filter")
+    const downloadEndpoint = thisObject.el.getAttribute("data-endpoint-download")
 
     createApp({
         data() {
@@ -38,7 +39,9 @@ function PricingListing(){
                     colour:''
                 },
                 searchClicked:false,
-                filterValidationError: ''
+                filterValidationError: '',
+                filterBrandName:''
+
             }
         },
         computed:{
@@ -49,7 +52,6 @@ function PricingListing(){
         },
         mounted(){
             
-            console.log('initialFilterObject', initialFilter)
             var initialFilterObject = JSON.parse(initialFilter)
 
             if (initialFilterObject != null){
@@ -116,8 +118,13 @@ function PricingListing(){
                 if (this.filter.brandId != ''){
                     this.searchClicked = true
                     this.filterValidationError = ''
+
+                    var sel = document.getElementById("filterBrand");
+                    this.filterBrandName = sel.options[sel.selectedIndex].text;
+
                     this.populateGrid(1);
                 }else{
+                    this.filterBrandName = ''
                     this.filterValidationError = 'Please select a brand.'
                 }
             },
@@ -165,7 +172,48 @@ function PricingListing(){
                             console.log(response.message)
                         }
                     });
-            }
+            },
+            download(){
+                this.errorMessage = ''
+                let data = {
+                    filters:{
+                        filterSupplier: this.filter.brandId,
+                        filterC3Style:this.filter.c3Style,
+                        filterCollection:this.filter.collection,
+                        filterSupplierStyle:this.filter.supplierStyle,
+                        filterDescription:this.filter.description,
+                        FilterCOO:this.filter.coo,
+                        filterProductGroup:this.filter.productGroup,
+                        filterSizes:this.filter.sizes,
+                        filterColour:this.filter.colour
+                     }
+                }
+
+                let _this = this;
+                fetch(downloadEndpoint, {
+                    method: "POST",
+                    headers:{
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data),
+                    data: null
+                }).then( res => res.blob() )
+                    .then( blob => {
+                        var url = window.URL.createObjectURL(blob);
+                        var a = document.createElement('a');
+                        a.href = url;
+                        a.download = `C-3_admin_products_${this.filterBrandName}.csv`;
+                        document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+                        a.click();
+                        a.remove();  
+                    });
+                   /* .then(function (response) {
+
+                       console.log('response', response)
+
+                    });*/
+
+            },
         }
     }).mount('#main-app')
 }

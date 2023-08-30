@@ -41,7 +41,7 @@
         Product Pricing
       </div>
 
-      <div id="main-app" data-endpoint="api/getbrands.json" data-delete-endpoint="api/deleteResponse.json" data-method="POST" data-item-per-page="5" data-initial-filter="{&quot;pageNumber&quot;:1,&quot;itemsPerPage&quot;:100,&quot;filters&quot;:{&quot;filterSupplier&quot;:13,&quot;filterC3Style&quot;:&quot;&quot;,&quot;filterCollection&quot;:&quot;&quot;,&quot;filterSupplierStyle&quot;:&quot;&quot;,&quot;filterDescription&quot;:&quot;&quot;,&quot;filterCOO&quot;:&quot;&quot;,&quot;filterProductGroup&quot;:&quot;&quot;,&quot;filterSizes&quot;:&quot;&quot;,&quot;filterColour&quot;:&quot;all&quot;}}">
+      <div id="main-app" data-endpoint="api/getbrands.json" data-delete-endpoint="api/deleteResponse.json" data-method="POST" data-item-per-page="5" data-endpoint-download="" data-initial-filter1="{&quot;pageNumber&quot;:1,&quot;itemsPerPage&quot;:100,&quot;filters&quot;:{&quot;filterSupplier&quot;:13,&quot;filterC3Style&quot;:&quot;&quot;,&quot;filterCollection&quot;:&quot;&quot;,&quot;filterSupplierStyle&quot;:&quot;&quot;,&quot;filterDescription&quot;:&quot;&quot;,&quot;filterCOO&quot;:&quot;&quot;,&quot;filterProductGroup&quot;:&quot;&quot;,&quot;filterSizes&quot;:&quot;&quot;,&quot;filterColour&quot;:&quot;all&quot;}}">
         <div class="action">
           <a class="button is-link" href="/admin/product-price/0">New Product Pricing</a>
         </div>
@@ -103,12 +103,13 @@
             <div class="field">
               <label>Colour</label>
               <div class="control">
-                <input id="filterColour" v-model="filter.colour" data-value="colourdefault">
+                <input id="filterColour" v-model="filter.colour">
               </div>
             </div>
             <div class="error-validation" v-show="filterValidationError">{{filterValidationError}}</div>
             <div class="buttons">
               <button id="buttonSearch" class="button is-link" v-on:click.prevent="filterResults()">Search</button>
+              <button id="buttonCSVDownload" class="button is-link" v-on:click.prevent="download()" v-if="searchClicked">CSV Download</button>
             </div>
           </form>
         </div>

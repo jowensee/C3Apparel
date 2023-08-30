@@ -109,6 +109,10 @@ function PricingEdit(){
                     validate = false
                 }
 
+                if (this.pricing.colourDescriptions.trim() == ''){
+                    this.errors.push("<b>Colour Descriptions:</b> Please enter a value")
+                    validate = false
+                }
                 if (isNaN(this.pricing.buyPrice)){
                     this.errors.push("<b>Buy Price:</b> Please enter a decimal value")
                     validate = false

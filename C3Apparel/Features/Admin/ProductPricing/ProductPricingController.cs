@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using C3Apparel.Features.Base.API;
@@ -7,12 +9,15 @@ using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Data.Modules.Filters;
 using C3Apparel.Data.Pricing;
 using C3Apparel.Features.Admin.ProductPricing.API;
+using C3Apparel.Features.Admin.ProductPricing.CSV;
 using C3Apparel.Frontend.Data.Common;
 using C3Apparel.Frontend.Data.Settings;
 using C3Apparel.Infrastructure;
 using C3Apparel.Web.Authentication;
 using C3Apparel.Web.Features.ProductPricing.API.Requests;
 using C3Apparel.Web.Features.ProductPricing.API.Responses;
+using CsvHelper;
+using CsvHelper.Configuration;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -308,14 +313,69 @@ namespace C3Apparel.Features.Admin.ProductPricing
             }
         }
 
-        /*
+        [TypeFilter(typeof(AuthentictedAuthorizationFilter))]
         [HttpPost]
-        [Route("save")]
-        public IActionResult SaveToPriceListTable(PricingForm form)
+        [Route("productmaintenancedownloadcsv")]
+        public async Task<ActionResult> DownloadCSV([FromBody] DownloadProductPricingsParameters requests)
         {
-            var message = _priceListService.SavePriceListToPriceListTable(1, form.Currency, form.Brand.ToInt());
 
-            return RedirectToAction("ProductPricingListing");
-        }*/
+            var filter = new ProductPricingFilter
+            {
+                Description = requests.Filters.FilterDescription,
+                Collection = requests.Filters.FilterCollection,
+                C3Style = requests.Filters.FilterC3Style,
+                Colour = requests.Filters.FilterColour,
+                COO = requests.Filters.FilterCOO,
+                ProductGroup = requests.Filters.FilterProductGroup,
+                Sizes = requests.Filters.FilterSizes,
+                Supplier = requests.Filters.FilterSupplier,
+                SupplierStyle = requests.Filters.FilterSupplierStyle,
+
+            };
+
+            var brands = _brandInfoProvider.GetAllBrands();
+            IEnumerable<ProductPricingInfo> productPricings =
+                _productPricingInfoProvider.GetAllProductPricings(filter, 0,0);
+
+            var brand = brands.FirstOrDefault(a => a.BrandID == requests.Filters.FilterSupplier);
+            
+            var csvItems = productPricings.Select(a => new CSVProductItem
+            {
+                Supplier = brand?.BrandDisplayName,
+                Collection = a.ProductPricingCollection,
+                Colours = a.ProductPricingColours,
+                SupplierStyle = a.ProductPricingSupplierStyle,
+                Sizes = a.ProductPricingSizes,
+                ColourDescription = a.ProductPricingColourDesc,
+                ProductGroups = a.ProductPricingGroup,
+                Description = a.ProductPricingDescription,
+                COO = a.ProductPricingCoo,
+                C3Style = a.ProductPricingC3Style,
+                C3BuyPrice = a.ProductPricingC3BuyPrice,
+                Currency = brand?.BrandCurrency,
+                SKUWeight = a.ProductPricingSKUWeight,
+                C3OverrideWeight = a.ProductPricingC3OverrideWeight,
+                Status = a.ProductPricingStatus
+            });
+            
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var streamWriter = new StreamWriter(memoryStream))
+                {
+                    using (var csvWriter = new CsvWriter(streamWriter, new CsvConfiguration(CultureInfo.InvariantCulture)))
+                    {
+                        csvWriter.WriteRecords(csvItems);
+                        streamWriter.Flush();
+                        
+                        var bytes = memoryStream.ToArray();
+                        return new FileStreamResult(new MemoryStream(bytes), "text/csv")
+                        {
+                            FileDownloadName = "productMaintenanceSearch.csv"
+                        };
+                    }
+                }
+            }
+            
+        }
     }
 }
