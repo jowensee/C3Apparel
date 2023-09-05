@@ -3,7 +3,7 @@
 <div class="customer-nav">
     <nav>
         <a href="/price-list/@Model.Country" class="@(Model.ActivePage != "price-list" ? "" : "active")">@(Model.UserIsAdministrator ? "Customer" : "") Price List</a>
-        <a href="/product-inquiry/@Model.Country" class="@(Model.ActivePage == "product-inquiry" ? "active" : "")">@(Model.UserIsAdministrator ? "Customer" : "") Product Inquiry</a>
+        <a href="/product-inquiry/@Model.Country" class="@(Model.ActivePage == "product-inquiry" ? "active" : "")">@(Model.UserIsAdministrator ? "Customer" : "") Product Enquiry</a>
     </nav>
     <div class="select is-normal">
         <select onchange="javascript:changeCountry(this, '@($"/{Model.ActivePage}")')">

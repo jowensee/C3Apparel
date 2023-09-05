@@ -11,7 +11,7 @@
 }
 <partial name="~/Features/Pricing/_CustomerNavigation.cshtml" model="@(Model.CountryCode, "product-inquiry", Model.UserIsAdministrator)"/>
 <div class="main-caption">
-   @Model.CountryName Product Inquiry
+   @Model.CountryName Product Enquiry
 </div>
 <div id="main-app" data-endpoint="@Url.Action("SearchPriceList", "CustomerPricingInquiry")" 
      data-endpoint-download="@Url.Action("DownloadCSV", "CustomerPricingInquiry")" 
