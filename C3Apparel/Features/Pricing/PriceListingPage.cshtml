@@ -37,12 +37,12 @@
          <button id="buttonSearch" class="button is-link">Search</button>
          @if (!Model.BrandCSVDataUrl.IsNullOrEmpty())
          {
-            <a href="@Model.BrandCSVDataUrl" class="button is-link" target="_blank">CSV data</a>
+            <a href="@Model.BrandCSVDataUrl" class="button is-link" target="_blank" download>CSV data</a>
          }
          
          @if (!Model.BrandPDFPriceListUrl.IsNullOrEmpty())
          {
-            <a href="@Model.BrandPDFPriceListUrl" class="button is-link" target="_blank">Price List PDF</a>
+            <a href="@Model.BrandPDFPriceListUrl" class="button is-link" target="_blank" download>Price List PDF</a>
          }
          
       </div>

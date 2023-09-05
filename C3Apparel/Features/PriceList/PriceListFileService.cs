@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Data.Pricing;
 using C3Apparel.Data.Products;
@@ -93,8 +94,11 @@ public class PriceListFileService : IPriceListFileService
         var fileName = GetPriceListFileName(brandCodeName, currency, PriceListConstants.FILE_TYPE_PDF);    
         var bytes = pdfGenerator.GeneratePDF($"{baseUrl}/print-version?brandid={brandId}&currency={currency}");
 
-        File.WriteAllBytes($"{_priceListMainPath}\\{fileName}", bytes);
+        var finalFilePath = $"{_priceListMainPath}\\{fileName}";
+        
+        File.WriteAllBytes(finalFilePath, bytes);
 
+        
         return string.Empty;
     }
 

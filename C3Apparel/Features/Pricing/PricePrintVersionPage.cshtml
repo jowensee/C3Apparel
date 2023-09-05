@@ -18,7 +18,19 @@
       
       .listing-container{
       }
+    
+      table.listing-table td{
+           width:1px;
+           white-space:nowrap;
+      }
       
+      table.listing-table td.product-desc{
+           max-width:300px;
+      }
+      
+      table.listing-table .disclaimer{
+         width: 810px;
+      }
       table td.center, table th{
          text-align: center!important;
       }
@@ -31,6 +43,8 @@
       body .main-wrapper .main-content{
          max-width: 1400px;
       }
+      
+      
    </style>
 }
 
@@ -195,7 +209,7 @@
                            <td class="">@product.Collection</td>  
                         }
                         <td class="center">@product.ProductCode</td>
-                        <td style="width:300px">@product.ProductName</td>
+                        <td class="product-desc">@product.ProductName</td>
                         <td class="center">@product.ProductSizes</td>
                         <td class="center">@product.ProductColours</td>
                         @if (Model.PriceCol1HasFreightSurcharge)
