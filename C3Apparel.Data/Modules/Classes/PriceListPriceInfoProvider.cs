@@ -112,7 +112,7 @@ namespace C3Apparel.Data.Modules.Classes
             };
             var sSql = $@"SELECT * FROM C3_PricingListPrices
                        WHERE PriceVersionId = @versionId AND PriceCurrency = @currency AND PriceBrandId = @brandId
-                        ORDER BY PriceCollection, PriceC3Style";
+                        ORDER BY PriceCollection, REPLICATE('0',20-LEN(PriceC3Style)) + PriceC3Style";
 
             if (itemsPerPage > 0)
             {
@@ -259,7 +259,7 @@ namespace C3Apparel.Data.Modules.Classes
             
             var sSql = $@"SELECT * FROM C3_PricingListPrices
                        WHERE PriceVersionId = @versionId AND PriceCurrency = @currency {sFilterSql}
-                        ORDER BY PriceBrandName, PriceCollection, PriceC3Style";
+                        ORDER BY PriceBrandName, PriceCollection, REPLICATE('0',20-LEN(PriceC3Style)) + PriceC3Style";
 
             if (itemsPerPage > 0)
             {
