@@ -320,7 +320,7 @@ namespace C3Apparel.Data.Modules.Classes
             
             var sSql = $@"SELECT * FROM C3_ProductPricing
                        WHERE 1 = 1 {sFilterSql}
-                        ORDER BY ProductPricingCollection, ProductPricingC3Style";
+                        ORDER BY ProductPricingCollection, REPLICATE('0',20-LEN(ProductPricingC3Style)) + ProductPricingC3Style";
 
             if (itemsPerPage > 0)
             {
