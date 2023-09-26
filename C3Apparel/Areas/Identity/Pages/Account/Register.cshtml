@@ -3,6 +3,15 @@
 @{
     ViewData["Title"] = "Register";
 }
+<style>
+    .text-danger{
+        color: #ff0000;
+        display: block;
+    }
+    .validation-summary-errors{
+        margin-bottom: 20px;
+    }
+</style>
 @{
     Layout = "~/Features/Shared/_CMSLayout.cshtml";
 }
@@ -44,8 +53,8 @@
                 <div class="control">
                     <div class="select">
                         <select asp-for="Input.Role">
-                            <option value="Admin">Admin</option>
                             <option value="Customer">Customer</option>
+                            <option value="Admin">Admin</option>
                         </select>
                     </div>
                 </div>

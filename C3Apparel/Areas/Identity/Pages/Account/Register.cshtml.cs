@@ -138,6 +138,7 @@ namespace C3Apparel.Areas.Identity.Pages.Account
                     Message = "New user created";
                     await  _userManager.AddToRoleAsync(user, Input.Role);
                     
+                    return Redirect("/admin/users");
                     /*_logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
@@ -169,8 +170,7 @@ namespace C3Apparel.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
-            //return Page();
-            return Redirect("/admin/users");
+            return Page();
         }
 
         private C3ApparelUser CreateUser()

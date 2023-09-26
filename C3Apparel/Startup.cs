@@ -4,10 +4,12 @@ using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Data.Pricing;
 using C3Apparel.Data.Products;
 using C3Apparel.Data.Sql;
+using C3Apparel.Frontend.Data.Identity;
 using C3Apparel.Infrastructure;
 using C3Apparel.Web.Membership;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,19 +35,19 @@ namespace BlankSiteCore
             /*services.AddDbContext<ApplicationDbContext>((option) =>
             {
                 option.UseSqlServer(_configuration.GetConnectionString("ConnectionString"));
-            });
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            }); */
+            
+            services.Configure<IdentityOptions>(options =>
                 {
                     // Note: These settings are effective only when password policies are turned off in the administration settings.
                     options.Password.RequireDigit = false;
                     options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequiredLength = 0;
+                    options.Password.RequiredLength = 6;
                     options.Password.RequireUppercase = false;
                     options.Password.RequireLowercase = false;
                     options.Password.RequiredUniqueChars = 0;
-                })
-                .AddEntityFrameworkStores<ApplicationDbContext>();;
-            */
+                });
+           
             services.AddAuthorization();
             services.AddAuthentication();
             services.AddMvc()
