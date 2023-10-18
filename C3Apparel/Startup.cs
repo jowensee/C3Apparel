@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using C3Apparel.Features.PriceList;
 using C3Apparel.Data.Modules.Classes;
 using C3Apparel.Data.Pricing;
@@ -6,6 +7,7 @@ using C3Apparel.Data.Products;
 using C3Apparel.Data.Sql;
 using C3Apparel.Frontend.Data.Identity;
 using C3Apparel.Infrastructure;
+using C3Apparel.Infrastructure.Exception;
 using C3Apparel.Web.Membership;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +17,8 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace BlankSiteCore
 {
@@ -107,13 +111,31 @@ namespace BlankSiteCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
             if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/500.html");
+            }
+            
+            app.UseMiddleware<BackofficeExceptionHandlerMiddleware>();
 
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .Enrich.FromLogContext().CreateLogger();
+
+            loggerFactory.AddSerilog();
+            
             var rewriteOptions = new RewriteOptions();
             rewriteOptions.AddRedirect("$^", "login");
             if (System.IO.File.Exists("rewrite.config"))
