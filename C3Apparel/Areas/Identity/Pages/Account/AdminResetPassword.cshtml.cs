@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
@@ -6,8 +6,9 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
-using C3Apparel.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
+using C3Apparel.Areas.Identity.Data;
+using C3Apparel.Web.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,11 +16,12 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace C3Apparel.Areas.Identity.Pages.Account
 {
-    public class ResetPasswordModel : PageModel
+    [TypeFilter(typeof(AdminAuthorizationFilter))]
+    public class AdminResetPassword : PageModel
     {
         private readonly UserManager<C3ApparelUser> _userManager;
 
-        public ResetPasswordModel(UserManager<C3ApparelUser> userManager)
+        public AdminResetPassword(UserManager<C3ApparelUser> userManager)
         {
             _userManager = userManager;
         }
@@ -30,7 +32,9 @@ namespace C3Apparel.Areas.Identity.Pages.Account
         /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
-
+        public string Message { get; set; }
+        public string UserId { get; set; }
+        public string UserName { get; set; }
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -41,10 +45,12 @@ namespace C3Apparel.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            /*[Required]
             [EmailAddress]
             public string Email { get; set; }
-
+            */
+            
+            public string Id { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -63,29 +69,29 @@ namespace C3Apparel.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [Required]
-            public string Code { get; set; }
 
         }
 
-        public IActionResult OnGet(string code = null)
+        public async Task<IActionResult> OnGet(string id = null)
         {
-            if (code == null)
+            if (id == null)
             {
-                return BadRequest("A code must be supplied for password reset.");
-            }
-            else
-            {
-                Input = new InputModel
-                {
-                    Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
-                };
+                Message = "Invalid parameter";
+                
                 return Page();
             }
+            UserId = id;
+            
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                Message = "User not found";
+                
+                return Page();
+            }
+
+            UserName = user.UserName;
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -95,23 +101,27 @@ namespace C3Apparel.Areas.Identity.Pages.Account
                 return Page();
             }
 
-            var user = await _userManager.FindByEmailAsync(Input.Email);
+            var user = await _userManager.FindByIdAsync(Input.Id);
             if (user == null)
             {
-                // Don't reveal that the user does not exist
-                return RedirectToPage("./ResetPasswordConfirmation");
+                Message = "User not found";
+                
+                return Page();
             }
 
-            var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
+            string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user, resetToken, Input.Password);
             if (result.Succeeded)
             {
-                return RedirectToPage("./ResetPasswordConfirmation");
+                Message = "Password has been reset";
             }
 
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
+
+            UserName = user.UserName;
             return Page();
         }
     }

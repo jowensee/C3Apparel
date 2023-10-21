@@ -40,7 +40,7 @@ namespace BlankSiteCore
             {
                 option.UseSqlServer(_configuration.GetConnectionString("ConnectionString"));
             }); */
-            
+
             services.Configure<IdentityOptions>(options =>
                 {
                     // Note: These settings are effective only when password policies are turned off in the administration settings.
@@ -138,10 +138,10 @@ namespace BlankSiteCore
             
             var rewriteOptions = new RewriteOptions();
             rewriteOptions.AddRedirect("$^", "login");
-            if (System.IO.File.Exists("rewrite.config"))
+            if (File.Exists("rewrite.config"))
             {
                 var iisUrlRewriteStreamReader =
-                    System.IO.File.OpenText("rewrite.config");
+                    File.OpenText("rewrite.config");
 
                 rewriteOptions.AddRedirect("$^", "login");
                 rewriteOptions.AddIISUrlRewrite(iisUrlRewriteStreamReader);

@@ -38,7 +38,6 @@
     <Compile Remove="Features\Pricing\InternalPricingController.cs" />
     <Compile Remove="Areas\Identity\Pages\Account\Manage\**" />
     <Compile Remove="Areas\Identity\Pages\Account\AccessDenied.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\ForgotPassword.cshtml.cs" />
     <Compile Remove="Areas\Identity\Pages\Account\RegisterConfirmation.cshtml.cs" />
     <Compile Remove="Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml.cs" />
     <Compile Remove="Areas\Identity\Pages\Account\UserList.cshtml.cs" />
@@ -59,7 +58,6 @@
     <Content Remove="Features\Pricing\InternalPriceListingPage.cshtml" />
     <Content Remove="Areas\Identity\Pages\Account\Manage\**" />
     <Content Remove="Areas\Identity\Pages\Account\AccessDenied.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\ForgotPassword.cshtml" />
     <Content Remove="Areas\Identity\Pages\Account\RegisterConfirmation.cshtml" />
     <Content Remove="Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml" />
     <Content Remove="Areas\Identity\Pages\Account\UserList.cshtml" />
