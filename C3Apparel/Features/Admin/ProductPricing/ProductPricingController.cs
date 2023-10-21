@@ -152,7 +152,7 @@ namespace C3Apparel.Features.Admin.ProductPricing
             var filter = new ProductPricingFilter
             {
                 Description = requests.Filters.FilterDescription,
-                Collection = requests.Filters.FilterCollection,
+                //Collection = requests.Filters.FilterCollection,
                 C3Style = requests.Filters.FilterC3Style,
                 Colour = requests.Filters.FilterColour,
                 COO = requests.Filters.FilterCOO,
@@ -245,10 +245,12 @@ namespace C3Apparel.Features.Admin.ProductPricing
                         ColourDescription = pricing.ProductPricingColourDesc,
                         Coo = pricing.ProductPricingCoo,
                         Sizes = pricing.ProductPricingSizes,
+                        AllSizes = pricing.ProductPricingAllSizes,
                         SupplierStyle = pricing.ProductPricingSupplierStyle,
                         Status = pricing.ProductPricingStatus,
                         Description = pricing.ProductPricingDescription,
                         ProductGroup = pricing.ProductPricingGroup,
+                        ProductSubCategory = pricing.ProductPricingSubCategory
 
                     }
 
@@ -278,10 +280,12 @@ namespace C3Apparel.Features.Admin.ProductPricing
                     ProductPricingColours = request.Colour,
                     ProductPricingColourDesc = request.ColourDescription,
                     ProductPricingCoo = request.Coo,
+                    ProductPricingSubCategory = request.ProductSubCategory,
                     ProductPricingC3OverrideWeight = request.C3OverrideWeight,
                     ProductPricingDescription = request.Description,
                     ProductPricingGroup = request.ProductGroup,
                     ProductPricingSizes = request.Sizes,
+                    ProductPricingAllSizes = request.AllSizes,
                     ProductPricingSupplierStyle = request.SupplierStyle,
                     ProductPricingStatus = request.Status,
                     ProductPricingSupplierID = request.BrandId,

@@ -25,7 +25,9 @@ function PricingEdit(){
                     description:'',
                     coo:'',
                     productGroup:'',
+                    productSubCategory:'',
                     sizes:'',
+                    allSizes:'',
                     productColours:'',
                     colourDescriptions:'',
                     buyPrice:0,
@@ -71,7 +73,9 @@ function PricingEdit(){
                         pricing.description = response.productPricing.description
                         pricing.coo = response.productPricing.coo
                         pricing.productGroup = response.productPricing.productGroup
+                        pricing.productSubCategory = response.productPricing.productSubCategory
                         pricing.sizes = response.productPricing.sizes
+                        pricing.allSizes = response.productPricing.allSizes
                         pricing.productColours = response.productPricing.colour
                         pricing.colourDescriptions = response.productPricing.colourDescription
                         pricing.buyPrice = response.productPricing.c3BuyPrice
@@ -106,6 +110,11 @@ function PricingEdit(){
 
                 if (this.pricing.sizes.trim() == ''){
                     this.errors.push("<b>Sizes:</b> Please enter a value")
+                    validate = false
+                }
+                
+                if (this.pricing.allSizes.trim() == ''){
+                    this.errors.push("<b>All Sizes:</b> Please enter a value")
                     validate = false
                 }
 
@@ -147,7 +156,9 @@ function PricingEdit(){
                     description:self.pricing.description,
                     coo:self.pricing.coo,
                     productGroup:self.pricing.productGroup,
+                    productSubCategory:self.pricing.productSubCategory,
                     sizes:self.pricing.sizes,
+                    allSizes:self.pricing.allSizes,
                     colour:self.pricing.productColours,
                     colourDescription:self.pricing.colourDescriptions,
                     c3BuyPrice:self.pricing.buyPrice,

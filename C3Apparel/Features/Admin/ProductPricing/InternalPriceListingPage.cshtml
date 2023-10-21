@@ -162,14 +162,14 @@
                     </div>
                 </div>
             </div>
-            <div class="field-row">
+            @*<div class="field-row">
                 <div class="field">
                     <label>Collection</label>
                     <div class="control">
                         <input type="text" v-model="filter.collection">
                     </div>
                 </div>
-            </div>
+            </div>*@
             <div class="buttons">
                 <button id="buttonSearch" class="button is-link" type="button" v-on:click.prevent="search()">Search</button>
                 <button id="buttonDownload" class="button is-link" type="button" v-on:click.prevent="download()" v-show="settings.id !== null">Download</button>

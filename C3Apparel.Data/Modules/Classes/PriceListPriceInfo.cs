@@ -1,37 +1,5 @@
 namespace C3Apparel.Data.Modules.Classes
 {
-    /*
-     *	
-	[PriceVersionID] [int] NOT NULL,
-	[PriceCurrency] [nvarchar](200) NOT NULL,
-	[PriceBrandID] [int] NOT NULL,
-	[PriceBrandName] [nvarchar](200) NULL,
-	[PriceCollection] [nvarchar](500) NULL,
-	[PriceC3Style] [nvarchar](500) NOT NULL,
-	[PriceSupplierStyle] [nvarchar](200) NULL,
-	[PriceDescription] [nvarchar](500) NOT NULL,
-	[PriceCoo] [nvarchar](200) NULL,
-	[PriceGroup] [nvarchar](200) NOT NULL,
-	[PriceSizes] [nvarchar](200) NOT NULL,
-	[PriceColours] [nvarchar](200) NOT NULL,
-	[PriceColourDesc] [nvarchar](max) NULL,
-	[PriceCol1FreightSurcharge] [decimal](19, 4) NULL,
-	[PriceCol1UnitPrice] [decimal](19, 3) NOT NULL,
-	[PriceCol1MOQUnit] [int] NULL,
-	[PriceCol2FreightSurcharge] [decimal](19, 4) NULL,
-	[PriceCol2UnitPrice] [decimal](19, 3) NOT NULL,
-	[PriceCol2MOQUnit] [int] NULL,
-	[PriceCol3FreightSurcharge] [decimal](19, 4) NULL,
-	[PriceCol3UnitPrice] [decimal](19, 3) NOT NULL,
-	[PriceCol3MOQUnit] [int] NULL,
-	[PriceCol4FreightSurcharge] [decimal](19, 4) NULL,
-	[PriceCol4UnitPrice] [decimal](19, 3) NOT NULL,
-	[PriceCol4MOQUnit] [int] NULL
-	)
-GO
-
-     * 
-     */
     public class PriceListPriceInfo
     {
 	    public int PriceVersionID { get; set; }
@@ -59,8 +27,10 @@ GO
 	    public string PriceCoo { get; set; }
 	    public string PriceGroup { get; set; }
 	    public string PriceColourDesc { get; set; }
+		public string PriceSubCategory { get; set; }
+		public string PriceAllSizes { get; set; }
 
-	    public string FormatPrice(decimal price)
+		public string FormatPrice(decimal price)
 	    {
 		    return $"${price:#,##0.00}";
 

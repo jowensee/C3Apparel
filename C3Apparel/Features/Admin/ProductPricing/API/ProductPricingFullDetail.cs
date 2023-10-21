@@ -14,6 +14,9 @@ public class ProductPricingFullDetail
     public string Coo { get; set; }
     public string ProductGroup { get; set; }
     public string Sizes { get; set; }
+
+    public string ProductSubCategory { get; set; }
+    public string AllSizes { get; set; }
     public string Colour { get; set; }
     public string ColourDescription { get; set; }
     public decimal C3BuyPrice { get; set; }

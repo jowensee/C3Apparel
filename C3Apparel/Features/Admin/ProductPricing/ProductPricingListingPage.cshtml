@@ -50,14 +50,6 @@
             </div>
          </div>
          <div class="field">
-            <label>Collection</label>
-            <div class="control">
-               <div>
-                  <input type="text" v-model="filter.collection">
-               </div>
-            </div>
-         </div>
-         <div class="field">
             <label>Supplier Style</label>
             <div class="control">
                <div>
@@ -98,7 +90,7 @@
             </div>
          </div>
          <div class="field">
-            <label>Colour</label>
+            <label>Colour Description</label>
             <div class="control">
                <div>
                   <input type="text" v-model="filter.colour">
@@ -127,9 +119,6 @@
                </th>
                <th class="col-header col-brand">
                   Brand
-               </th>
-               <th class="col-header col-currency">
-                  Collection
                </th>
                <th class="col-header col-focus">
                   C-3 Style
@@ -177,7 +166,6 @@
                    </a>
                 </td>
                <td>{{row.supplierName}}</td>
-                <td>{{row.collection}}</td>
                 <td>{{row.c3Style}}</td>
                 <td>{{row.supplierStyle}}</td>
                 <td>{{row.description}}</td>

@@ -273,10 +273,10 @@ namespace C3Apparel.Web.Features.Content
             {
                 return BadRequest();
             }
+            
             var response = new GetPricingsResponse();
             IEnumerable<ProductItem> products;
             ResultItem result;
-
 
             var brandPricing =
                 _brandRepository.GetBrandPricingInfo(requests.BrandID.ToInteger(), requests.TargetCurrency);
@@ -302,7 +302,7 @@ namespace C3Apparel.Web.Features.Content
             
             var searchFilter = new SearchFilter
             {
-                Collection = requests.Collection
+                //Collection = requests.Collection
             };
             (products, result) = _productPriceConversionService.GetProductsWithConvertedPrice(freightSettings, brandPricing, searchFilter, requests.TargetCurrency, requests.PageNumber, requests.ItemsPerPage);
 

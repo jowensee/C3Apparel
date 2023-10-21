@@ -180,18 +180,20 @@ namespace C3Apparel.Data.Modules.Classes
                 { "@ProductPricingC3BuyPrice", productPricing.ProductPricingC3BuyPrice },
                 { "@ProductPricingSKUWeight", productPricing.ProductPricingSKUWeight },
                 { "@ProductPricingC3OverrideWeight", productPricing.ProductPricingC3OverrideWeight },
-                { "@ProductPricingStatus", productPricing.ProductPricingStatus }
+                { "@ProductPricingStatus", productPricing.ProductPricingStatus },
+                { "@ProductPricingSubCategory", productPricing.ProductPricingSubCategory },
+                { "@ProductPricingAllSizes", productPricing.ProductPricingAllSizes }
                 
             };
             
             ExecuteCommand($@"INSERT INTO C3_ProductPricing (ProductPricingDescription, ProductPricingC3Style, ProductPricingSupplierStyle,ProductPricingSupplierID,
                              ProductPricingCollection, ProductPricingSizes, ProductPricingColours,ProductPricingColourDesc, ProductPricingGroup, ProductPricingCoo, 
-                       ProductPricingC3BuyPrice, ProductPricingSKUWeight, ProductPricingC3OverrideWeight,ProductPricingStatus,
+                       ProductPricingC3BuyPrice, ProductPricingSKUWeight, ProductPricingC3OverrideWeight,ProductPricingStatus,ProductPricingSubCategory,ProductPricingAllSizes,
                        ProductPricingLastModified, ProductPricingGuid) VALUES   
                      (@ProductPricingDescription, @ProductPricingC3Style, @ProductPricingSupplierStyle, @ProductPricingSupplierID, 
                       @ProductPricingCollection, @ProductPricingSizes, @ProductPricingColours, @ProductPricingColourDesc, @ProductPricingGroup, @ProductPricingCoo,
-                      @ProductPricingC3BuyPrice,@ProductPricingSKUWeight,@ProductPricingC3OverrideWeight,@ProductPricingStatus,
-                      GETDATE(), NewID())", parameters);
+                      @ProductPricingC3BuyPrice,@ProductPricingSKUWeight,@ProductPricingC3OverrideWeight,@ProductPricingStatus, @ProductPricingSubCategory,
+                      @ProductPricingAllSizes, GETDATE(), NewID())", parameters);
         }
 
         public void UpdateProductPricing(ProductPricingInfo productPricing)
@@ -212,7 +214,9 @@ namespace C3Apparel.Data.Modules.Classes
                 { "@ProductPricingC3BuyPrice", productPricing.ProductPricingC3BuyPrice },
                 { "@ProductPricingSKUWeight", productPricing.ProductPricingSKUWeight },
                 { "@ProductPricingC3OverrideWeight", productPricing.ProductPricingC3OverrideWeight },
-                { "@ProductPricingStatus", productPricing.ProductPricingStatus }
+                { "@ProductPricingStatus", productPricing.ProductPricingStatus },
+                { "@ProductPricingSubCategory", productPricing.ProductPricingSubCategory },
+                { "@ProductPricingAllSizes", productPricing.ProductPricingAllSizes }
                 
             };
             
@@ -231,6 +235,8 @@ namespace C3Apparel.Data.Modules.Classes
                                     ProductPricingSKUWeight = @ProductPricingSKUWeight, 
                                     ProductPricingC3OverrideWeight = @ProductPricingC3OverrideWeight,
                                     ProductPricingStatus = @ProductPricingStatus,
+                                    ProductPricingSubCategory = @ProductPricingSubCategory,
+                                    ProductPricingAllSizes = @ProductPricingAllSizes,
                                     ProductPricingLastModified = GETDATE()
                                     WHERE ProductPricingID = @ProductPricingID", parameters);
         }
@@ -262,16 +268,17 @@ namespace C3Apparel.Data.Modules.Classes
                         $" AND {nameof(ProductPricingInfo.ProductPricingC3Style)} LIKE '%{SQLHelper.SqlString(filter.C3Style)}%'");
                 }
                 
+                /*
                 if (!string.IsNullOrWhiteSpace(filter.Collection))
                 {
                     sFilterSql.Append(
                         $" AND {nameof(ProductPricingInfo.ProductPricingCollection)} LIKE '%{SQLHelper.SqlString(filter.Collection)}%'");
-                }
+                }*/
                 
                 if (!string.IsNullOrWhiteSpace(filter.Colour))
                 {
                     sFilterSql.Append(
-                        $" AND {nameof(ProductPricingInfo.ProductPricingColours)} LIKE '%{SQLHelper.SqlString(filter.Colour)}%'");
+                        $" AND {nameof(ProductPricingInfo.ProductPricingColourDesc)} LIKE '%{SQLHelper.SqlString(filter.Colour)}%'");
                 }
                 
                 if (!string.IsNullOrWhiteSpace(filter.Description))
@@ -368,6 +375,8 @@ namespace C3Apparel.Data.Modules.Classes
                 ProductPricingC3OverrideWeight =  row[nameof(ProductPricingInfo.ProductPricingC3OverrideWeight)].ToDecimal(),
                 ProductPricingStatus = row[nameof(ProductPricingInfo.ProductPricingStatus)].ToSafeString(),
                 ProductPricingSizes = row[nameof(ProductPricingInfo.ProductPricingSizes)].ToSafeString(),
+                ProductPricingSubCategory = row[nameof(ProductPricingInfo.ProductPricingSubCategory)].ToSafeString(),
+                ProductPricingAllSizes = row[nameof(ProductPricingInfo.ProductPricingAllSizes)].ToSafeString(),
                 
             };
         }

@@ -107,6 +107,9 @@ namespace C3Apparel.Data.Modules.Classes
             get;
             set;
         }
+        
+        public string ProductPricingSubCategory { get; set; }
+        public string ProductPricingAllSizes { get; set; }
 
     }
 }
