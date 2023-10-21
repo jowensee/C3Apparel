@@ -5,6 +5,7 @@ namespace C3Apparel.Features.Admin.ProductPricing.CSV;
 public class CSVPriceListItem
 {
     public string Brand { get; set; }
+    [Ignore]
     public string Collection { get; set; }
     public string Style { get; set; }
     public string Description { get; set; }

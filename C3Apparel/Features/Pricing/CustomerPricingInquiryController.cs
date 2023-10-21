@@ -88,7 +88,7 @@ namespace C3Apparel.Web.Features.Pricing
             return new SearchPriceListFilter
             {
                 BrandId = requests.Filters.BrandId,
-                Collection = requests.Filters.Collection,
+                //Collection = requests.Filters.Collection,
                 C3Style = requests.Filters.C3Style,
                 Description = requests.Filters.Description,
                 ProductGroup = requests.Filters.ProductGroup,

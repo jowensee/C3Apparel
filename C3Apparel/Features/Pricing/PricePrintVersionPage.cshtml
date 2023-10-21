@@ -73,7 +73,7 @@
                <table class="listing-table">
                   <thead class="listing-header">
                   <tr>
-                     <th colspan="@(Model.HasCollection ? "6" : "5")" rowspan="2" class="disclaimer">
+                     <th colspan="5" rowspan="2" class="disclaimer">
                            @Html.Raw(Model.DisclaimerText)
                      </th>
                      <th class="col-header col-group thick thick-left" colspan="@(Model.PriceCol1HasFreightSurcharge ? "3" : "2")">
@@ -138,10 +138,6 @@
                   </tr>
                   <tr class="row-header">
                      <th rowspan="2" class="col-header">Brand</th>
-                     @if (Model.HasCollection)
-                     {
-                        <th rowspan="2" class="col-header">Collection</th>
-                     }
                      <th rowspan="2" class="col-header">Style</th>
                      <th rowspan="2" class="col-header">Description</th>
                      <th rowspan="2" class="col-header">Sizes</th>
@@ -204,10 +200,6 @@
                      var product = products[i];
                      <tr class="row">
                         <td class="" nowrap="nowrap">@product.BrandName</td>
-                        @if (Model.HasCollection)
-                        {
-                           <td class="">@product.Collection</td>  
-                        }
                         <td class="center">@product.ProductCode</td>
                         <td class="product-desc">@product.ProductName</td>
                         <td class="center">@product.ProductSizes</td>

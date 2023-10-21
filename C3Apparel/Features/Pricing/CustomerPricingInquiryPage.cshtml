@@ -33,14 +33,6 @@
          </div>
       </div>
       <div class="field">
-         <label>Collection</label>
-         <div class="control">
-            <div>
-               <input type="text" v-model="filter.collection">
-            </div>
-         </div>
-      </div>
-      <div class="field">
          <label>C-3 Style</label>
          <div class="control">
             <div>
@@ -99,7 +91,7 @@
          <table class="listing-table">
             <thead class="listing-header">
             <tr>
-               <th colspan="8">
+               <th colspan="7">
                </th>
                <th class="col-header col-group thick thick-left" colspan="@(Model.PriceCol1HasFreightSurcharge ? "3" : "2")">
                   Column 1
@@ -116,7 +108,6 @@
             </tr>
             <tr>
                <th rowspan="2" class="col-header col-brand">Brand</th>
-               <th rowspan="2" class="col-header col-style">Collection</th>
                <th rowspan="2" class="col-header col-style">C-3 Style</th>
                <th rowspan="2" class="col-header">Description</th>
                <th rowspan="2" class="col-header col-sizes">Product Group</th>
@@ -178,7 +169,6 @@
             <tbody>
             <tr class="row" v-for="(row, index) in grid.rows">
                <td class=" col-brand" nowrap="nowrap">{{row.brand}}</td>
-               <td class=" col-style">{{row.collection}}</td>
                <td class=" col-style center">{{row.productCode}}</td>
                <td class="">{{row.description}}</td>
                <td class=" col-color center">{{row.productGroup}}</td>

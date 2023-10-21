@@ -28,7 +28,7 @@ public class PriceListingPageViewModel
     public string CurrentBrandRegionCode { get; set; }
     public string Currency { get; set; }
 
-    public bool HasCollection => !Products.IsNullOrEmpty() && Products.Any(a => !a.Collection.IsNullOrEmpty());
+    //public bool HasCollection => !Products.IsNullOrEmpty() && Products.Any(a => !a.Collection.IsNullOrEmpty());
     public string GetColumnHeader(int headerIndex, string priceKey)
     {
         if (PriceWeightBasedSettings == null || !PriceWeightBasedSettings.ContainsKey(priceKey))
