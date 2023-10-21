@@ -103,7 +103,9 @@ public class CSVUploader
                         ProductPricingColourDesc = pricing.ColourDescription,
                         ProductPricingC3BuyPrice = pricing.C3BuyPrice,
                         ProductPricingSKUWeight = pricing.SKUWeight,
-                        ProductPricingC3OverrideWeight = pricing.C3OverrideWeight
+                        ProductPricingC3OverrideWeight = pricing.C3OverrideWeight,
+                        ProductPricingAllSizes = pricing.AllSizes,
+                        ProductPricingSubCategory = pricing.ProductSubCategory
                     };    
                     
                     if (isNew)

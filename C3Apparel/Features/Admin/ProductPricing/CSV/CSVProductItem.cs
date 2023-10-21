@@ -18,5 +18,7 @@ public class CSVProductItem
     public string Currency { get; set; }
     public decimal SKUWeight { get; set; }
     public decimal C3OverrideWeight { get; set; }
+    public string ProductSubCategory { get; set; }
+    public string AllSizes { get; set; }
         
 }
