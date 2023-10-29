@@ -1,13 +1,14 @@
 
 
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace C3Apparel.Web.Features.Pricing.API.Requests;
 
 public class SearchPriceListFilterParameter
 {
-    [JsonProperty("brandId")]
-    public int BrandId { get; set; }
+    [JsonProperty("brands")]
+    public List<int> Brands { get; set; }
     
     [JsonProperty("collection")]
     public string Collection { get; set; }

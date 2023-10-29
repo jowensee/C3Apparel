@@ -1,8 +1,10 @@
+using System.Collections.Generic;
+
 namespace C3Apparel.Data.Modules.Filters
 {
     public class SearchPriceListFilter
     {
-        public int BrandId { get; set; }
+        public List<int> Brands { get; set; }
         public string C3Style { get; set; }
         public string Collection { get; set; }
         public string Description { get; set; }

@@ -209,22 +209,15 @@ namespace C3Apparel.Data.Modules.Classes
 
         }
 
-        public IEnumerable<PriceListPriceInfo> SearchPriceList(int versionId, string currency, SearchPriceListFilter filter, int pageNumber = 0,
-            int itemsPerPage = 0)
+        private string GetFilterSqlText(SearchPriceListFilter filter)
         {
-            var parameters = new Dictionary<string, object>
-            {
-                { "@versionId", versionId},
-                { "@currency", currency }
-            };
-            
             var sFilterSql = new StringBuilder();
 
             if (filter != null)
             {
-                if (filter.BrandId > 0)
+                if (filter.Brands != null && filter.Brands.Count > 0)
                 {
-                    sFilterSql.Append($" AND PriceBrandID = {filter.BrandId}");
+                    sFilterSql.Append($" AND PriceBrandID IN ({string.Join(",", filter.Brands)})");
                 }
                 if (!string.IsNullOrWhiteSpace(filter.Collection))
                 {
@@ -256,7 +249,20 @@ namespace C3Apparel.Data.Modules.Classes
                 }
                 
             }
+
+            return sFilterSql.ToString();
+        }
+        public IEnumerable<PriceListPriceInfo> SearchPriceList(int versionId, string currency, SearchPriceListFilter filter, int pageNumber = 0,
+            int itemsPerPage = 0)
+        {
+            var parameters = new Dictionary<string, object>
+            {
+                { "@versionId", versionId},
+                { "@currency", currency }
+            };
             
+            var sFilterSql = GetFilterSqlText(filter);
+
             var sSql = $@"SELECT * FROM C3_PricingListPrices
                        WHERE PriceVersionId = @versionId AND PriceCurrency = @currency {sFilterSql}
                         ORDER BY PriceBrandName, PriceCollection, REPLICATE('0',20-LEN(PriceC3Style)) + PriceC3Style";
@@ -291,49 +297,11 @@ namespace C3Apparel.Data.Modules.Classes
                 { "@currency", currency }
             };
             
-            var sFilterSql = new StringBuilder();
-
-            if (filter != null)
-            {
-                if (filter.BrandId > 0)
-                {
-                    sFilterSql.Append($" AND PriceBrandID = {filter.BrandId}");
-                }
-                if (!string.IsNullOrWhiteSpace(filter.Collection))
-                {
-                    sFilterSql.Append($" AND PriceCollection LIKE '%{SQLHelper.SqlString(filter.Collection)}%'");
-                }
-                if (!string.IsNullOrWhiteSpace(filter.C3Style))
-                {
-                    sFilterSql.Append($" AND PriceC3Style LIKE '%{SQLHelper.SqlString(filter.C3Style)}%'");
-                }
-                if (!string.IsNullOrWhiteSpace(filter.Description))
-                {
-                    sFilterSql.Append($" AND PriceDescription LIKE '%{SQLHelper.SqlString(filter.Description)}%'");
-                }
-                if (!string.IsNullOrWhiteSpace(filter.ProductGroup))
-                {
-                    sFilterSql.Append($" AND PriceGroup LIKE '%{SQLHelper.SqlString(filter.ProductGroup)}%'");
-                }
-                if (!string.IsNullOrWhiteSpace(filter.Sizes))
-                {
-                    sFilterSql.Append($" AND PriceSizes LIKE '%{SQLHelper.SqlString(filter.Sizes)}%'");
-                }
-                if (!string.IsNullOrWhiteSpace(filter.Colour))
-                {
-                    sFilterSql.Append($" AND PriceColours LIKE '%{SQLHelper.SqlString(filter.Colour)}%'");
-                }
-                if (!string.IsNullOrWhiteSpace(filter.ColourDescription))
-                {
-                    sFilterSql.Append($" AND PriceColourDesc LIKE '%{SQLHelper.SqlString(filter.ColourDescription)}%'");
-                }
-                
-            }
+            var sFilterSql = GetFilterSqlText(filter);
             
             var sSql = $@"SELECT COUNT(*) FROM C3_PricingListPrices
                        WHERE PriceVersionId = @versionId AND PriceCurrency = @currency {sFilterSql}";
 
-           
             var ds = ExecuteQuery(sSql, parameters);
 
             if (DataHelper.IsEmpty(ds))

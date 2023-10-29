@@ -44,11 +44,17 @@ public abstract class AbstractExceptionHandlerMiddleware
             // log the error
             Logger.Error(exception, "Error during executing {Context}", context.Request.Path.Value);
             var response = context.Response;
-            
-            var reader = new StreamReader(context.Response.Body);
-            var text = reader.ReadToEnd();
-            await response.WriteAsync(text);
-            
+
+            try
+            {
+                var reader = new StreamReader(context.Response.Body);
+                var text = reader.ReadToEnd();
+                await response.WriteAsync(text);
+            }
+            catch (System.Exception ex)
+            {
+                
+            }
         }
     }
 }

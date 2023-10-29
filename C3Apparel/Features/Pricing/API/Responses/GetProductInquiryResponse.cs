@@ -23,5 +23,8 @@ public class GetProductInquiryResponse : BaseListingResponse
     
     [JsonProperty("settingsGuid")]
     public string SettingsGuid { get; set; }
+    
+    [JsonProperty("totalCount")]
+    public int TotalResult { get; set; }
 }
 

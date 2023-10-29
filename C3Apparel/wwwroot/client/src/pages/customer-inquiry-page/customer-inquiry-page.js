@@ -1,9 +1,11 @@
 import "../../scripts/global"
+//import Multiselect from '@vueform/multiselect'
+
 
 var Page = new Object()
 
 function PriceListing(){
-    const { createApp } = Vue
+    //const { createApp } = Vue
     let thisObject = this;
     this.el = document.getElementById("main-app");
     this.currency =  this.el.getAttribute("data-currency") ;
@@ -12,7 +14,10 @@ function PriceListing(){
     const downloadEndpoint = thisObject.el.getAttribute("data-endpoint-download")
     const method = thisObject.el.getAttribute("data-method")
 
-    createApp({
+    const app = Vue.createApp({
+        //components: {
+        //    Multiselect,
+        //  },
         data() {
             return {
                 
@@ -25,7 +30,7 @@ function PriceListing(){
                     rows:[]
                 },
                 filter:{
-                    brandId:0,
+                    brands:[],
                     c3Style:'',
                     collection:'',
                     description:'',
@@ -35,11 +40,13 @@ function PriceListing(){
                     colour:''
                 },
                 searchClicked:false,
-                filterValidationError: ''
+                filterValidationError: '',
+                brandOptions:[]
             }
         },
         mounted(){
-            
+
+           this.brandOptions = JSON.parse(document.getElementById('hiddenOptions').value)
         },
         computed:{
             showError: function(){
@@ -49,10 +56,17 @@ function PriceListing(){
         },
         methods:{
             populateGrid(pageNumber){
-                console.log('populate')
+
+                var brandIds = []
+                this.filter.brands.forEach(element => {
+                    brandIds.push(element)
+                });
+
                 let data = {
+
+
                     filters:{
-                        brandId: this.filter.brandId,
+                        brands: brandIds,
                         c3Style:this.filter.c3Style,
                         collection:this.filter.collection,
                         description:this.filter.description,
@@ -66,6 +80,8 @@ function PriceListing(){
                     itemsPerPage:thisObject.itemsPerPage
 
                 }
+
+                
                 let grid = this.grid;
                 fetch(endpoint, {
                     method: method,
@@ -115,9 +131,15 @@ function PriceListing(){
             },
             download(){
                 this.errorMessage = ''
+
+                var brandIds = []
+                this.filter.brands.forEach(element => {
+                    brandIds.push(element)
+                });
+
                 let data = {
                     filters:{
-                        brandId: this.filter.brandId,
+                        brands: brandIds,
                         c3Style:this.filter.c3Style,
                         collection:this.filter.collection,
                         description:this.filter.description,
@@ -138,8 +160,9 @@ function PriceListing(){
                     },
                     body: JSON.stringify(data),
                     data: null
-                }).then( res => res.blob() )
+                })/*.then( res => res.blob() )
                     .then( blob => {
+                        console.log('blob', blob)
                         var url = window.URL.createObjectURL(blob);
                         var a = document.createElement('a');
                         a.href = url;
@@ -147,16 +170,27 @@ function PriceListing(){
                         document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
                         a.click();
                         a.remove();  
-                    });
-                   /* .then(function (response) {
+                    })*/
+                   .then(function (response) {
 
                        console.log('response', response)
+                       const contentType = response.headers.get('Content-Type');
+                       console.log('contentType', contentType)
+                       response.then(res=> res.json())
+                       .then(function (r){
+                        console.log('r',r)
+                       })
 
-                    });*/
+
+
+                       console.log('json', response.json())
+                    });
 
             },
         }
-    }).mount('#main-app')
+    })
+    app.component('Multiselect', VueformMultiselect)
+    app.mount('#main-app')
 }
 
 document.addEventListener("DOMContentLoaded", function(){

@@ -2,6 +2,7 @@
 
 <!-- @@block = head-->
 <link rel="stylesheet" href="styles/customer-inquiry-page.css">
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/@vueform/multiselect/themes/default.css">
 <!-- @@close-->
 
 <!-- @@block = body-->
@@ -25,18 +26,19 @@
 <div class="main-caption">
    New Zealand Pricing
 </div>
-<div id="main-app" data-endpoint="api/getpricingnoresult.json" data-method="GET" data-item-per-page="5" data-currency="aud">
+<div id="main-app" data-endpoint="api/getpricingnoresult.json" 
+data-endpoint-download="api/getpricingnoresult.json" data-method="GET" data-item-per-page="5" data-currency="aud">
+    <input id="hiddenOptions" type="hidden" value="[{ &quot;value&quot;: 1, &quot;label&quot;: &quot;Batman&quot; }, { &quot;value&quot;: 2, &quot;label&quot;: &quot;Robin&quot; }, { &quot;value&quot;: 3,&quot;label&quot;: &quot;Joker&quot; }]" />
     <div class="filter-container">
             <div class="field">
             <label>Brand</label>
-            <div class="control">
-                <div class="select">
-                    <select id="selectBrand" v-model="filter.brandId">
-                        <option value="0">Select Brand</option>
-                        <option value="3" >Decky</option>
-                        <option value="1" selected>PureWaste</option>
-                    </select>
-                </div>
+            <div class="">
+                    <Multiselect
+                    v-model="filter.brands"
+                    mode="tags"
+                    :close-on-select="false"
+                    :searchable="true"
+                    :options="brandOptions" />s
             </div>
             </div>
             <div class="field">
@@ -90,8 +92,8 @@
                   
             <div class="error-validation" v-show="filterValidationError">{{filterValidationError}}</div>
             <div class="buttons">
-                <button id="buttonSearch" class="button is-link" v-on:click.prevent="filterResults()">Search</button>       
-                <button id="buttonPrint" class="button is-link" type="submit" value="print">CSV Download</button>
+                <button id="buttonSearch" class="button is-link" v-on:click.prevent="filterResults()">Search</button>     
+                <button id="buttonCSVDownload" class="button is-link" v-on:click.prevent="download()">CSV Download</button>
             </div>
         <div class="error"></div>
     </div>
@@ -233,5 +235,7 @@
 <!-- @@close-->
 
 <!-- @@block = scripts-->
+
 <script src="scripts/customer-inquiry-page.js"></script>
+<script type="text/javascript" src="https://unpkg.com/@vueform/multiselect"></script>
 <!-- @@close-->

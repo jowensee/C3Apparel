@@ -87,7 +87,7 @@ namespace C3Apparel.Web.Features.Pricing
 
             return new SearchPriceListFilter
             {
-                BrandId = requests.Filters.BrandId,
+                Brands = requests.Filters.Brands,
                 //Collection = requests.Filters.Collection,
                 C3Style = requests.Filters.C3Style,
                 Description = requests.Filters.Description,
@@ -128,6 +128,7 @@ namespace C3Apparel.Web.Features.Pricing
             
             var totalCount = _priceListPriceInfoProvider.SearchPriceListCount(1, currency, filter);
 
+            response.TotalResult = totalCount;
             response.TotalPage = GetTotalPage(totalCount, requests.ItemsPerPage);
             response.Pricings = products.Select(p => new ProductInquiryAPIItem
             {
@@ -168,8 +169,19 @@ namespace C3Apparel.Web.Features.Pricing
 
             var filter = MapFilter(requests);
 
+            var totalCount = _priceListPriceInfoProvider.SearchPriceListCount(1, currency, filter);
 
+            if (totalCount > 500)
+            {
+                
+                return Ok(new DownloadCSVResponse
+                {
+                    ErrorMessage = $"Your search results is more than the allowed number of rows of 500. Please update your filter to trim your results."
+                });
+            }
+            
             var products = _priceListPriceInfoProvider.SearchPriceList(1, currency, filter);
+            
             
             //TODO create csvmodel for pricelist item
             var csvItems = products.Select(a => new CSVPProductInquiryItem

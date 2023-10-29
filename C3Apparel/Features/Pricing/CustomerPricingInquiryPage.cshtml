@@ -4,10 +4,12 @@
 
 @section Styles {
    <link rel="stylesheet" href="/client/dist/styles/customer-inquiry-page.css" asp-append-version="true">
+   <link rel="stylesheet" type="text/css" href="https://unpkg.com/@@vueform/multiselect/themes/default.css">
 }
 
 @section Scripts {
    <script src="/client/dist/scripts/customer-inquiry-page.js" asp-append-version="true"></script>
+   <script type="text/javascript" src="https://unpkg.com/@@vueform/multiselect"></script>
 }
 <partial name="~/Features/Pricing/_CustomerNavigation.cshtml" model="@(Model.CountryCode, "product-inquiry", Model.UserIsAdministrator)"/>
 <div class="main-caption">
@@ -17,19 +19,18 @@
      data-endpoint-download="@Url.Action("DownloadCSV", "CustomerPricingInquiry")" 
      data-method="POST" data-item-per-page="@C3Constants.GRID_ITEMS_PER_PAGE"
                           data-currency="@Model.Currency">
+   <input id="hiddenOptions" type="hidden" value="@Model.JsonBrandsFilterOptions" />
+                             
    <div class="filter-container">
       <div class="field">
          <label>Brand</label>
-         <div class="control">
-            <div class="select">
-               <select id="selectBrand"  v-model="filter.brandId">
-                  <option value="0">Select Brand</option>
-                  @foreach (var brand in Model.Brands)
-                  {
-                     <!option value="@brand.Value" @(brand.IsSelected ? "selected" : "")>@brand.Text</!option>
-                  }
-               </select>
-            </div>
+         <div>
+             <Multiselect
+              v-model="filter.brands"
+              mode="tags"
+              :close-on-select="false"
+              :searchable="true"
+              :options="brandOptions" />
          </div>
       </div>
       <div class="field">

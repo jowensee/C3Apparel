@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using C3Apparel.Data.Extensions;
 using C3Apparel.Data.Pricing;
 using C3Apparel.Data.Products;
 using C3Apparel.Frontend.Data.Common;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace C3Apparel.Web.Features.Pricing;
 
@@ -28,6 +31,25 @@ public class CustomerPricingInquiryPageViewModel
     public string Currency { get; set; }
     public string CountryCode { get; set; }
     public bool UserIsAdministrator { get; set; }
+
+    public string JsonBrandsFilterOptions
+    {
+        get
+        {
+            if (Brands.IsNullOrEmpty())
+            {
+                return string.Empty;
+            }
+
+            var options = Brands.Select(b => new
+            {
+                value = b.Value.ToInt(),
+                label = b.Text
+            });
+
+            return JsonConvert.SerializeObject(options);
+        }
+    }
 
     public string GetColumnHeader(int headerIndex, string priceKey)
     {
