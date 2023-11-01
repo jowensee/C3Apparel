@@ -174,7 +174,7 @@ namespace C3Apparel.Web.Features.Pricing
             if (totalCount > 500)
             {
                 
-                return Ok(new DownloadCSVResponse
+                return Json(new DownloadCSVResponse
                 {
                     ErrorMessage = $"Your search results is more than the allowed number of rows of 500. Please update your filter to trim your results."
                 });

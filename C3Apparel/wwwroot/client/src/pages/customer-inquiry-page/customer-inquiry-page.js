@@ -40,8 +40,9 @@ function PriceListing(){
                     colour:''
                 },
                 searchClicked:false,
-                filterValidationError: '',
-                brandOptions:[]
+                brandOptions:[],
+                hasError:false,
+                errorMessage:''
             }
         },
         mounted(){
@@ -125,13 +126,12 @@ function PriceListing(){
             filterResults(){
                 
                 this.searchClicked = true
-                this.filterValidationError = ''
                 this.populateGrid(1);
             
             },
             download(){
                 this.errorMessage = ''
-
+                this.hasError = false
                 var brandIds = []
                 this.filter.brands.forEach(element => {
                     brandIds.push(element)
@@ -173,17 +173,26 @@ function PriceListing(){
                     })*/
                    .then(function (response) {
 
-                       console.log('response', response)
-                       const contentType = response.headers.get('Content-Type');
-                       console.log('contentType', contentType)
-                       response.then(res=> res.json())
-                       .then(function (r){
-                        console.log('r',r)
-                       })
+                        const contentType = response.headers.get("content-type");
+                        if (contentType && contentType.indexOf("application/json") !== -1) {
+                            return response.json().then(data => {
+                                _this.hasError = true
+                                _this.errorMessage = data.errorMessage
+                            });
+                        } else {
+                            return response.blob().then(function(blob) {
+    
+                                var url = window.URL.createObjectURL(blob);
+                                var a = document.createElement('a');
+                                a.href = url;
+                                a.download = `C-3pricelistinquiry.csv`;
+                                document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+                                a.click();
+                                a.remove();  
+                            });
+                        }
 
-
-
-                       console.log('json', response.json())
+                        
                     });
 
             },

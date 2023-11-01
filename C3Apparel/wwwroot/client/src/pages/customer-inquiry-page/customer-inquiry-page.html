@@ -30,7 +30,7 @@
 data-endpoint-download="api/getpricingnoresult.json" data-method="GET" data-item-per-page="5" data-currency="aud">
     <input id="hiddenOptions" type="hidden" value="[{ &quot;value&quot;: 1, &quot;label&quot;: &quot;Batman&quot; }, { &quot;value&quot;: 2, &quot;label&quot;: &quot;Robin&quot; }, { &quot;value&quot;: 3,&quot;label&quot;: &quot;Joker&quot; }]" />
     <div class="filter-container">
-            <div class="field">
+        <div class="field">
             <label>Brand</label>
             <div class="">
                     <Multiselect
@@ -40,62 +40,62 @@ data-endpoint-download="api/getpricingnoresult.json" data-method="GET" data-item
                     :searchable="true"
                     :options="brandOptions" />s
             </div>
-            </div>
-            <div class="field">
-                <label>Collection</label>
-                <div class="control">
-                    <div>
-                        <input type="text" v-model="filter.collection">
-                    </div>
+        </div>
+        <div class="field">
+            <label>Collection</label>
+            <div class="control">
+                <div>
+                    <input type="text" v-model="filter.collection">
                 </div>
             </div>
-            <div class="field">
-                <label>C-3 Style</label>
-                <div class="control">
-                    <div>
-                        <input type="text" v-model="filter.c3Style">
-                    </div>
+        </div>
+        <div class="field">
+            <label>C-3 Style</label>
+            <div class="control">
+                <div>
+                    <input type="text" v-model="filter.c3Style">
                 </div>
             </div>
-            <div class="field">
-                <label>Description</label>
-                <div class="control">
-                    <div>
-                        <input type="text" v-model="filter.description">
-                    </div>
+        </div>
+        <div class="field">
+            <label>Description</label>
+            <div class="control">
+                <div>
+                    <input type="text" v-model="filter.description">
                 </div>
             </div>
-            <div class="field">
-                <label>Product Group</label>
-                <div class="control">
-                    <div>
-                        <input type="text" v-model="filter.productGroup">
-                    </div>
+        </div>
+        <div class="field">
+            <label>Product Group</label>
+            <div class="control">
+                <div>
+                    <input type="text" v-model="filter.productGroup">
                 </div>
             </div>
-            <div class="field">
-                <label>Sizes</label>
-                <div class="control">
-                    <div>
-                        <input type="text" v-model="filter.sizes">
-                    </div>
+        </div>
+        <div class="field">
+            <label>Sizes</label>
+            <div class="control">
+                <div>
+                    <input type="text" v-model="filter.sizes">
                 </div>
             </div>
-            <div class="field">
-                <label>Colour Descriptions</label>
-                <div class="control">
-                    <div>
-                        <input type="text" v-model="filter.colourDesc">
-                    </div>
+        </div>
+        <div class="field">
+            <label>Colour Descriptions</label>
+            <div class="control">
+                <div>
+                    <input type="text" v-model="filter.colourDesc">
                 </div>
             </div>
-                  
-            <div class="error-validation" v-show="filterValidationError">{{filterValidationError}}</div>
-            <div class="buttons">
-                <button id="buttonSearch" class="button is-link" v-on:click.prevent="filterResults()">Search</button>     
-                <button id="buttonCSVDownload" class="button is-link" v-on:click.prevent="download()">CSV Download</button>
-            </div>
-        <div class="error"></div>
+        </div>                
+        <div class="buttons">
+            <button id="buttonSearch" class="button is-link" v-on:click.prevent="filterResults()">Search</button>     
+            <button id="buttonCSVDownload" class="button is-link" v-on:click.prevent="download()">CSV Download</button>
+        </div>
+        <div class="error">
+            <div v-if="hasError">{{errorMessage}}</div>
+        </div>
     </div>
     <div id="listingMain">
         <div class="listing-container" v-if="showError">

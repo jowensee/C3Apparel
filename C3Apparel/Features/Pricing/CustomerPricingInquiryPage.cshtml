@@ -17,8 +17,7 @@
 </div>
 <div id="main-app" data-endpoint="@Url.Action("SearchPriceList", "CustomerPricingInquiry")" 
      data-endpoint-download="@Url.Action("DownloadCSV", "CustomerPricingInquiry")" 
-     data-method="POST" data-item-per-page="@C3Constants.GRID_ITEMS_PER_PAGE"
-                          data-currency="@Model.Currency">
+     data-method="POST" data-item-per-page="@C3Constants.GRID_ITEMS_PER_PAGE" data-currency="@Model.Currency">
    <input id="hiddenOptions" type="hidden" value="@Model.JsonBrandsFilterOptions" />
                              
    <div class="filter-container">
@@ -73,13 +72,12 @@
             </div>
          </div>
       </div>
-      <div class="error-validation" v-show="filterValidationError">{{filterValidationError}}</div>
       <div class="buttons">
           <button id="buttonSearch" class="button is-link" v-on:click.prevent="filterResults()">Search</button>       
           <button id="buttonCSVDownload" class="button is-link" v-on:click.prevent="download()">CSV Download</button>
       </div>
       <input type="hidden" name="currency" value="@Model.Currency" />
-      <div class="error"></div>
+      <div v-if="hasError" class="error-validation">{{errorMessage}}</div>
    </div>
    <div id="listingMain">
       <div class="listing-container" v-if="showError">
