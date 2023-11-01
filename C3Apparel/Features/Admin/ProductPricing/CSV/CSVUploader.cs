@@ -133,7 +133,9 @@ public class CSVUploader
                         product.ProductPricingC3BuyPrice = pricing.C3BuyPrice;
                         product.ProductPricingSKUWeight = pricing.SKUWeight;
                         product.ProductPricingC3OverrideWeight = pricing.C3OverrideWeight;
-
+                        product.ProductPricingSubCategory = pricing.ProductSubCategory;
+                        product.ProductPricingAllSizes = pricing.AllSizes;
+                        
                         _productPricingInfoProvider.UpdateProductPricing(product);
                         
                     }
